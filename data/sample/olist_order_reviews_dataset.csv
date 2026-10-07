@@ -1,0 +1,9 @@
+review_id,order_id,review_score,review_comment_title,review_comment_message,review_creation_date,review_answer_timestamp
+r1,o1,5,,synthetic,2018-01-11 00:00:00,2018-01-11 12:00:00
+r1,o1,4,,synthetic,2018-01-12 00:00:00,2018-01-12 12:00:00
+r2,o2,1,,synthetic,2018-01-22 00:00:00,2018-01-22 12:00:00
+r3,o3,5,,synthetic,2018-01-26 00:00:00,2018-01-26 12:00:00
+r3,o3,1,,synthetic,2018-01-26 00:00:00,2018-01-26 12:00:00
+r4,o4,2,,synthetic,2018-02-13 00:00:00,2018-02-13 12:00:00
+r5,o5,5,,synthetic,2018-05-11 00:00:00,2018-05-11 12:00:00
+r7,o7,4,,synthetic,2018-03-11 00:00:00,2018-03-11 12:00:00

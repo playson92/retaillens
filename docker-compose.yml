@@ -1,0 +1,36 @@
+name: retaillens
+services:
+  db:
+    image: postgres:17.6
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-retaillens}
+      POSTGRES_USER: ${DATABASE_USER:-retaillens_app}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:?Run scripts/setup.ps1 to generate local credentials}
+    ports:
+      - "127.0.0.1:${DATABASE_PORT:-5433}:5432"
+    volumes:
+      - retaillens_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${DATABASE_NAME:-retaillens}
+      DATABASE_USER: ${DATABASE_USER:-retaillens_app}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:?Local credentials required}
+      KAGGLEHUB_CACHE: /app/output/kaggle_cache
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./data/raw:/app/data/raw
+      - ./output:/app/output
+volumes:
+  retaillens_pgdata:

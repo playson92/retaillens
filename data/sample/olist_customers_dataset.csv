@@ -1,0 +1,9 @@
+customer_id,customer_unique_id,customer_zip_code_prefix,customer_city,customer_state
+c1,u1,01000,synthetic city,SP
+c2,u2,01000,synthetic city,RJ
+c3,u3,01000,synthetic city,SP
+c4,u1,01000,synthetic city,RJ
+c5,u4,01000,synthetic city,SP
+c6,u7,01000,synthetic city,RJ
+c7,u5,01000,synthetic city,SP
+c8,u6,01000,synthetic city,RJ

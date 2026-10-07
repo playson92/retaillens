@@ -1,0 +1,117 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - "feat/**"
+      - "fix/**"
+      - "docs/**"
+      - "test/**"
+      - "refactor/**"
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Python quality checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version-file: ".python-version"
+          cache: "pip"
+          cache-dependency-path: "requirements.lock"
+
+      - name: Display Python version
+        run: python --version
+
+      - name: Install project and development tools
+        run: |
+          python -m pip install -r requirements.lock
+          python -m pip install --no-build-isolation --no-deps -e .
+
+      - name: Run Ruff lint checks
+        run: ruff check . --output-format=github
+
+      - name: Check Ruff formatting
+        run: ruff format --check .
+
+      - name: Run tests
+        run: python -m pytest -m 'not integration'
+
+      - name: Validate official PBIP schemas and references
+        run: python scripts/validate_powerbi.py
+
+  tmdl:
+    name: Official TMDL parser
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Parse model metadata with pinned Microsoft TOM
+        shell: powershell
+        run: ./scripts/parse_tmdl.ps1 -Download -Output output/tmdl_parse.json
+
+  postgres:
+    name: PostgreSQL business contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17.6
+        env:
+          POSTGRES_DB: retaillens
+          POSTGRES_USER: retaillens_app
+          POSTGRES_PASSWORD: fixture_ci_only
+        ports: ["5433:5432"]
+        options: >-
+          --health-cmd "pg_isready -U retaillens_app -d retaillens"
+          --health-interval 3s --health-timeout 3s --health-retries 30
+    env:
+      DATABASE_HOST: 127.0.0.1
+      DATABASE_PORT: 5433
+      DATABASE_NAME: retaillens
+      DATABASE_USER: retaillens_app
+      DATABASE_PASSWORD: fixture_ci_only
+      RETAILLENS_TEST_POSTGRES: "1"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: requirements.lock
+      - run: python -m pip install -r requirements.lock
+      - run: python -m pip install --no-build-isolation --no-deps -e .
+      - run: python -m pytest -m integration
+      - run: python -m retaillens demo --output output/ci-demo
+
+  docker:
+    name: Docker build and Compose fixture demo
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - run: docker build -f docker/Dockerfile -t retaillens:ci .
+      - name: One-command Compose demo
+        env:
+          DATABASE_PASSWORD: fixture_ci_only
+        run: |
+          mkdir -p output
+          chmod 777 output
+          docker compose up -d --wait db
+          docker compose run --rm app
+      - name: Stop services; preserve volumes
+        if: always()
+        run: docker compose stop

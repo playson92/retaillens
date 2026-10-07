@@ -1,0 +1,11 @@
+.git
+.venv
+.env*
+output
+data/raw
+data/processed
+powerbi
+__pycache__
+.ruff_cache
+.pytest_cache
+*.egg-info

@@ -1,0 +1,22 @@
+{
+  "data_mode": "synthetic",
+  "source_version": "fixture-v1",
+  "source_orders": 8,
+  "delivered_gmv_brl": "340.00",
+  "gmv_eligible_orders": 6,
+  "delivered_aov_fraction": "340/6",
+  "delivery_eligible_orders": 5,
+  "on_time_orders": 3,
+  "observed_repeat_people": 1,
+  "eligible_repeat_people": 4,
+  "incomplete_repeat_windows": 2,
+  "observation_end": "2018-06-01",
+  "reconciliation_tolerance_brl": "0.01",
+  "delivered_reconciliation": {"matched": 5, "mismatch": 1, "not_comparable": 1},
+  "examples": {
+    "o1": {"items": "100.00", "expected": "110.00", "paid": "110.00", "latest_review": 4},
+    "o3": {"equal_price_items": "80.00", "ambiguous_latest_review": true},
+    "o4": {"gmv_eligible": false, "delivery_eligible": true},
+    "o8": {"delta": "0.01", "reconciliation_status": "matched"}
+  }
+}
