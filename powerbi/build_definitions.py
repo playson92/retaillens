@@ -479,23 +479,37 @@ def model():
             ]
         )
         write(MODEL / f"definition/tables/{table}.tmdl", "\n".join(lines))
-    relations = [
+    endpoints = [
         ("date_orders", "Orders", "purchase_date", "Date", "date"),
         ("date_cohorts", "Cohorts", "first_purchase_date", "Date", "date"),
         ("orders_items", "Items", "order_id", "Orders", "order_id"),
         ("product_items", "Items", "product_id", "Product", "product_id"),
         ("seller_items", "Items", "seller_id", "Seller", "seller_id"),
     ]
+    relations = [
+        {
+            "name": name,
+            "fromTable": from_table,
+            "fromColumn": from_column,
+            "toTable": to_table,
+            "toColumn": to_column,
+            "isActive": True,
+            "fromCardinality": "many",
+            "toCardinality": "one",
+            "crossFilteringBehavior": "oneDirection",
+        }
+        for name, from_table, from_column, to_table, to_column in endpoints
+    ]
     lines = []
-    for name, from_table, from_column, to_table, to_column in relations:
+    for relation in relations:
         lines.extend(
             [
-                f"relationship {name}",
-                f"\tfromColumn: '{from_table}'.'{from_column}'",
-                f"\ttoColumn: '{to_table}'.'{to_column}'",
-                "\tfromCardinality: many",
-                "\ttoCardinality: one",
-                "\tcrossFilteringBehavior: oneDirection",
+                f"relationship {relation['name']}",
+                f"\tfromColumn: '{relation['fromTable']}'.'{relation['fromColumn']}'",
+                f"\ttoColumn: '{relation['toTable']}'.'{relation['toColumn']}'",
+                f"\tfromCardinality: {relation['fromCardinality']}",
+                f"\ttoCardinality: {relation['toCardinality']}",
+                f"\tcrossFilteringBehavior: {relation['crossFilteringBehavior']}",
                 "",
             ]
         )

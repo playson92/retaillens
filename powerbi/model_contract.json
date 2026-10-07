@@ -155,40 +155,60 @@
   ],
   "money_storage": "TOM Decimal / M Currency.Type (fixed decimal)",
   "relations": [
-    [
-      "date_orders",
-      "Orders",
-      "purchase_date",
-      "Date",
-      "date"
-    ],
-    [
-      "date_cohorts",
-      "Cohorts",
-      "first_purchase_date",
-      "Date",
-      "date"
-    ],
-    [
-      "orders_items",
-      "Items",
-      "order_id",
-      "Orders",
-      "order_id"
-    ],
-    [
-      "product_items",
-      "Items",
-      "product_id",
-      "Product",
-      "product_id"
-    ],
-    [
-      "seller_items",
-      "Items",
-      "seller_id",
-      "Seller",
-      "seller_id"
-    ]
+    {
+      "name": "date_orders",
+      "fromTable": "Orders",
+      "fromColumn": "purchase_date",
+      "toTable": "Date",
+      "toColumn": "date",
+      "isActive": true,
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "crossFilteringBehavior": "oneDirection"
+    },
+    {
+      "name": "date_cohorts",
+      "fromTable": "Cohorts",
+      "fromColumn": "first_purchase_date",
+      "toTable": "Date",
+      "toColumn": "date",
+      "isActive": true,
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "crossFilteringBehavior": "oneDirection"
+    },
+    {
+      "name": "orders_items",
+      "fromTable": "Items",
+      "fromColumn": "order_id",
+      "toTable": "Orders",
+      "toColumn": "order_id",
+      "isActive": true,
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "crossFilteringBehavior": "oneDirection"
+    },
+    {
+      "name": "product_items",
+      "fromTable": "Items",
+      "fromColumn": "product_id",
+      "toTable": "Product",
+      "toColumn": "product_id",
+      "isActive": true,
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "crossFilteringBehavior": "oneDirection"
+    },
+    {
+      "name": "seller_items",
+      "fromTable": "Items",
+      "fromColumn": "seller_id",
+      "toTable": "Seller",
+      "toColumn": "seller_id",
+      "isActive": true,
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "crossFilteringBehavior": "oneDirection"
+    }
   ]
 }
