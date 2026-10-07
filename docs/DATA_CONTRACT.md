@@ -5,7 +5,7 @@ nie wyniki badania pobranego zbioru. Zweryfikuj nazwy i unikalność na wejściu
 Jeśli źródło przeczy założeniu, zachowaj surowe dane, opisz fakt i wprowadź
 uzasadnioną zmianę kontraktu, bez ukrywania utraconych rekordów.
 
-Implementation evidence (run 20261007T191556Z): official Olist v2 schemas and candidate
+Implementation evidence (runs 20261007T191556Z and 20261007T204100Z): official Olist v2 schemas and candidate
 keys were profiled. The original spelling of product *_lenght fields is retained.
 All required candidate keys were unique on these actual inputs; review rows deliberately
 have no business uniqueness constraint. Typed duplicate conflicts remain an explicitly

@@ -9,26 +9,35 @@ reconciliation and observed repeat purchases with explicit populations and exclu
 ## Actual verification
 
 Full official **Olist version 2** has run on PostgreSQL 17.6. Reimport/rebuild preserve counts
-and metrics. Python quality, unit tests, PostgreSQL business tests, official Microsoft JSON
+and metrics. This review-fix run executed **96 unit tests and 26 PostgreSQL tests**. Python
+quality, PostgreSQL business tests, official Microsoft JSON
 schemas and official TOM TMDL parsing have passed. Details: [PROJECT_STATE.json](docs/PROJECT_STATE.json).
 
-**Overall: PARTIAL.** Desktop and Docker are absent. Desktop open/refresh, DAX execution, visual
-QA, Docker build/Compose and remote Actions remain **NOT_RUN**. Authored/parsed definitions do
-not prove a working Desktop dashboard. No rendered screenshots or deployment are claimed.
+Power BI Desktop **2.158.1304.0** opened and refreshed separate fresh real/synthetic projects.
+All four native pages rendered in both modes; eight final screenshots and actual slicer
+interactions are retained. The actual Desktop engine executed **32 required DAX queries**,
+with **962 strict comparisons against PostgreSQL and no mismatches**, including the supplied
+reconciliation queries and date/category/seller/empty selections.
+
+**Overall: PARTIAL** because Docker build/demo/cleanup and remote Actions remain **NOT_RUN**.
+Docker Desktop 4.93.0 is installed, but its Linux daemon is unavailable: WSL is missing and
+pipe probes fail/time out. Remote CI was intentionally not triggered; no publication is requested.
+See [POWER_BI.md](docs/POWER_BI.md) and [PROJECT_STATE.json](docs/PROJECT_STATE.json) for exact evidence.
 
 ## Run on Windows
 
 Python 3.12 is required. From the project root:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\setup.ps1 -Backend Auto
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo.ps1 -Mode synthetic
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo.ps1 -Mode real -ObservationEnd 2018-09-01
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\setup.ps1 -Backend Portable
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo.ps1 -Mode synthetic -Backend Portable
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo.ps1 -Mode real -Backend Portable -ObservationEnd 2018-09-01
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\open_powerbi.ps1 -Mode real
 ```
 
-Setup creates a private `.env`, installs `requirements.lock`, then starts Docker Compose or
-an isolated portable PostgreSQL at `127.0.0.1:5433`. It preserves credentials, other services
+Setup creates a private `.env`, installs `requirements.lock`, then starts the selected backend.
+The executed Windows path above uses isolated portable PostgreSQL at `127.0.0.1:5433`;
+use `-Backend Docker` when a working daemon is available. Setup preserves credentials, other services
 and volumes. Pass `-Python C:\path\to\python.exe` if needed. Windows portable binaries come
 from EDB with pinned SHA256; the database stays in ignored `output/postgres_data`. Stop with
 `.\.venv\Scripts\python.exe scripts\local_postgres.py stop`.
@@ -39,7 +48,9 @@ The real demo reuses or downloads `olistbr/brazilian-ecommerce/versions/2` to `d
 No Kaggle account was needed here. If access later requires consent/authentication, follow
 [the official source instructions](docs/DATA_SOURCES.md). Existing nonempty inputs are not overwritten.
 
-Opening Power BI prepares an ignored local copy in `output/powerbi/<mode>`. With an installed
+Opening Power BI validates and opens a new local copy in
+`output/powerbi/<mode>/<UTC timestamp>-<unique suffix>/RetailLens.pbip`, preserving earlier sessions.
+Pipeline and report use the same environment > `.env` > defaults connection settings. With an installed
 Desktop, enable PBIP/PBIR features if requested, select Database authentication for PostgreSQL,
 enter credentials from local `.env`, and refresh. No password is stored in TMDL. See
 [POWER_BI.md](docs/POWER_BI.md) for the runtime checklist. `demo.ps1 -OpenReport` opens after import.
@@ -114,9 +125,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\parse_tmdl.ps1 -Down
 ```
 
 PostgreSQL tests replace only `rl_synthetic`; run sequentially outside its demo. They check
-exact financial outcomes, ambiguous reviews, unknown references, conflicting keys, repeat
-boundaries, transaction rollback and schema isolation. CI retains Ruff/pytest and adds PostgreSQL,
-official schemas and Docker/Compose fixture checks without real Olist downloads on each PR.
+exact financial outcomes, ambiguous CSV headers/reviews, unknown references, conflicting keys,
+repeat boundaries, same-day delivery promises, audit/publication atomicity, rollback and schema
+isolation. CI retains Ruff/pytest and adds PostgreSQL, official schemas and Docker/Compose
+fixture checks without real Olist downloads on each PR. All Compose steps share the Docker job's
+test configuration; CI checks cleanup after an intentionally failed demo and always stops services
+while preserving volumes. Local Compose parsing and a remote container run are separate controls.
 
 Run evidence, Polish review, patch, manifest, handoff and `REVIEW_BUNDLE.zip` are under
 `output/codex_runs/<UTC_TIMESTAMP>`. Bundles omit secrets, environments, databases, full inputs,
@@ -137,5 +151,6 @@ and [contribution rules](CONTRIBUTING.md).
 
 Code/artificial fixtures: MIT, author **Jonatan Tomaszewicz**. Olist inputs and derived evidence
 retain [CC BY-NC-SA 4.0 terms](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce).
-Microsoft schema attribution is retained separately. Next work after runtime review: Desktop
-screenshots, source completeness agreement, incremental snapshots and investigation of mismatches.
+Microsoft schema attribution is retained separately. Remaining local runtime work is Docker
+verification after administrator WSL setup. Future analytical work includes source completeness
+agreement, incremental snapshots and investigation of mismatches.

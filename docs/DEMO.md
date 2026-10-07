@@ -4,7 +4,9 @@ Prepare: `scripts/setup.ps1`, then `scripts/demo.ps1 -Mode real -ObservationEnd 
 Invoke scripts with `powershell -NoProfile -ExecutionPolicy Bypass -File` as shown in README;
 this works with the host's default restricted script policy without a global policy change.
 With Desktop installed, run `scripts/open_powerbi.ps1 -Mode real`, authenticate from local
-`.env` and refresh. Desktop runtime is not verified on the implementation host.
+`.env` and refresh. The current run passed Desktop open, refresh, DAX/SQL and all four pages in both modes;
+32 required queries and 962 strict comparisons passed. Evidence is in PROJECT_STATE.json;
+opening, refresh, DAX and visual QA are independent controls.
 
 **0:00–0:40 — Overview.** Identify source/version and observation assumption. Explain 13.22
 million BRL delivered item GMV and 137.04 BRL full-order AOV. Filter purchase date; explain

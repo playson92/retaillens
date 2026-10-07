@@ -1,7 +1,9 @@
 # Data and technical sources
 
 Verified during implementation on 7 October 2026. Official Olist was downloaded,
-profiled, imported and analysed on PostgreSQL 17.6 in run 20261007T191556Z.
+profiled, imported and analysed on PostgreSQL 17.6 in run 20261007T191556Z. Review-fix run
+20261007T204100Z reused, reprofiled and reimported those pinned bytes and records new SQL,
+reimport and before/after evidence rather than inheriting previous test claims.
 Raw data stay local and excluded from Git/review ZIP; small derived evidence is included.
 Kaggle public datasets/list API confirms dataset id 55151, currentVersionNumber 2,
 lastUpdated 2021-10-01T19:08:27.97Z and licenseName CC BY-NC-SA 4.0.
@@ -66,7 +68,8 @@ For findings: query path/version, input manifest, parameters and output path.
 
 Local SOURCE.json records mode, official URL, version, retrieval time and license.
 It also pins each CSV SHA256; reuses/imports reject changed real input files.
-The full manifest is in output/codex_runs/20261007T191556Z/evidence/real/source_manifest.json.
+The current manifest is in output/codex_runs/20261007T204100Z/evidence/real/source_manifest.json;
+the previous run remains available separately.
 Required CSV counts total 550,759 rows; optional geolocation has 1,000,163 rows,
 retained/profiled outside the warehouse MVP. Source purchase range is
 2016-09-04T21:15:19 through 2018-10-17T17:30:18, naive source timestamps.
@@ -82,4 +85,6 @@ Docker build/Compose have not been executed here.
 Power BI schema source revisions and hashes are in powerbi/schemas/manifest.json.
 The official TOM parser version 19.117.0 and
 NuGet SHA256 are pinned by scripts/parse_tmdl.ps1. Schema/parser validation is distinct
-from NOT_RUN Desktop, Power Query and DAX runtime checks.
+from Desktop, Power Query and DAX runtime checks; consult PROJECT_STATE.json for their actual
+current outcomes. Desktop 2.158.1304.0 was installed using the official Microsoft Store package
+9NTXR16HNW1T. The run retains the installation command, exit code and runtime evidence.

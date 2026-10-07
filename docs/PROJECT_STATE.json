@@ -15,14 +15,14 @@
     "01": "PASS",
     "02": "PASS",
     "03": "PASS",
-    "04": "PARTIAL",
+    "04": "PASS",
     "05": "PARTIAL"
   },
-  "last_implementation_run": "20261007T191556Z",
-  "last_updated_utc": "2026-10-07T20:06:33.087881+00:00",
+  "last_implementation_run": "20261007T204100Z",
+  "last_updated_utc": "2026-10-07T22:23:15.617803+00:00",
   "data_mode": "real; synthetic isolated in a separate schema",
   "real_data_downloaded": true,
-  "power_bi_runtime_verified": false,
+  "power_bi_runtime_verified": true,
   "completed": [
     "Preserved original template/source and other projects",
     "Python3.12 CLI and locked dependencies",
@@ -33,127 +33,177 @@
     "Four PBIR pages,8 TMDL tables,49 DAX measures,55 native visuals",
     "Official schema/TMDL parser validation",
     "PowerShell setup/demo/verify/report preparation",
-    "CI definitions, reproducible review patch and compact ZIP workflow"
+    "CI definitions, reproducible review patch and compact ZIP workflow",
+    "RL-01 through RL-07 implementation and executed regressions",
+    "Actual Desktop refresh, DAX/SQL reconciliation and four-page visual QA in both modes",
+    "Zero-numerator DAX correction, readable native slicers and metadata row"
   ],
   "verification": {
-    "PYTHON_QUALITY": {
-      "status": "PASS",
-      "exit_code": 0,
-      "evidence": "evidence/verification/verification.log",
-      "result": "Ruff lint and format; 21 Python files"
-    },
     "UNIT_TESTS": {
       "status": "PASS",
       "exit_code": 0,
-      "evidence": "evidence/verification/verification.log",
-      "result": "19 passed; input preservation and pinned checksums included"
+      "result": "96 passed,26 deselected; Compose CLI and official TOM regressions executed;33 runtime-helper regressions included",
+      "evidence": "logs/UNIT_FINAL_20261007T220430808862Z.log"
     },
     "POSTGRES_INTEGRATION": {
       "status": "PASS",
       "exit_code": 0,
-      "evidence": "evidence/verification/verification.log",
-      "result": "14 passed on PostgreSQL17.6; financial, lineage, rollback, windows, schema isolation"
-    },
-    "REIMPORT": {
-      "status": "PASS",
-      "exit_code": 0,
-      "evidence": "evidence/real/reimport.json",
-      "result": "Real import and rebuild retain all counts and KPI"
-    },
-    "SQL_METRICS": {
-      "status": "PASS",
-      "exit_code": 0,
-      "evidence": "evidence/real/sql_evidence.json",
-      "result": "Exact NUMERIC reconciliation; five analytical questions; fixture and real"
+      "result": "26 passed on actual PostgreSQL17.6, including ambiguous header preflight and audit fault injection",
+      "evidence": "logs/POSTGRES_INTEGRATION_SQL_REVIEW.log"
     },
     "REAL_DATA_RUN": {
       "status": "PASS",
       "exit_code": 0,
-      "evidence": "evidence/real/source_manifest.json",
-      "result": "Official Olist v2;99,441 orders;550,759 required source rows"
-    },
-    "DOCKER_BUILD": {
-      "status": "NOT_RUN",
-      "reason": "Docker executable/Desktop/daemon not installed; portable PostgreSQL is separate evidence"
-    },
-    "COMPOSE_DEMO": {
-      "status": "NOT_RUN",
-      "reason": "Docker/Compose not installed; no container demo was executed"
-    },
-    "PBIP_SCHEMA": {
-      "status": "PASS",
-      "exit_code": 0,
-      "evidence": "evidence/pbip_postgres.json",
-      "result": "12 official pinned schemas;65JSON;4pages;55visuals;114refs;both DB contracts"
-    },
-    "TMDL_PARSE": {
-      "status": "PASS",
-      "exit_code": 0,
-      "evidence": "evidence/tmdl_parse.json",
-      "result": "Official TOM19.117.0:8tables49measures5relations5expressions; source and prepared copy"
-    },
-    "DESKTOP_OPEN": {
-      "status": "NOT_RUN",
-      "reason": "Power BI Desktop absent from standard paths, PATH and Appx lookup; no runtime UI tool"
-    },
-    "DATA_REFRESH": {
-      "status": "NOT_RUN",
-      "reason": "No Power BI Desktop/M runtime; PostgreSQL loads are not Power Query refresh"
-    },
-    "DAX_RUNTIME_RECONCILIATION": {
-      "status": "NOT_RUN",
-      "reason": "No running Analysis Services/Power BI engine; parser does not execute DAX"
-    },
-    "VISUAL_QA": {
-      "status": "NOT_RUN",
-      "reason": "No Desktop report rendering/UI; no screenshots claimed"
-    },
-    "REMOTE_CI": {
-      "status": "NOT_RUN",
-      "reason": "No remote publication or Actions run; local checks reported independently"
-    },
-    "LOCAL_SETUP": {
-      "status": "PASS",
-      "exit_code": 0,
-      "evidence": "verification.log",
-      "result": "PowerShell setup completed; existing services/credentials preserved"
+      "evidence": "evidence/real/analysis.json"
     },
     "PORTABLE_DEMO": {
       "status": "PASS",
       "exit_code": 0,
-      "evidence": "evidence/real/analysis.json",
-      "result": "PowerShell single-command demo completed in real and synthetic modes"
+      "result": "real and synthetic demo; schemas isolated"
+    },
+    "REIMPORT": {
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "evidence/real/reimport.json"
+    },
+    "KPI_BEFORE_AFTER": {
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "evidence/real/kpi_comparison.json",
+      "result": "0 changed Olist orders;0 KPI changes; same source hash and observation_end2018-09-01"
+    },
+    "EXPORT_CONSISTENCY": {
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "evidence/real/export_check.json",
+      "result": "All analytical CSV/JSON and independently summed marts agree in both modes; January/empty ranges and negative corruption controls passed"
+    },
+    "DEPENDENCY_CHECK": {
+      "status": "PASS",
+      "exit_code": 0,
+      "result": "pip check: No broken requirements",
+      "evidence": "logs/DEPENDENCY_RELEASE_20261007T221756127717Z.log"
     },
     "WHEEL_BUILD": {
       "status": "PASS",
       "exit_code": 0,
-      "evidence": "verification.log",
-      "result": "Normal Python wheel built; contains CLI and8 SQL resources"
+      "evidence": "evidence/wheel_check.json",
+      "result": "Normal wheel includes CLI and8 exact SQL resources",
+      "build_evidence": "logs/WHEEL_RELEASE_20261007T221757616936Z.log"
     },
-    "PBIP_NEGATIVE_CHECKS": {
+    "COMPOSE_CONFIG": {
       "status": "PASS",
       "exit_code": 0,
-      "evidence": "evidence/pbip_negative_checks.json",
-      "result": "Unknown measure and out-of-bounds visual corruptions detected"
+      "evidence": "rl01_review.json",
+      "result": "Actual Compose5.6.0 baseline cleanup exits1; corrected configurations exit0;5 regression tests"
     },
-    "STATIC_CONFIG": {
+    "DOCKER_BUILD": {
+      "status": "NOT_RUN",
+      "evidence": "docker_host_probes.json",
+      "reason": "Docker Desktop4.93.0 installed/running but Linux daemon unavailable; pipe probes timeout/HTTP500. WSL not installed; administrator feature setup/reboot required."
+    },
+    "COMPOSE_DEMO": {
+      "status": "NOT_RUN",
+      "reason": "No working Docker daemon; real container demo/cleanup cannot run"
+    },
+    "DESKTOP_OPEN": {
+      "status": "PASS",
+      "modes": {
+        "real": "PASS",
+        "synthetic": "PASS"
+      },
+      "evidence": "evidence/powerbi_runtime/runtime.json",
+      "result": "Official Store Desktop2.158.1304.0 opened exact fresh real/synthetic copies; model/report hashes remained unchanged"
+    },
+    "DATA_REFRESH": {
+      "status": "PASS",
+      "modes": {
+        "real": "PASS",
+        "synthetic": "PASS"
+      },
+      "evidence": "evidence/powerbi_runtime/runtime.json",
+      "result": "All8tables imported in both modes; counts and Run/source metadata match independent PostgreSQL proofs"
+    },
+    "DAX_RUNTIME_RECONCILIATION": {
+      "status": "PASS",
+      "modes": {
+        "real": "PASS",
+        "synthetic": "PASS"
+      },
+      "evidence": "evidence/powerbi_runtime/runtime.json",
+      "result": "Actual Desktop engine:32/32queries,962strict comparisons,0mismatches; real17/553,synthetic15/409; all5supplied EVALUATE blocks per mode and49measure filter matrix"
+    },
+    "VISUAL_QA": {
+      "status": "PASS",
+      "modes": {
+        "real": "PASS",
+        "synthetic": "PASS"
+      },
+      "evidence": "evidence/powerbi_runtime/runtime.json",
+      "result": "All4native pages inspected in both modes;8final screenshots plus actual date/category/seller/order interactions; zero-numerator and clipping fixes verified"
+    },
+    "REMOTE_CI": {
+      "status": "NOT_RUN",
+      "reason": "No push/publication requested; local checks reported separately"
+    },
+    "PYTHON_QUALITY": {
       "status": "PASS",
       "exit_code": 0,
-      "evidence": "verification.log",
-      "result": "Compose YAML and4 CI jobs parsed; does not imply Docker/Actions execution"
+      "evidence": "logs/RUFF_RELEASE_20261007T221754178638Z.log",
+      "result": "Ruff lint and format passed on all32final Python files",
+      "format_evidence": "logs/FORMAT_RELEASE_20261007T221755136585Z.log"
+    },
+    "PBIP_SCHEMA": {
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "evidence/powerbi_final/source_schema.json",
+      "result": "Source and exact fresh real/synthetic:65JSON,12officialschemas,4pages,8tables,49measures,55visuals,114refs,actualrelationships and PostgreSQL keys"
+    },
+    "TMDL_PARSE": {
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "evidence/powerbi_final/source_tom.json",
+      "result": "Source and exact fresh real/synthetic officialTOM19.117.0; actualproperties match all5relationships"
+    },
+    "CLEANUP_RUNTIME": {
+      "status": "NOT_RUN",
+      "reason": "Docker daemon unavailable; actual cleanup after successful and deliberately failed container demos could not run",
+      "evidence": "docker_host_probes.json"
+    },
+    "POWERSHELL_SYNTAX": {
+      "status": "PASS",
+      "exit_code": 0,
+      "result": "Native PowerShell AST parser found no errors in12scripts",
+      "evidence": "evidence/powershell_syntax.json",
+      "log": "logs/POWERSHELL_SYNTAX_FINAL_CORRECTED_20261007T222230976349Z.log"
+    },
+    "UI_PROCESS_GUARD": {
+      "status": "PASS",
+      "observed_exit_code": 1,
+      "expected_exit_code": 1,
+      "result": "Non-Desktop process rejected before UI actions",
+      "evidence": "logs/POWERBI_PROCESS_GUARD_NEGATIVE_20261007T222204185192Z.log"
     }
   },
   "runtime_gaps": [
     "DOCKER_BUILD",
     "COMPOSE_DEMO",
-    "DESKTOP_OPEN",
-    "DATA_REFRESH",
-    "DAX_RUNTIME_RECONCILIATION",
-    "VISUAL_QA",
+    "CLEANUP_RUNTIME",
     "REMOTE_CI"
   ],
   "observation_end": "2018-09-01",
   "observation_basis": "Assumed start-of-day cutoff before sparse September/October tail; source completeness not certified",
-  "next_action": "Open output/powerbi/real/RetailLens.pbip in installed Desktop, connect local credentials, refresh, execute DAX query set and inspect4 pages; test Docker/Compose separately",
-  "note": "Independent implementation completed. Full DONE requires remaining runtime gates. No merge, remote publication or paid deployment."
+  "next_action": "Administrator WSL setup/reboot, then ready isolated Docker build/demo/failed-demo/cleanup commands from the handoff. Remote CI remains NOT_RUN until publication is separately authorized.",
+  "note": "All available local implementation, PostgreSQL and Desktop verification is complete. Overall PARTIAL reflects unavailable Docker runtime and intentionally unexecuted remote CI. No merge, push or publication.",
+  "previous_implementation_run": "20261007T191556Z",
+  "baseline_sha": "a2c51e9f038a1c81e029d3212c4f6e8c2055d1f4",
+  "review_fixes": {
+    "RL-01": "IMPLEMENTED; regression PASS",
+    "RL-02": "IMPLEMENTED; regression PASS",
+    "RL-03": "IMPLEMENTED; regression PASS",
+    "RL-04": "IMPLEMENTED; regression PASS",
+    "RL-05": "IMPLEMENTED; regression PASS",
+    "RL-06": "IMPLEMENTED; regression PASS",
+    "RL-07": "IMPLEMENTED; regression PASS"
+  }
 }

@@ -61,6 +61,11 @@ unused here. Reconciliation decisions are made in PostgreSQL `NUMERIC`, never
 from visual floats; the configurable tolerance is imported as SQL-cast text so
 arbitrary metadata precision remains visible. Ratios and averages may return
 floating results and are compared to SQL with appropriate numerical tolerance.
+Currency-derived AOV/segment averages retain four decimal places in the actual
+Desktop engine; reconciliation requires identical cents and a difference no
+larger than 0.00005. Count measures explicitly return zero for empty populations.
+Rates return zero for a positive denominator with no successes, and BLANK for
+a zero denominator; zero is never substituted for BLANK during comparison.
 [Microsoft's data-type mapping](https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-data-types)
 describes TOM `DataType.Decimal` as the fixed decimal type.
 
@@ -110,3 +115,17 @@ The base theme is CY26SU02; report/page/visual schemas are 3.3.0/2.1.0/2.9.0,
 and report definition content version is 2.0.0. Use a current compatible Desktop
 release. Definition JSON, TMDL parsing, Desktop open, refresh, DAX reconciliation
 and visual QA must retain separate evidence statuses.
+
+The completed local runtime evidence is in
+`output/codex_runs/20261007T204100Z/evidence/powerbi_runtime/runtime.json`.
+Official Desktop 2.158.1304.0 opened and refreshed separate fresh real/synthetic
+PBIPs. The actual Desktop-hosted model executed the five supplied EVALUATE
+queries per mode plus the 49-measure filter matrix through official ADOMD
+19.117.0: 32 required queries and 962 strict SQL comparisons passed. Eight actual
+screenshots show the four native pages in both modes. Native UI date/category/
+seller/order checks include empty results and unchanged global quality snapshots.
+The runtime tool versions, input model/report hashes, exact prepared paths,
+connection catalog IDs, SQL proofs and failed attempts with their resolutions
+remain in that evidence directory. Native long tables/crowded axes use scrolling
+and tooltips. Optional UI helper scripts target this Polish Desktop locale and
+require an explicit owned process ID; core project dependencies are unchanged.

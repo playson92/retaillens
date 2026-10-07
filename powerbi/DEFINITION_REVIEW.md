@@ -11,9 +11,9 @@ synthetic PostgreSQL schemas. Checks were executed locally on 7 October 2026.
 | Warehouse field and relationship keys | PASS: real and synthetic source columns present; Orders, Date, Product and Seller relationship keys unique and non-null. |
 | Official TMDL parser | PASS: Microsoft.AnalysisServices 19.117.0 `TmdlSerializer` loaded all eight tables, 49 measures, five relationships and five expressions at compatibility level 1600. |
 | Money storage metadata | PASS: official TOM deserialization confirms six monetary columns use fixed `Decimal`; Power Query applies `Currency.Type`. Arbitrary-precision tolerance is SQL-cast text. |
-| Desktop open / refresh | NOT_RUN: requires Power BI Desktop and its PostgreSQL connector runtime. |
-| DAX execution and SQL agreement | NOT_RUN: static dependencies are checked; the actual DAX engine has not run. Ready-to-run queries are in `DAXQueries/Reconciliation.dax`. |
-| Visual QA / screenshots | NOT_RUN: no report pages were rendered. Layout bounds are a static check, not an inspection of UI rendering. |
+| Desktop open / refresh | PASS: official Desktop 2.158.1304.0 opened/refreshed exact fresh real and synthetic copies; imported table counts and Run identity match independent PostgreSQL proofs. |
+| DAX execution and SQL agreement | PASS: actual Desktop-hosted model executed the five supplied EVALUATE blocks per mode and the full 49-measure filter matrix via official ADOMD 19.117.0; 32 required queries, 962 strict comparisons, no mismatches. |
+| Visual QA / screenshots | PASS: all four native pages inspected in both modes; eight genuine final screenshots and actual date/category/seller/order UI interactions retained in the runtime evidence. |
 
 The review checked the five KPI populations against the analytical contract.
 GMV and AOV share the eligible delivered population; seller/category metrics use
@@ -35,6 +35,16 @@ avoids causal attribution.
 
 The schema intentionally allows arbitrary native visual formatting object names.
 Consequently, schema validation cannot prove that Power BI accepts every visual
-property or renders every field as intended. The runtime gates remain separate
-and must be completed after installing/opening Desktop; no screenshots or
-runtime PASS claims have been fabricated.
+property or renders every field as intended. The separate actual runtime checks
+are recorded in `output/codex_runs/20261007T204100Z/evidence/powerbi_runtime/runtime.json`,
+with exact PBIP paths, input hashes, engine catalogs, source identities and raw
+results. Native scrolling/tooltips remain for long tables and crowded axes.
+
+Runtime exposed a positive-denominator zero-numerator issue: January 2018 and
+seller s2 had one eligible order but BLANK on-time count/rate. Six base counters
+now use COALESCE0; the actual corrected model returns 1/0/0 while empty-denominator
+rates remain BLANK. Independent SQL v2 retains that distinction. Monetary sums
+agree exactly; Currency-derived averages agree to cents and within 0.00005,
+other numeric comparisons use absolute tolerance 1e-10. UI inspection also found
+clipped dropdowns and a metadata row; hiding duplicate slicer field headers and
+enlarging the metadata table resolved these in both final rendered modes.

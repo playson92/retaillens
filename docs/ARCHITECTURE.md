@@ -9,8 +9,12 @@ Python 3.12, setuptools, src/tests, Ruff and pytest preserve the supplied templa
 only the selected schema and implicit pg_catalog, never public fallback. `rl_audit.ingestion_runs`
 records attempts/results. An advisory transaction lock serializes writers by mode. Import
 truncates explicitly owned source tables and rebuilds explicitly owned marts in one PostgreSQL
-transaction. Failed COPY/TRUNCATE/DROP/CREATE rolls back to the previous publication; unrelated
-tables and volumes remain. Reimport produces identical source counts/KPI.
+transaction, including the audit transition from RUNNING to SUCCESS. RUNNING is committed
+before this transaction. Failed COPY/TRUNCATE/DROP/CREATE or audit finalization rolls back to
+the previous publication. A separate best-effort FAILED update preserves the original exception
+and cannot overwrite committed SUCCESS; if that update also fails, the durable attempt remains
+RUNNING for investigation. Unrelated tables and volumes remain. Reimport produces identical
+source counts/KPI. PostgreSQL fault-injection tests check both published rows and durable audit.
 
 `raw_records` retains original strings as JSONB with SHA256 and logical CSV record number
 (not physical newline). `source_files` and `run_metadata.source_manifest` retain source counts,
@@ -18,6 +22,8 @@ hashes/version. Original files stay in data/raw. Optional geolocation is retaine
 counted as a source file; it is deliberately not loaded into raw/staging/marts. State-level
 questions do not need its million rows, and naive ZIP-code joins would multiply facts.
 
+CSV headers must be nonempty and unique, including after whitespace normalization. Ambiguous
+headers are rejected before any database connection or mutation; UTF-8 BOM remains supported.
 Parser: naive timestamps keep source calendar; money is finite, nonnegative, at most two
 decimals and inside NUMERIC(18,2). Invalid optional fields become NULL plus an issue, with raw
 values preserved. Missing keys and all rows in a conflicting key group are excluded from
@@ -50,7 +56,9 @@ Uncertain/unresolved seller identity excludes seller delivery/review attribution
 
 M1/M2 require delivered, valid purchase dates and all item prices. M3 has independent date
 eligibility; approval/carrier timestamps, when present, must be chronological, and approval
-must not follow handoff. Promise/actual are source days. Eligible delay is max(actual-promise,0).
+must not follow handoff. The promised calendar day must be on or after the purchase day;
+midnight on that day is not an earlier process event. Actual process chronology still uses
+full timestamps. Promise/actual are source days. Eligible delay is max(actual-promise,0).
 M4 uses complete separately aggregated monetary sides and the recorded NUMERIC tolerance.
 M5 uses whole-source first delivered observations with full assumed 90-day windows. Equal
 first timestamps are counted separately, not treated as later repeats. Cohorts use grouped
@@ -63,6 +71,13 @@ for single-seller orders. Category does not attribute a whole-order delivery res
 uses first-purchase date and ignores product/seller; quality summaries/source labels stay global.
 Money is fixed decimal in TMDL and Currency.Type in Power Query. No credentials are embedded.
 
+Pipeline and report preparation use one pure connection resolver: process environment, then
+local `.env`, then defaults. Preparation creates a unique timestamped directory for each session,
+copies complete definitions without `.pbi`, sets host/port/database/mode and validates that exact
+PBIP. Earlier Desktop edits and pending changes remain in their original directories. Opening
+validates the newly prepared file again. Relationship checks compare actual TMDL/TOM endpoints,
+activation, cardinalities and filter directions with the contract, including omitted defaults.
+
 Four PBIR pages have native bound visuals and documented interactions. Official JSON schemas
 and TOM parse metadata; they do not execute Power Query/DAX or verify visual rendering.
 
@@ -72,3 +87,8 @@ Full refresh simplifies historical versioning and atomic publication. The import
 required source table at a time, retaining raw and typed copies; memory scales with that CSV.
 The tested required Olist files have roughly 550,000 rows combined. Future larger sources can
 use temporary streaming staging and incremental snapshots. No extra frontend/cloud/dbt is needed.
+
+DAX base count measures return zero for empty populations. Ratios use DIVIDE and remain BLANK
+when their denominator is empty; a positive denominator with no matching numerator yields zero.
+Runtime verification executes actual Desktop queries against independently queried PostgreSQL
+expectations, including import/source identity, date/item filters and disconnected global scopes.

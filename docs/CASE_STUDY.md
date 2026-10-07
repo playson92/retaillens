@@ -7,8 +7,9 @@ PostgreSQL and a reviewable Power BI project.
 Official Olist v2 (CC BY-NC-SA 4.0): 99,441 orders, purchases 2016-09-04–2018-10-17. Study:
 whole source, tolerance 0.01 BRL, assumed follow-up through start of 2018-09-01. September has
 16 and October 4 source orders, none delivered; the sparse tail is excluded from follow-up,
-but the chosen cutoff still does not prove completeness. Run `20261007T191556Z`, evidence at
-`output/codex_runs/20261007T191556Z/evidence/real/`, also included in the review bundle.
+but the chosen cutoff still does not prove completeness. Current review-fix run `20261007T204100Z`,
+evidence at `output/codex_runs/20261007T204100Z/evidence/real/`, included in the new review bundle.
+The earlier `20261007T191556Z` results remain preserved as history.
 
 ## Three supported findings
 
@@ -45,6 +46,23 @@ marts together. Reimport/rebuild preserve results. Independent review found unce
 attribution, tolerance evidence and public fallback risks; regressions protect the fixes.
 Four native PBIR pages and 49 DAX measures are authored and officially parsed/schema-validated.
 
-Overall acceptance is **PARTIAL**: Docker/Compose, Desktop opening/refresh, DAX reconciliation,
-visual QA and remote Actions were not run. No screenshots are supplied. Next: execute
-`docs/POWER_BI.md` on an installed Desktop and test Compose on a Docker-enabled machine.
+The review-fix run added CSV ambiguity preflight, atomic SUCCESS/publication, resilient failure
+audit and calendar-day delivery promises. Actual before/after Olist snapshots have the same
+pinned input hash and observation boundary: **zero orders and zero reported KPIs changed**.
+Synthetic same-day and invalid chronology cases independently verify the corrected rule.
+Shared connection precedence, fresh Desktop copies and actual relationship contract checks
+prevent opening a different model from the one verified. The new run executed 96 unit tests
+and 26 PostgreSQL tests, rather than reusing previous test claims.
+
+Official Desktop 2.158.1304.0 opened and refreshed the exact fresh real/synthetic copies.
+The actual engine executed 32 required queries with 962 strict SQL comparisons and no mismatches;
+all four native pages were visually checked in both modes with eight final screenshots and
+actual date/category/seller/order interactions. A positive-denominator, zero-numerator fixture
+case exposed DAX BLANK propagation; six base count measures now return zero, while ratios with
+no denominator stay BLANK. Native slicer headers and the metadata row were corrected after
+observed clipping. Whole-source Olist financial and cohort metrics remain unchanged.
+
+Overall acceptance remains **PARTIAL** because Docker build/demo/cleanup and remote Actions
+remain NOT_RUN. Docker Desktop is installed but its daemon is unavailable without WSL;
+remote CI requires a separately authorized publication. Use `docs/POWER_BI.md`, PROJECT_STATE
+and the current run's handoff for executed evidence and the ready Docker commands.
