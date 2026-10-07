@@ -109,7 +109,9 @@ def main():
     # Evidence only: explicit extension/size policy; never include a cache, database or ZIP.
     evidence = {}
     for path in sorted(run.rglob("*")):
-        if any(part in {"unit_tmp", "integration_tmp"} for part in path.relative_to(run).parts):
+        if any(
+            part in {"unit_tmp", "integration_tmp", "marts"} for part in path.relative_to(run).parts
+        ):
             continue
         if path.name == "bundle_contents.json":
             continue
