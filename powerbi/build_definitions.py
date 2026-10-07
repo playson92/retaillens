@@ -122,7 +122,11 @@ def measure(name, dax, format_string=COUNT, folder="Population", description="")
     MEASURES[name] = (dax, format_string, folder, description)
 
 
-measure("Order Count", "COUNTROWS('Orders')", description="One row per order, all statuses.")
+measure(
+    "Order Count",
+    "COALESCE(COUNTROWS('Orders'), 0)",
+    description="One row per order, all statuses; zero for an empty population.",
+)
 measure(
     "Delivered Order Count",
     "CALCULATE([Order Count], KEEPFILTERS('Orders'[order_status] = \"delivered\"))",
@@ -217,7 +221,7 @@ measure(
 )
 measure(
     "Segment Eligible Orders",
-    "CALCULATE(DISTINCTCOUNT('Items'[order_id]), KEEPFILTERS('Items'[gmv_eligible] = TRUE()))",
+    "CALCULATE(COALESCE(DISTINCTCOUNT('Items'[order_id]), 0), KEEPFILTERS('Items'[gmv_eligible] = TRUE()))",
     folder="Segments",
 )
 measure(
@@ -318,7 +322,7 @@ measure(
 )
 measure(
     "Eligible Cohort Customers",
-    "CALCULATE(COUNTROWS('Cohorts'), KEEPFILTERS('Cohorts'[eligible_90d] = TRUE()))",
+    "CALCULATE(COALESCE(COUNTROWS('Cohorts'), 0), KEEPFILTERS('Cohorts'[eligible_90d] = TRUE()))",
     folder="Repeat",
 )
 measure(
@@ -335,15 +339,17 @@ measure(
 )
 measure(
     "Incomplete Cohort Windows",
-    "CALCULATE(COUNTROWS('Cohorts'), KEEPFILTERS('Cohorts'[eligible_90d] = FALSE()))",
+    "CALCULATE(COALESCE(COUNTROWS('Cohorts'), 0), KEEPFILTERS('Cohorts'[eligible_90d] = FALSE()))",
     folder="Repeat",
 )
 measure(
-    "Same Timestamp Additional Orders", "SUM('Cohorts'[same_timestamp_orders])", folder="Repeat"
+    "Same Timestamp Additional Orders",
+    "COALESCE(SUM('Cohorts'[same_timestamp_orders]), 0)",
+    folder="Repeat",
 )
 measure(
     "Reported Quality Rule Occurrences",
-    "SUM('Quality'[affected_rows])",
+    "COALESCE(SUM('Quality'[affected_rows]), 0)",
     folder="Quality",
     description="Global snapshot across rules, not distinct bad orders. Rule counts may overlap. Date filters do not change snapshot.",
 )
@@ -606,6 +612,7 @@ def visual(page, name, kind, title, roles, position, note=""):
         config["query"] = {"queryState": query_state}
     if kind == "slicer":
         config["objects"] = {
+            "header": [{"properties": {"show": literal(False)}}],
             "data": [
                 {
                     "properties": {
@@ -1121,7 +1128,7 @@ def report():
             col("Orders", "missing_payment_count"),
             col("Orders", "review_ambiguous"),
         ],
-        (20, 724, 1240, 164),
+        (20, 724, 1240, 154),
     )
     table(
         p,
@@ -1132,7 +1139,7 @@ def report():
             col("Run", "imported_at"),
             col("Run", "source_manifest_sha256"),
         ],
-        (20, 905, 1240, 75),
+        (20, 890, 1240, 90),
     )
     finish(p, {"kpi_3", "quality_rules", "quality_provenance"})
     write(

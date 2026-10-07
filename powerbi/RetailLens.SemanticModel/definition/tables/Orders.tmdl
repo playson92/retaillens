@@ -131,8 +131,8 @@ table 'Orders'
 		sourceColumn: reviewed_eligible
 		summarizeBy: none
 
-	/// One row per order, all statuses.
-	measure 'Order Count' = COUNTROWS('Orders')
+	/// One row per order, all statuses; zero for an empty population.
+	measure 'Order Count' = COALESCE(COUNTROWS('Orders'), 0)
 		displayFolder: Population
 		formatString: #,0
 
@@ -214,7 +214,7 @@ table 'Orders'
 		displayFolder: Segments
 		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
 
-	measure 'Segment Eligible Orders' = CALCULATE(DISTINCTCOUNT('Items'[order_id]), KEEPFILTERS('Items'[gmv_eligible] = TRUE()))
+	measure 'Segment Eligible Orders' = CALCULATE(COALESCE(DISTINCTCOUNT('Items'[order_id]), 0), KEEPFILTERS('Items'[gmv_eligible] = TRUE()))
 		displayFolder: Segments
 		formatString: #,0
 
@@ -296,7 +296,7 @@ table 'Orders'
 		displayFolder: Payments
 		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
 
-	measure 'Eligible Cohort Customers' = CALCULATE(COUNTROWS('Cohorts'), KEEPFILTERS('Cohorts'[eligible_90d] = TRUE()))
+	measure 'Eligible Cohort Customers' = CALCULATE(COALESCE(COUNTROWS('Cohorts'), 0), KEEPFILTERS('Cohorts'[eligible_90d] = TRUE()))
 		displayFolder: Repeat
 		formatString: #,0
 
@@ -309,16 +309,16 @@ table 'Orders'
 		displayFolder: Repeat
 		formatString: 0.0%;-0.0%;0.0%
 
-	measure 'Incomplete Cohort Windows' = CALCULATE(COUNTROWS('Cohorts'), KEEPFILTERS('Cohorts'[eligible_90d] = FALSE()))
+	measure 'Incomplete Cohort Windows' = CALCULATE(COALESCE(COUNTROWS('Cohorts'), 0), KEEPFILTERS('Cohorts'[eligible_90d] = FALSE()))
 		displayFolder: Repeat
 		formatString: #,0
 
-	measure 'Same Timestamp Additional Orders' = SUM('Cohorts'[same_timestamp_orders])
+	measure 'Same Timestamp Additional Orders' = COALESCE(SUM('Cohorts'[same_timestamp_orders]), 0)
 		displayFolder: Repeat
 		formatString: #,0
 
 	/// Global snapshot across rules, not distinct bad orders. Rule counts may overlap. Date filters do not change snapshot.
-	measure 'Reported Quality Rule Occurrences' = SUM('Quality'[affected_rows])
+	measure 'Reported Quality Rule Occurrences' = COALESCE(SUM('Quality'[affected_rows]), 0)
 		displayFolder: Quality
 		formatString: #,0
 

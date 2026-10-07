@@ -137,6 +137,19 @@
       }
     },
     "objects": {
+      "header": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "data": [
         {
           "properties": {
