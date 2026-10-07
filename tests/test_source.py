@@ -6,7 +6,7 @@ import pytest
 from retaillens.cli import main
 from retaillens.config import Settings
 from retaillens.fixture import make_fixture
-from retaillens.source import FILES, convert, profile, sha256
+from retaillens.source import FILES, convert, profile, read_rows, sha256
 from retaillens.warehouse import ingest, prepare_rows
 
 
@@ -49,6 +49,22 @@ def test_real_import_rejects_modified_pinned_files_before_database_use(tmp_path,
     )
     with pytest.raises(ValueError, match="pinned SOURCE.json checksum"):
         ingest(Settings("real"), source, "olist-v2")
+
+
+@pytest.mark.parametrize("header", ["price,price", "price, price ", "price,", "price,   ", ""])
+def test_csv_ambiguous_headers_are_rejected_before_row_dict_construction(tmp_path, header):
+    path = tmp_path / "ambiguous.csv"
+    path.write_text(header + "\n40.00,999.00\n", encoding="utf-8")
+    original = path.read_bytes()
+    with pytest.raises(ValueError, match="CSV column header"):
+        list(read_rows(path))
+    assert path.read_bytes() == original
+
+
+def test_unique_bom_headers_preserve_values(tmp_path):
+    path = tmp_path / "correct.csv"
+    path.write_text("price,freight_value\n40.00,5.00\n", encoding="utf-8-sig")
+    assert list(read_rows(path)) == [(1, {"price": "40.00", "freight_value": "5.00"})]
 
 
 @pytest.mark.parametrize("value", ["NaN", "Infinity", "-1", "0.001", "10000000000000000"])

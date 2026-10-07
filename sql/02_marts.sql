@@ -63,7 +63,7 @@ WITH items AS (
             AND o.order_delivered_customer_date IS NOT NULL
             AND o.order_estimated_delivery_date IS NOT NULL
             AND o.order_delivered_customer_date >= o.order_purchase_timestamp
-            AND o.order_estimated_delivery_date >= o.order_purchase_timestamp
+            AND o.order_estimated_delivery_date::date >= o.order_purchase_timestamp::date
             AND (o.order_approved_at IS NULL OR
                 (o.order_approved_at >= o.order_purchase_timestamp
                  AND o.order_approved_at <= o.order_delivered_customer_date))

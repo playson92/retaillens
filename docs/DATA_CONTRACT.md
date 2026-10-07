@@ -74,6 +74,9 @@ Osobna populacja: dostarczone zamówienia z poprawną datą zakupu, obiecaną
 i faktyczną datą dostawy, bez sprzecznej chronologii. Braki kwot nie wyłączają
 automatycznie z analizy terminowości.
 Terminowe = DATE(order_delivered_customer_date) <= DATE(order_estimated_delivery_date).
+Obietnica jest dniem kalendarzowym: DATE(estimated) >= DATE(purchase).
+Północ w obiecanym dniu zakupu nie oznacza zdarzenia sprzed zakupu.
+Approval, carrier i actual pozostają zdarzeniami porównywanymi pełnym timestampem.
 Porównuj dni źródłowe; nie przypisuj naiwnym timestampom UTC bez podstawy.
 Wynik = liczba terminowych / liczba kwalifikujących dostarczonych.
 Braki i niedostarczone pokazuj osobno; nie klasyfikuj ich automatycznie jako

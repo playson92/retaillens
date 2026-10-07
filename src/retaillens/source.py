@@ -102,6 +102,15 @@ def sha256(path):
 def read_rows(path, table=None):
     with Path(path).open(encoding="utf-8-sig", newline="") as stream:
         reader = csv.DictReader(stream)
+        headers = reader.fieldnames or []
+        normalized = [name.strip() for name in headers]
+        if not headers or any(not name for name in normalized):
+            raise ValueError(f"Empty CSV column header in {Path(path).name}")
+        duplicate_headers = [name for name, count in Counter(normalized).items() if count > 1]
+        if duplicate_headers:
+            raise ValueError(
+                f"Duplicate CSV column headers in {Path(path).name}: {', '.join(duplicate_headers)}"
+            )
         if table and not set(SCHEMAS[table]).issubset(reader.fieldnames or []):
             raise ValueError(f"Missing required columns in {Path(path).name}")
         for number, row in enumerate(reader, 1):

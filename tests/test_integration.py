@@ -476,3 +476,282 @@ def test_unresolved_seller_is_unknown_in_items_and_excluded_from_seller_outcomes
     assert {row["seller_id"] for row in sellers} == {"s1", "s2"}
     assert sum(row["eligible_orders"] for row in sellers) == 3
     assert not query(settings, "SELECT 1 FROM mart_orders WHERE reviewed_eligible IS NULL")
+
+
+def audit_snapshot(settings):
+    return query(
+        settings,
+        "SELECT * FROM rl_audit.ingestion_runs WHERE data_mode='synthetic' ORDER BY run_id",
+    )
+
+
+def alter_first_price(source, value="999.00"):
+    columns, rows = read_input(source, "items")
+    rows[0]["price"] = value
+    write_input(source, "items", columns, rows)
+
+
+def test_duplicate_price_header_rejects_before_any_connection_and_preserves_input(
+    settings, source, monkeypatch
+):
+    ingest(settings, source, "fixture-v1")
+    before = snapshot(settings)
+    audit_before = audit_snapshot(settings)
+    columns, rows = read_input(source, "items")
+    path = source / FILES["items"]
+    with path.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.writer(stream)
+        writer.writerow([*columns, "price"])
+        for row in rows:
+            writer.writerow([*(row[column] for column in columns), "999.00"])
+    malformed_bytes = path.read_bytes()
+
+    def forbid_connection(_settings):
+        pytest.fail("Ambiguous CSV must fail validation before opening any database connection")
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(Settings, "connect", forbid_connection)
+        with pytest.raises(ValueError, match="[Dd]uplicate|[Uu]nique|[Aa]mbiguous"):
+            ingest(settings, source, "fixture-v1")
+    assert path.read_bytes() == malformed_bytes
+    assert snapshot(settings) == before
+    assert audit_snapshot(settings) == audit_before
+
+
+def test_valid_bom_csv_import_retains_business_values(settings, source):
+    path = source / FILES["items"]
+    path.write_bytes(b"\xef\xbb\xbf" + path.read_bytes())
+    original_bytes = path.read_bytes()
+    ingest(settings, source, "fixture-v1")
+    assert order(settings, "o1")["item_value"] == Decimal("100.00")
+    assert order(settings, "o1")["expected_amount"] == Decimal("110.00")
+    assert path.read_bytes() == original_bytes
+    assert audit_snapshot(settings)[-1]["status"] == "SUCCESS"
+
+
+class AuditFinalizationFailure(RuntimeError):
+    """Identifiable injected error; exception identity is part of the contract."""
+
+
+class FailedAuditRecordingFailure(RuntimeError):
+    """Secondary failure must never replace the original publish failure."""
+
+
+class ActualConnectionProxy:
+    """Inject failures around real PostgreSQL transactions, COPY and model DDL."""
+
+    def __init__(self, connection, number, before_execute=None, after_commit=None):
+        self.connection = connection
+        self.number = number
+        self.before_execute = before_execute
+        self.after_commit = after_commit
+
+    def __getattr__(self, name):
+        return getattr(self.connection, name)
+
+    def __enter__(self):
+        self.connection.__enter__()
+        return self
+
+    def __exit__(self, exception_type, exception, traceback):
+        result = self.connection.__exit__(exception_type, exception, traceback)
+        if exception_type is None and self.after_commit:
+            self.after_commit(self)
+        return result
+
+    def execute(self, statement, parameters=None, **kwargs):
+        rendered = (
+            statement.as_string(self.connection)
+            if isinstance(statement, sql.Composable)
+            else str(statement)
+        )
+        if self.before_execute:
+            self.before_execute(self, " ".join(rendered.upper().split()), parameters)
+        return self.connection.execute(statement, parameters, **kwargs)
+
+
+def install_connection_proxy(monkeypatch, before_execute=None, after_commit=None):
+    original_connect = Settings.connect
+    connections = []
+
+    def connect_with_proxy(configured):
+        wrapped = ActualConnectionProxy(
+            original_connect(configured),
+            len(connections) + 1,
+            before_execute,
+            after_commit,
+        )
+        connections.append(wrapped)
+        return wrapped
+
+    monkeypatch.setattr(Settings, "connect", connect_with_proxy)
+    return connections, original_connect
+
+
+def is_audit_update(statement, status):
+    return statement.startswith(
+        "UPDATE RL_AUDIT.INGESTION_RUNS"
+    ) and f"STATUS='{status}'" in statement.replace(" ", "")
+
+
+def test_audit_success_finalization_failure_rolls_back_publication(settings, source, monkeypatch):
+    ingest(settings, source, "fixture-v1")
+    before = snapshot(settings)
+    baseline_audit = audit_snapshot(settings)[-1]
+    alter_first_price(source)
+    injected = AuditFinalizationFailure("Injected SUCCESS write failure before commit")
+    success_connection = []
+
+    def fail_success(connection, statement, _parameters):
+        if is_audit_update(statement, "SUCCESS"):
+            success_connection.append(connection.number)
+            raise injected
+
+    with monkeypatch.context() as scoped:
+        connections, _ = install_connection_proxy(scoped, before_execute=fail_success)
+        with pytest.raises(AuditFinalizationFailure) as caught:
+            ingest(settings, source, "fixture-v1")
+        assert caught.value is injected
+        assert success_connection == [2]  # Same connection as staging/model publication.
+        assert len(connections) == 3  # Durable RUNNING, publish rollback, best-effort FAILED.
+
+    assert snapshot(settings) == before
+    audit = audit_snapshot(settings)
+    assert audit[-2] == baseline_audit
+    assert audit[-1]["status"] == "FAILED"
+    assert audit[-1]["error_type"] == "AuditFinalizationFailure"
+    assert audit[-1]["finished_at"] is not None
+
+
+def test_failed_audit_recording_preserves_original_failure_and_running_record(
+    settings, source, monkeypatch
+):
+    ingest(settings, source, "fixture-v1")
+    before = snapshot(settings)
+    baseline_audit = audit_snapshot(settings)[-1]
+    alter_first_price(source)
+    original = AuditFinalizationFailure("Original publish finalization failure")
+    secondary = FailedAuditRecordingFailure("Secondary FAILED write failure")
+    attempted = []
+
+    def fail_both(_connection, statement, _parameters):
+        if is_audit_update(statement, "SUCCESS"):
+            attempted.append("SUCCESS")
+            raise original
+        if is_audit_update(statement, "FAILED"):
+            attempted.append("FAILED")
+            raise secondary
+
+    with monkeypatch.context() as scoped:
+        install_connection_proxy(scoped, before_execute=fail_both)
+        with pytest.raises(AuditFinalizationFailure) as caught:
+            ingest(settings, source, "fixture-v1")
+        assert caught.value is original
+    assert attempted == ["SUCCESS", "FAILED"]
+    assert snapshot(settings) == before
+    audit = audit_snapshot(settings)
+    assert audit[-2] == baseline_audit
+    assert audit[-1]["status"] == "RUNNING"
+    assert audit[-1]["finished_at"] is None
+    assert audit[-1]["error_type"] is None
+
+
+def test_success_and_publication_share_transaction_and_require_only_two_connections(
+    settings, source, monkeypatch
+):
+    ingest(settings, source, "fixture-v1")
+    alter_first_price(source)
+    success_observations = []
+    original_connect = Settings.connect
+
+    def inspect_before_success(connection, statement, parameters):
+        if is_audit_update(statement, "SUCCESS"):
+            assert connection.number == 2
+            # The durable RUNNING is visible elsewhere before the publish transaction commits.
+            with original_connect(settings) as observer:
+                status = observer.execute(
+                    "SELECT status FROM rl_audit.ingestion_runs WHERE run_id=%s", parameters
+                ).fetchone()[0]
+            assert status == "RUNNING"
+            unpublished_amount = connection.connection.execute(
+                "SELECT item_value FROM mart_orders WHERE order_id='o1'"
+            ).fetchone()[0]
+            assert unpublished_amount == Decimal("1059.00")
+            success_observations.append(status)
+
+    with monkeypatch.context() as scoped:
+        connections, _ = install_connection_proxy(scoped, before_execute=inspect_before_success)
+        ingest(settings, source, "fixture-v1")
+        assert len(connections) == 2
+    assert success_observations == ["RUNNING"]
+    assert order(settings, "o1")["item_value"] == Decimal("1059.00")
+    assert audit_snapshot(settings)[-1]["status"] == "SUCCESS"
+
+
+def test_failed_handler_cannot_overwrite_success_already_committed(settings, source, monkeypatch):
+    ingest(settings, source, "fixture-v1")
+    alter_first_price(source)
+    original = AuditFinalizationFailure("Simulated local error after successful commit")
+    failed_updates = []
+
+    def fail_after_publish_commit(connection):
+        if connection.number == 2:
+            raise original
+
+    def capture_failed(_connection, statement, _parameters):
+        if is_audit_update(statement, "FAILED"):
+            failed_updates.append(statement)
+
+    with monkeypatch.context() as scoped:
+        install_connection_proxy(
+            scoped, before_execute=capture_failed, after_commit=fail_after_publish_commit
+        )
+        with pytest.raises(AuditFinalizationFailure) as caught:
+            ingest(settings, source, "fixture-v1")
+        assert caught.value is original
+    assert len(failed_updates) == 1
+    assert order(settings, "o1")["item_value"] == Decimal("1059.00")
+    audit = audit_snapshot(settings)[-1]
+    assert audit["status"] == "SUCCESS"
+    assert audit["error_type"] is None
+    assert audit["finished_at"] is not None
+
+
+@pytest.mark.parametrize(
+    ("changed", "eligible", "on_time", "delay"),
+    [
+        ({}, True, True, 0),
+        ({"order_delivered_customer_date": "2018-01-02 18:00:00"}, True, False, 1),
+        ({"order_approved_at": "2018-01-01 09:00:00"}, False, None, None),
+        ({"order_delivered_carrier_date": "2018-01-01 10:30:00"}, False, None, None),
+        ({"order_delivered_customer_date": "2018-01-01 09:00:00"}, False, None, None),
+        ({"order_estimated_delivery_date": "2017-12-31 00:00:00"}, False, None, None),
+    ],
+    ids=[
+        "same-day-promise",
+        "late-next-day",
+        "approval-before-purchase",
+        "carrier-before-approval",
+        "delivery-before-purchase",
+        "promised-day-before-purchase",
+    ],
+)
+def test_promised_calendar_day_and_actual_event_chronology(
+    settings, source, changed, eligible, on_time, delay
+):
+    columns, rows = read_input(source, "orders")
+    first = rows[0]
+    first.update(
+        order_purchase_timestamp="2018-01-01 10:00:00",
+        order_approved_at="2018-01-01 11:00:00",
+        order_delivered_carrier_date="2018-01-01 12:00:00",
+        order_delivered_customer_date="2018-01-01 18:00:00",
+        order_estimated_delivery_date="2018-01-01 00:00:00",
+    )
+    first.update(changed)
+    write_input(source, "orders", columns, rows)
+    ingest(settings, source, "fixture-v1")
+    actual = order(settings, "o1")
+    assert actual["delivery_eligible"] is eligible
+    assert actual["is_on_time"] is on_time
+    assert actual["delay_days"] == delay

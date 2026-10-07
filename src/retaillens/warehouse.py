@@ -1,6 +1,7 @@
 """Transactional, lineage-preserving PostgreSQL ingestion and atomic model publication."""
 
 import json
+import logging
 import sys
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
@@ -230,18 +231,27 @@ def ingest(settings, directory, version, observation_end=None):
                 ),
             )
             build(connection)
-        with settings.connect() as audit:
-            audit.execute(
-                """UPDATE rl_audit.ingestion_runs SET status='SUCCESS',finished_at=now()
-                WHERE run_id=%s""",
+            finalized = connection.execute(
+                """UPDATE rl_audit.ingestion_runs SET status='SUCCESS',finished_at=clock_timestamp()
+                WHERE run_id=%s AND status='RUNNING'""",
                 (run_id,),
             )
+            if finalized.rowcount != 1:
+                raise RuntimeError("Audit finalization did not update the RUNNING attempt")
     except Exception as exc:
-        with settings.connect() as audit:
-            audit.execute(
-                """UPDATE rl_audit.ingestion_runs SET status='FAILED',finished_at=now(),
-                error_type=%s WHERE run_id=%s""",
-                (type(exc).__name__, run_id),
+        try:
+            with settings.connect() as audit:
+                audit.execute(
+                    """UPDATE rl_audit.ingestion_runs SET status='FAILED',finished_at=clock_timestamp(),
+                    error_type=%s WHERE run_id=%s AND status='RUNNING'""",
+                    (type(exc).__name__, run_id),
+                )
+        except Exception as audit_error:
+            logging.getLogger(__name__).warning(
+                "FAILED audit update unavailable for run %s (%s); preserving original %s",
+                run_id,
+                type(audit_error).__name__,
+                type(exc).__name__,
             )
         raise
     return manifest
