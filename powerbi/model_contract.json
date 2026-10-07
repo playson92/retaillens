@@ -1,0 +1,194 @@
+{
+  "tables": {
+    "Orders": {
+      "source": "mart_orders",
+      "columns": {
+        "order_id": "string",
+        "purchase_date": "dateTime",
+        "order_status": "string",
+        "customer_unique_id": "string",
+        "customer_state": "string",
+        "item_value": "decimal",
+        "expected_amount": "decimal",
+        "paid_amount": "decimal",
+        "payment_delta": "decimal",
+        "gmv_eligible": "boolean",
+        "delivery_eligible": "boolean",
+        "is_on_time": "boolean",
+        "delay_days": "int64",
+        "review_score": "int64",
+        "review_ambiguous": "boolean",
+        "item_count": "int64",
+        "seller_count": "int64",
+        "single_seller_id": "string",
+        "reconciliation_status": "string",
+        "purchase_timestamp": "dateTime",
+        "missing_price_count": "int64",
+        "missing_freight_count": "int64",
+        "missing_payment_count": "int64",
+        "review_count": "int64",
+        "reviewed_eligible": "boolean"
+      }
+    },
+    "Items": {
+      "source": "mart_items",
+      "columns": {
+        "order_id": "string",
+        "order_item_id": "int64",
+        "purchase_date": "dateTime",
+        "product_id": "string",
+        "seller_id": "string",
+        "price": "decimal",
+        "freight_value": "decimal",
+        "gmv_eligible": "boolean"
+      }
+    },
+    "Date": {
+      "source": "dim_date",
+      "columns": {
+        "date": "dateTime",
+        "year": "int64",
+        "month": "int64",
+        "year_month": "string",
+        "is_boundary_month": "boolean"
+      }
+    },
+    "Product": {
+      "source": "dim_product",
+      "columns": {
+        "product_id": "string",
+        "category": "string"
+      }
+    },
+    "Seller": {
+      "source": "dim_seller",
+      "columns": {
+        "seller_id": "string",
+        "seller_state": "string"
+      }
+    },
+    "Cohorts": {
+      "source": "mart_cohorts",
+      "columns": {
+        "customer_unique_id": "string",
+        "first_purchase_date": "dateTime",
+        "eligible_90d": "boolean",
+        "repeated_90d": "boolean",
+        "first_purchase_timestamp": "dateTime",
+        "same_timestamp_orders": "int64"
+      }
+    },
+    "Quality": {
+      "source": "quality_summary",
+      "columns": {
+        "check_name": "string",
+        "severity": "string",
+        "affected_rows": "int64",
+        "details": "string"
+      }
+    },
+    "Run": {
+      "source": "run_metadata",
+      "columns": {
+        "data_mode": "string",
+        "source_version": "string",
+        "analysis_start": "dateTime",
+        "analysis_end_exclusive": "dateTime",
+        "observation_end": "dateTime",
+        "observation_basis": "string",
+        "imported_at": "dateTime",
+        "reconciliation_tolerance": "string",
+        "source_manifest_sha256": "string"
+      }
+    }
+  },
+  "measures": [
+    "Order Count",
+    "Delivered Order Count",
+    "Nondelivered Orders",
+    "GMV Eligible Orders",
+    "Delivered GMV",
+    "Delivered AOV",
+    "GMV Excluded Delivered Orders",
+    "Delivery Eligible Orders",
+    "On Time Orders",
+    "Late Orders",
+    "On Time Rate",
+    "Delivery Excluded Orders",
+    "Mean Late Days",
+    "Reviewed Delivery Orders",
+    "Review Coverage",
+    "Mean Review Score",
+    "Ambiguous Review Orders",
+    "Unreviewed Delivery Orders",
+    "Delivered Segment Item Value",
+    "Segment Eligible Orders",
+    "Segment Item Value Per Order",
+    "Segment Value Share",
+    "Single Seller Delivery Orders",
+    "Single Seller On Time Orders",
+    "Single Seller On Time Rate",
+    "Single Seller Reviewed Orders",
+    "Single Seller Review Coverage",
+    "Single Seller Mean Review",
+    "Multi Seller Delivery Exclusions",
+    "Matched Delivered Orders",
+    "Mismatch Delivered Orders",
+    "Comparable Delivered Orders",
+    "Payment Matched Rate",
+    "Not Comparable Delivered Orders",
+    "Not Comparable Delivered Share",
+    "Expected Amount BRL",
+    "Paid Amount BRL",
+    "Payment Delta BRL",
+    "Eligible Cohort Customers",
+    "Repeat 90d Customers",
+    "Observed Repeat 90d Rate",
+    "Incomplete Cohort Windows",
+    "Same Timestamp Additional Orders",
+    "Reported Quality Rule Occurrences",
+    "Orders Missing Price",
+    "Orders Missing Freight",
+    "Orders Missing Payment",
+    "Selected Data Mode",
+    "Scope Note"
+  ],
+  "money_storage": "TOM Decimal / M Currency.Type (fixed decimal)",
+  "relations": [
+    [
+      "date_orders",
+      "Orders",
+      "purchase_date",
+      "Date",
+      "date"
+    ],
+    [
+      "date_cohorts",
+      "Cohorts",
+      "first_purchase_date",
+      "Date",
+      "date"
+    ],
+    [
+      "orders_items",
+      "Items",
+      "order_id",
+      "Orders",
+      "order_id"
+    ],
+    [
+      "product_items",
+      "Items",
+      "product_id",
+      "Product",
+      "product_id"
+    ],
+    [
+      "seller_items",
+      "Items",
+      "seller_id",
+      "Seller",
+      "seller_id"
+    ]
+  ]
+}

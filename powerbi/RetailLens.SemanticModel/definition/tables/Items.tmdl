@@ -1,0 +1,53 @@
+table 'Items'
+
+	column 'order_id'
+		dataType: string
+		sourceColumn: order_id
+		summarizeBy: none
+
+	column 'order_item_id'
+		dataType: int64
+		sourceColumn: order_item_id
+		summarizeBy: none
+
+	column 'purchase_date'
+		dataType: dateTime
+		sourceColumn: purchase_date
+		summarizeBy: none
+		formatString: yyyy-MM-dd
+
+	column 'product_id'
+		dataType: string
+		sourceColumn: product_id
+		summarizeBy: none
+
+	column 'seller_id'
+		dataType: string
+		sourceColumn: seller_id
+		summarizeBy: none
+
+	column 'price'
+		dataType: decimal
+		sourceColumn: price
+		summarizeBy: none
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	column 'freight_value'
+		dataType: decimal
+		sourceColumn: freight_value
+		summarizeBy: none
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	column 'gmv_eligible'
+		dataType: boolean
+		sourceColumn: gmv_eligible
+		summarizeBy: none
+
+	partition 'Items' = m
+		mode: import
+		source =
+			let
+				Source = WarehouseTable("mart_items"),
+				Typed = Table.TransformColumnTypes(Source, {{"order_id", type text}, {"order_item_id", Int64.Type}, {"purchase_date", type datetime}, {"product_id", type text}, {"seller_id", type text}, {"price", Currency.Type}, {"freight_value", Currency.Type}, {"gmv_eligible", type logical}})
+			in
+				Typed

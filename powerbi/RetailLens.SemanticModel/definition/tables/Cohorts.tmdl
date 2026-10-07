@@ -1,0 +1,42 @@
+table 'Cohorts'
+
+	column 'customer_unique_id'
+		dataType: string
+		sourceColumn: customer_unique_id
+		summarizeBy: none
+
+	column 'first_purchase_date'
+		dataType: dateTime
+		sourceColumn: first_purchase_date
+		summarizeBy: none
+		formatString: yyyy-MM-dd
+
+	column 'eligible_90d'
+		dataType: boolean
+		sourceColumn: eligible_90d
+		summarizeBy: none
+
+	column 'repeated_90d'
+		dataType: boolean
+		sourceColumn: repeated_90d
+		summarizeBy: none
+
+	column 'first_purchase_timestamp'
+		dataType: dateTime
+		sourceColumn: first_purchase_timestamp
+		summarizeBy: none
+		formatString: yyyy-MM-dd HH:mm:ss
+
+	column 'same_timestamp_orders'
+		dataType: int64
+		sourceColumn: same_timestamp_orders
+		summarizeBy: none
+
+	partition 'Cohorts' = m
+		mode: import
+		source =
+			let
+				Source = WarehouseTable("mart_cohorts"),
+				Typed = Table.TransformColumnTypes(Source, {{"customer_unique_id", type text}, {"first_purchase_date", type datetime}, {"eligible_90d", type logical}, {"repeated_90d", type logical}, {"first_purchase_timestamp", type datetime}, {"same_timestamp_orders", Int64.Type}})
+			in
+				Typed

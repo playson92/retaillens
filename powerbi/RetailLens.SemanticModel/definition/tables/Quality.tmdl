@@ -1,0 +1,30 @@
+table 'Quality'
+
+	column 'check_name'
+		dataType: string
+		sourceColumn: check_name
+		summarizeBy: none
+
+	column 'severity'
+		dataType: string
+		sourceColumn: severity
+		summarizeBy: none
+
+	column 'affected_rows'
+		dataType: int64
+		sourceColumn: affected_rows
+		summarizeBy: none
+
+	column 'details'
+		dataType: string
+		sourceColumn: details
+		summarizeBy: none
+
+	partition 'Quality' = m
+		mode: import
+		source =
+			let
+				Source = WarehouseTable("quality_summary"),
+				Typed = Table.TransformColumnTypes(Source, {{"check_name", type text}, {"severity", type text}, {"affected_rows", Int64.Type}, {"details", type text}})
+			in
+				Typed

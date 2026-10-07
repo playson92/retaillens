@@ -1,0 +1,446 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "deliveries",
+  "displayName": "Deliveries and reviews",
+  "displayOption": "FitToPage",
+  "height": 1000,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "month",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "month",
+      "target": "state",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "timing",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "timing_state",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "review_distribution",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "review_groups",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "excluded",
+      "type": "DataFilter"
+    },
+    {
+      "source": "state",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "state",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "state",
+      "target": "timing",
+      "type": "DataFilter"
+    },
+    {
+      "source": "state",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "state",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "state",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "state",
+      "target": "kpi_3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "state",
+      "target": "timing_state",
+      "type": "DataFilter"
+    },
+    {
+      "source": "state",
+      "target": "review_distribution",
+      "type": "DataFilter"
+    },
+    {
+      "source": "state",
+      "target": "review_groups",
+      "type": "DataFilter"
+    },
+    {
+      "source": "state",
+      "target": "excluded",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "timing",
+      "target": "state",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing",
+      "target": "kpi_3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing",
+      "target": "timing_state",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing",
+      "target": "review_distribution",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing",
+      "target": "review_groups",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing",
+      "target": "excluded",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing_state",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing_state",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "timing_state",
+      "target": "state",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing_state",
+      "target": "timing",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing_state",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing_state",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing_state",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing_state",
+      "target": "kpi_3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing_state",
+      "target": "review_distribution",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing_state",
+      "target": "review_groups",
+      "type": "DataFilter"
+    },
+    {
+      "source": "timing_state",
+      "target": "excluded",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_distribution",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_distribution",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_distribution",
+      "target": "state",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_distribution",
+      "target": "timing",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_distribution",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_distribution",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_distribution",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_distribution",
+      "target": "kpi_3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_distribution",
+      "target": "timing_state",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_distribution",
+      "target": "review_groups",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_distribution",
+      "target": "excluded",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_groups",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_groups",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_groups",
+      "target": "state",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_groups",
+      "target": "timing",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_groups",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_groups",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_groups",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_groups",
+      "target": "kpi_3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_groups",
+      "target": "timing_state",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_groups",
+      "target": "review_distribution",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_groups",
+      "target": "excluded",
+      "type": "DataFilter"
+    },
+    {
+      "source": "excluded",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "excluded",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "excluded",
+      "target": "state",
+      "type": "DataFilter"
+    },
+    {
+      "source": "excluded",
+      "target": "timing",
+      "type": "DataFilter"
+    },
+    {
+      "source": "excluded",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "excluded",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "excluded",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "excluded",
+      "target": "kpi_3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "excluded",
+      "target": "timing_state",
+      "type": "DataFilter"
+    },
+    {
+      "source": "excluded",
+      "target": "review_distribution",
+      "type": "DataFilter"
+    },
+    {
+      "source": "excluded",
+      "target": "review_groups",
+      "type": "DataFilter"
+    }
+  ],
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "deliveries_date",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Date"
+              }
+            },
+            "Property": "date"
+          }
+        },
+        "type": "Range",
+        "howCreated": "User"
+      }
+    ]
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F3F6F9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "annotations": [
+    {
+      "name": "FilterContract",
+      "value": "Date filters purchase and first-purchase dates. Single-direction relationships. Explicit interactions; see powerbi/README.md."
+    }
+  ]
+}

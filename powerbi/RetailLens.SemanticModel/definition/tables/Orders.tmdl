@@ -1,0 +1,353 @@
+table 'Orders'
+
+	column 'order_id'
+		dataType: string
+		sourceColumn: order_id
+		summarizeBy: none
+
+	column 'purchase_date'
+		dataType: dateTime
+		sourceColumn: purchase_date
+		summarizeBy: none
+		formatString: yyyy-MM-dd
+
+	column 'order_status'
+		dataType: string
+		sourceColumn: order_status
+		summarizeBy: none
+
+	column 'customer_unique_id'
+		dataType: string
+		sourceColumn: customer_unique_id
+		summarizeBy: none
+
+	column 'customer_state'
+		dataType: string
+		sourceColumn: customer_state
+		summarizeBy: none
+
+	column 'item_value'
+		dataType: decimal
+		sourceColumn: item_value
+		summarizeBy: none
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	column 'expected_amount'
+		dataType: decimal
+		sourceColumn: expected_amount
+		summarizeBy: none
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	column 'paid_amount'
+		dataType: decimal
+		sourceColumn: paid_amount
+		summarizeBy: none
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	column 'payment_delta'
+		dataType: decimal
+		sourceColumn: payment_delta
+		summarizeBy: none
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	column 'gmv_eligible'
+		dataType: boolean
+		sourceColumn: gmv_eligible
+		summarizeBy: none
+
+	column 'delivery_eligible'
+		dataType: boolean
+		sourceColumn: delivery_eligible
+		summarizeBy: none
+
+	column 'is_on_time'
+		dataType: boolean
+		sourceColumn: is_on_time
+		summarizeBy: none
+
+	column 'delay_days'
+		dataType: int64
+		sourceColumn: delay_days
+		summarizeBy: none
+
+	column 'review_score'
+		dataType: int64
+		sourceColumn: review_score
+		summarizeBy: none
+
+	column 'review_ambiguous'
+		dataType: boolean
+		sourceColumn: review_ambiguous
+		summarizeBy: none
+
+	column 'item_count'
+		dataType: int64
+		sourceColumn: item_count
+		summarizeBy: none
+
+	column 'seller_count'
+		dataType: int64
+		sourceColumn: seller_count
+		summarizeBy: none
+
+	column 'single_seller_id'
+		dataType: string
+		sourceColumn: single_seller_id
+		summarizeBy: none
+
+	column 'reconciliation_status'
+		dataType: string
+		sourceColumn: reconciliation_status
+		summarizeBy: none
+
+	column 'purchase_timestamp'
+		dataType: dateTime
+		sourceColumn: purchase_timestamp
+		summarizeBy: none
+		formatString: yyyy-MM-dd HH:mm:ss
+
+	column 'missing_price_count'
+		dataType: int64
+		sourceColumn: missing_price_count
+		summarizeBy: none
+
+	column 'missing_freight_count'
+		dataType: int64
+		sourceColumn: missing_freight_count
+		summarizeBy: none
+
+	column 'missing_payment_count'
+		dataType: int64
+		sourceColumn: missing_payment_count
+		summarizeBy: none
+
+	column 'review_count'
+		dataType: int64
+		sourceColumn: review_count
+		summarizeBy: none
+
+	column 'reviewed_eligible'
+		dataType: boolean
+		sourceColumn: reviewed_eligible
+		summarizeBy: none
+
+	/// One row per order, all statuses.
+	measure 'Order Count' = COUNTROWS('Orders')
+		displayFolder: Population
+		formatString: #,0
+
+	measure 'Delivered Order Count' = CALCULATE([Order Count], KEEPFILTERS('Orders'[order_status] = "delivered"))
+		displayFolder: Population
+		formatString: #,0
+
+	measure 'Nondelivered Orders' = [Order Count] - [Delivered Order Count]
+		displayFolder: Population
+		formatString: #,0
+
+	measure 'GMV Eligible Orders' = CALCULATE([Order Count], KEEPFILTERS('Orders'[gmv_eligible] = TRUE()))
+		displayFolder: Population
+		formatString: #,0
+
+	/// M1. Delivered orders, valid purchase date, nonempty items, every price valid. Excludes freight; purchase date filter. Product/seller filters do not change this order-grain measure.
+	measure 'Delivered GMV' = CALCULATE(SUM('Orders'[item_value]), KEEPFILTERS('Orders'[gmv_eligible] = TRUE()))
+		displayFolder: Value
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	/// M2. Exactly the M1 population. BLANK on zero denominator.
+	measure 'Delivered AOV' = DIVIDE([Delivered GMV], [GMV Eligible Orders])
+		displayFolder: Value
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	measure 'GMV Excluded Delivered Orders' = [Delivered Order Count] - [GMV Eligible Orders]
+		displayFolder: Population
+		formatString: #,0
+
+	measure 'Delivery Eligible Orders' = CALCULATE([Order Count], KEEPFILTERS('Orders'[delivery_eligible] = TRUE()))
+		displayFolder: Delivery
+		formatString: #,0
+
+	measure 'On Time Orders' = CALCULATE([Delivery Eligible Orders], KEEPFILTERS('Orders'[is_on_time] = TRUE()))
+		displayFolder: Delivery
+		formatString: #,0
+
+	measure 'Late Orders' = CALCULATE([Delivery Eligible Orders], KEEPFILTERS('Orders'[is_on_time] = FALSE()))
+		displayFolder: Delivery
+		formatString: #,0
+
+	/// M3. Delivered with valid purchase, promised and actual dates, consistent chronology; compares source calendar days. Missing amount does not exclude delivery.
+	measure 'On Time Rate' = DIVIDE([On Time Orders], [Delivery Eligible Orders])
+		displayFolder: Delivery
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Delivery Excluded Orders' = [Delivered Order Count] - [Delivery Eligible Orders]
+		displayFolder: Delivery
+		formatString: #,0
+
+	/// Days after promised date, late eligible orders only.
+	measure 'Mean Late Days' = CALCULATE(AVERAGE('Orders'[delay_days]), KEEPFILTERS('Orders'[delivery_eligible] = TRUE()), KEEPFILTERS('Orders'[is_on_time] = FALSE()))
+		displayFolder: Delivery
+		formatString: 0.0
+
+	measure 'Reviewed Delivery Orders' = CALCULATE([Delivery Eligible Orders], KEEPFILTERS('Orders'[reviewed_eligible] = TRUE()))
+		displayFolder: Reviews
+		formatString: #,0
+
+	/// One selected valid latest review per eligible delivery order; tied conflicting latest scores excluded.
+	measure 'Review Coverage' = DIVIDE([Reviewed Delivery Orders], [Delivery Eligible Orders])
+		displayFolder: Reviews
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Mean Review Score' = CALCULATE(AVERAGE('Orders'[review_score]), KEEPFILTERS('Orders'[delivery_eligible] = TRUE()), KEEPFILTERS('Orders'[reviewed_eligible] = TRUE()))
+		displayFolder: Reviews
+		formatString: 0.00
+
+	measure 'Ambiguous Review Orders' = CALCULATE([Order Count], KEEPFILTERS('Orders'[review_ambiguous] = TRUE()))
+		displayFolder: Reviews
+		formatString: #,0
+
+	measure 'Unreviewed Delivery Orders' = [Delivery Eligible Orders] - [Reviewed Delivery Orders]
+		displayFolder: Reviews
+		formatString: #,0
+
+	/// Eligible delivered items filtered by seller/category. Not whole-order GMV under segment filters.
+	measure 'Delivered Segment Item Value' = CALCULATE(SUM('Items'[price]), KEEPFILTERS('Items'[gmv_eligible] = TRUE()))
+		displayFolder: Segments
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	measure 'Segment Eligible Orders' = CALCULATE(DISTINCTCOUNT('Items'[order_id]), KEEPFILTERS('Items'[gmv_eligible] = TRUE()))
+		displayFolder: Segments
+		formatString: #,0
+
+	/// Sum of selected segment's eligible items divided by orders containing them; not whole-order AOV.
+	measure 'Segment Item Value Per Order' = DIVIDE([Delivered Segment Item Value], [Segment Eligible Orders])
+		displayFolder: Segments
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	/// Share of all eligible item value in current date/order filters; removes seller and product filters only in denominator.
+	measure 'Segment Value Share' = DIVIDE([Delivered Segment Item Value], CALCULATE([Delivered Segment Item Value], REMOVEFILTERS('Product'), REMOVEFILTERS('Seller')))
+		displayFolder: Segments
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Single Seller Delivery Orders' = CALCULATE([Delivery Eligible Orders], KEEPFILTERS('Orders'[seller_count] = 1), KEEPFILTERS(TREATAS(VALUES('Seller'[seller_id]), 'Orders'[single_seller_id])))
+		displayFolder: Segments
+		formatString: #,0
+
+	measure 'Single Seller On Time Orders' = CALCULATE([Single Seller Delivery Orders], KEEPFILTERS('Orders'[is_on_time] = TRUE()))
+		displayFolder: Segments
+		formatString: #,0
+
+	/// Seller timing restricted to orders with exactly one seller. Product/category filters ignored. No causal attribution.
+	measure 'Single Seller On Time Rate' = DIVIDE([Single Seller On Time Orders], [Single Seller Delivery Orders])
+		displayFolder: Segments
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Single Seller Reviewed Orders' = CALCULATE([Single Seller Delivery Orders], KEEPFILTERS('Orders'[reviewed_eligible] = TRUE()))
+		displayFolder: Segments
+		formatString: #,0
+
+	measure 'Single Seller Review Coverage' = DIVIDE([Single Seller Reviewed Orders], [Single Seller Delivery Orders])
+		displayFolder: Segments
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Single Seller Mean Review' = CALCULATE(AVERAGE('Orders'[review_score]), KEEPFILTERS('Orders'[delivery_eligible] = TRUE()), KEEPFILTERS('Orders'[reviewed_eligible] = TRUE()), KEEPFILTERS('Orders'[seller_count] = 1), KEEPFILTERS(TREATAS(VALUES('Seller'[seller_id]), 'Orders'[single_seller_id])))
+		displayFolder: Segments
+		formatString: 0.00
+
+	/// Overall eligible multi-seller orders excluded from seller timing. Does not allocate to sellers; ignores seller/category filters.
+	measure 'Multi Seller Delivery Exclusions' = CALCULATE([Delivery Eligible Orders], KEEPFILTERS('Orders'[seller_count] > 1))
+		displayFolder: Segments
+		formatString: #,0
+
+	measure 'Matched Delivered Orders' = CALCULATE([Delivered Order Count], KEEPFILTERS('Orders'[reconciliation_status] = "matched"))
+		displayFolder: Payments
+		formatString: #,0
+
+	measure 'Mismatch Delivered Orders' = CALCULATE([Delivered Order Count], KEEPFILTERS('Orders'[reconciliation_status] = "mismatch"))
+		displayFolder: Payments
+		formatString: #,0
+
+	measure 'Comparable Delivered Orders' = [Matched Delivered Orders] + [Mismatch Delivered Orders]
+		displayFolder: Payments
+		formatString: #,0
+
+	/// M4. Matched/(matched+mismatch), delivered only. Completeness and configured tolerance enforced in SQL; not accounting completeness.
+	measure 'Payment Matched Rate' = DIVIDE([Matched Delivered Orders], [Comparable Delivered Orders])
+		displayFolder: Payments
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Not Comparable Delivered Orders' = CALCULATE([Delivered Order Count], KEEPFILTERS('Orders'[reconciliation_status] = "not_comparable"))
+		displayFolder: Payments
+		formatString: #,0
+
+	measure 'Not Comparable Delivered Share' = DIVIDE([Not Comparable Delivered Orders], [Delivered Order Count])
+		displayFolder: Payments
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Expected Amount BRL' = SUM('Orders'[expected_amount])
+		displayFolder: Payments
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	measure 'Paid Amount BRL' = SUM('Orders'[paid_amount])
+		displayFolder: Payments
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	/// Order-grain paid minus expected; a discrepancy is not automatically loss/refund.
+	measure 'Payment Delta BRL' = SUM('Orders'[payment_delta])
+		displayFolder: Payments
+		formatString: "BRL "#,0.00;("BRL "#,0.00);"BRL "0.00
+
+	measure 'Eligible Cohort Customers' = CALCULATE(COUNTROWS('Cohorts'), KEEPFILTERS('Cohorts'[eligible_90d] = TRUE()))
+		displayFolder: Repeat
+		formatString: #,0
+
+	measure 'Repeat 90d Customers' = CALCULATE([Eligible Cohort Customers], KEEPFILTERS('Cohorts'[repeated_90d] = TRUE()))
+		displayFolder: Repeat
+		formatString: #,0
+
+	/// M5. First observed delivered purchase set before report filters; date filters first purchase. Full assumed 90-day observation window required. Seller/category/status/customer-state filters do not change this measure. Equal timestamps do not count as later purchases.
+	measure 'Observed Repeat 90d Rate' = DIVIDE([Repeat 90d Customers], [Eligible Cohort Customers])
+		displayFolder: Repeat
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Incomplete Cohort Windows' = CALCULATE(COUNTROWS('Cohorts'), KEEPFILTERS('Cohorts'[eligible_90d] = FALSE()))
+		displayFolder: Repeat
+		formatString: #,0
+
+	measure 'Same Timestamp Additional Orders' = SUM('Cohorts'[same_timestamp_orders])
+		displayFolder: Repeat
+		formatString: #,0
+
+	/// Global snapshot across rules, not distinct bad orders. Rule counts may overlap. Date filters do not change snapshot.
+	measure 'Reported Quality Rule Occurrences' = SUM('Quality'[affected_rows])
+		displayFolder: Quality
+		formatString: #,0
+
+	/// Orders containing at least one item with a missing/invalid price; zero-item orders are separate quality exclusions.
+	measure 'Orders Missing Price' = CALCULATE([Order Count], KEEPFILTERS('Orders'[missing_price_count] > 0))
+		displayFolder: Quality
+		formatString: #,0
+
+	/// Orders containing at least one item with a missing/invalid freight value; zero-item orders are separate quality exclusions.
+	measure 'Orders Missing Freight' = CALCULATE([Order Count], KEEPFILTERS('Orders'[missing_freight_count] > 0))
+		displayFolder: Quality
+		formatString: #,0
+
+	/// Missing or incomplete payment side, including orders with no payment rows. ISBLANK preserves legitimate zero paid amounts.
+	measure 'Orders Missing Payment' = CALCULATE([Order Count], KEEPFILTERS(ISBLANK('Orders'[paid_amount])))
+		displayFolder: Quality
+		formatString: #,0
+
+	measure 'Selected Data Mode' = SELECTEDVALUE('Run'[data_mode], "Unknown mode") & " / " & SELECTEDVALUE('Run'[source_version], "Unknown source")
+		displayFolder: Provenance
+
+	measure 'Scope Note' = "BRL; purchase dates. Source coverage is assumed, not certified. Mode: " & [Selected Data Mode]
+		displayFolder: Provenance
+
+	partition 'Orders' = m
+		mode: import
+		source =
+			let
+				Source = WarehouseTable("mart_orders"),
+				Typed = Table.TransformColumnTypes(Source, {{"order_id", type text}, {"purchase_date", type datetime}, {"order_status", type text}, {"customer_unique_id", type text}, {"customer_state", type text}, {"item_value", Currency.Type}, {"expected_amount", Currency.Type}, {"paid_amount", Currency.Type}, {"payment_delta", Currency.Type}, {"gmv_eligible", type logical}, {"delivery_eligible", type logical}, {"is_on_time", type logical}, {"delay_days", Int64.Type}, {"review_score", Int64.Type}, {"review_ambiguous", type logical}, {"item_count", Int64.Type}, {"seller_count", Int64.Type}, {"single_seller_id", type text}, {"reconciliation_status", type text}, {"purchase_timestamp", type datetime}, {"missing_price_count", Int64.Type}, {"missing_freight_count", Int64.Type}, {"missing_payment_count", Int64.Type}, {"review_count", Int64.Type}, {"reviewed_eligible", type logical}})
+			in
+				Typed

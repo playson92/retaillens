@@ -1,0 +1,34 @@
+relationship date_orders
+	fromColumn: 'Orders'.'purchase_date'
+	toColumn: 'Date'.'date'
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship date_cohorts
+	fromColumn: 'Cohorts'.'first_purchase_date'
+	toColumn: 'Date'.'date'
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship orders_items
+	fromColumn: 'Items'.'order_id'
+	toColumn: 'Orders'.'order_id'
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship product_items
+	fromColumn: 'Items'.'product_id'
+	toColumn: 'Product'.'product_id'
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship seller_items
+	fromColumn: 'Items'.'seller_id'
+	toColumn: 'Seller'.'seller_id'
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection

@@ -1,0 +1,476 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "quality",
+  "displayName": "Data quality",
+  "displayOption": "FitToPage",
+  "height": 1000,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "month",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "month",
+      "target": "reconciliation",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "order_lookup",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "month",
+      "target": "quality_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "month",
+      "target": "payment_groups",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "order_diagnostics",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "quality_provenance",
+      "type": "NoFilter"
+    },
+    {
+      "source": "reconciliation",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "reconciliation",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "reconciliation",
+      "target": "order_lookup",
+      "type": "DataFilter"
+    },
+    {
+      "source": "reconciliation",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "reconciliation",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "reconciliation",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "reconciliation",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "reconciliation",
+      "target": "quality_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "reconciliation",
+      "target": "payment_groups",
+      "type": "DataFilter"
+    },
+    {
+      "source": "reconciliation",
+      "target": "order_diagnostics",
+      "type": "DataFilter"
+    },
+    {
+      "source": "reconciliation",
+      "target": "quality_provenance",
+      "type": "NoFilter"
+    },
+    {
+      "source": "order_lookup",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_lookup",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "order_lookup",
+      "target": "reconciliation",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_lookup",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_lookup",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_lookup",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_lookup",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "order_lookup",
+      "target": "quality_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "order_lookup",
+      "target": "payment_groups",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_lookup",
+      "target": "order_diagnostics",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_lookup",
+      "target": "quality_provenance",
+      "type": "NoFilter"
+    },
+    {
+      "source": "quality_rules",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_rules",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "quality_rules",
+      "target": "reconciliation",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_rules",
+      "target": "order_lookup",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_rules",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_rules",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_rules",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_rules",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "quality_rules",
+      "target": "payment_groups",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_rules",
+      "target": "order_diagnostics",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_rules",
+      "target": "quality_provenance",
+      "type": "NoFilter"
+    },
+    {
+      "source": "payment_groups",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "payment_groups",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "payment_groups",
+      "target": "reconciliation",
+      "type": "DataFilter"
+    },
+    {
+      "source": "payment_groups",
+      "target": "order_lookup",
+      "type": "DataFilter"
+    },
+    {
+      "source": "payment_groups",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "payment_groups",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "payment_groups",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "payment_groups",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "payment_groups",
+      "target": "quality_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "payment_groups",
+      "target": "order_diagnostics",
+      "type": "DataFilter"
+    },
+    {
+      "source": "payment_groups",
+      "target": "quality_provenance",
+      "type": "NoFilter"
+    },
+    {
+      "source": "order_diagnostics",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_diagnostics",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "order_diagnostics",
+      "target": "reconciliation",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_diagnostics",
+      "target": "order_lookup",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_diagnostics",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_diagnostics",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_diagnostics",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_diagnostics",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "order_diagnostics",
+      "target": "quality_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "order_diagnostics",
+      "target": "payment_groups",
+      "type": "DataFilter"
+    },
+    {
+      "source": "order_diagnostics",
+      "target": "quality_provenance",
+      "type": "NoFilter"
+    },
+    {
+      "source": "quality_provenance",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_provenance",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "quality_provenance",
+      "target": "reconciliation",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_provenance",
+      "target": "order_lookup",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_provenance",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_provenance",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_provenance",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_provenance",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "quality_provenance",
+      "target": "quality_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "quality_provenance",
+      "target": "payment_groups",
+      "type": "DataFilter"
+    },
+    {
+      "source": "quality_provenance",
+      "target": "order_diagnostics",
+      "type": "DataFilter"
+    }
+  ],
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "quality_date",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Date"
+              }
+            },
+            "Property": "date"
+          }
+        },
+        "type": "Range",
+        "howCreated": "User"
+      },
+      {
+        "name": "quality_order_lookup",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Orders"
+              }
+            },
+            "Property": "order_id"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "quality_status",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Orders"
+              }
+            },
+            "Property": "order_status"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      }
+    ]
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F3F6F9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "annotations": [
+    {
+      "name": "FilterContract",
+      "value": "Date filters purchase and first-purchase dates. Single-direction relationships. Explicit interactions; see powerbi/README.md."
+    }
+  ]
+}

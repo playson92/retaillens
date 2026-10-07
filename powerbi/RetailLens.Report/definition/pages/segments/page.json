@@ -1,0 +1,446 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "segments",
+  "displayName": "Sellers and categories",
+  "displayOption": "FitToPage",
+  "height": 1000,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "month",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "month",
+      "target": "category",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "seller",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "month",
+      "target": "category_value",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "category_share",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "seller_value",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "seller_delivery",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "category",
+      "target": "seller",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "category",
+      "target": "category_value",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category",
+      "target": "category_share",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category",
+      "target": "seller_value",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category",
+      "target": "seller_delivery",
+      "type": "NoFilter"
+    },
+    {
+      "source": "seller",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "seller",
+      "target": "category",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "seller",
+      "target": "category_value",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller",
+      "target": "category_share",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller",
+      "target": "seller_value",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller",
+      "target": "seller_delivery",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_value",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_value",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "category_value",
+      "target": "category",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_value",
+      "target": "seller",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_value",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_value",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_value",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_value",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "category_value",
+      "target": "category_share",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_value",
+      "target": "seller_value",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_value",
+      "target": "seller_delivery",
+      "type": "NoFilter"
+    },
+    {
+      "source": "category_share",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_share",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "category_share",
+      "target": "category",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_share",
+      "target": "seller",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_share",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_share",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_share",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_share",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "category_share",
+      "target": "category_value",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_share",
+      "target": "seller_value",
+      "type": "DataFilter"
+    },
+    {
+      "source": "category_share",
+      "target": "seller_delivery",
+      "type": "NoFilter"
+    },
+    {
+      "source": "seller_value",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_value",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "seller_value",
+      "target": "category",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_value",
+      "target": "seller",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_value",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_value",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_value",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_value",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "seller_value",
+      "target": "category_value",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_value",
+      "target": "category_share",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_value",
+      "target": "seller_delivery",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_delivery",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_delivery",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "seller_delivery",
+      "target": "category",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_delivery",
+      "target": "seller",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_delivery",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_delivery",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_delivery",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_delivery",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "seller_delivery",
+      "target": "category_value",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_delivery",
+      "target": "category_share",
+      "type": "DataFilter"
+    },
+    {
+      "source": "seller_delivery",
+      "target": "seller_value",
+      "type": "DataFilter"
+    }
+  ],
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "segments_date",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Date"
+              }
+            },
+            "Property": "date"
+          }
+        },
+        "type": "Range",
+        "howCreated": "User"
+      }
+    ]
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F3F6F9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "annotations": [
+    {
+      "name": "FilterContract",
+      "value": "Date filters purchase and first-purchase dates. Single-direction relationships. Explicit interactions; see powerbi/README.md."
+    }
+  ]
+}

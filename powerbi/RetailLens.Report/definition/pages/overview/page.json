@@ -1,0 +1,361 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "overview",
+  "displayName": "Overview",
+  "displayOption": "FitToPage",
+  "height": 1000,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "month",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "kpi_3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "gmv_trend",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "orders_trend",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "cohort_table",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "populations",
+      "type": "DataFilter"
+    },
+    {
+      "source": "month",
+      "target": "provenance",
+      "type": "NoFilter"
+    },
+    {
+      "source": "gmv_trend",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "gmv_trend",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "gmv_trend",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "gmv_trend",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "gmv_trend",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "gmv_trend",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "gmv_trend",
+      "target": "orders_trend",
+      "type": "DataFilter"
+    },
+    {
+      "source": "gmv_trend",
+      "target": "cohort_table",
+      "type": "NoFilter"
+    },
+    {
+      "source": "gmv_trend",
+      "target": "populations",
+      "type": "DataFilter"
+    },
+    {
+      "source": "gmv_trend",
+      "target": "provenance",
+      "type": "NoFilter"
+    },
+    {
+      "source": "orders_trend",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "orders_trend",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "orders_trend",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "orders_trend",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "orders_trend",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "orders_trend",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "orders_trend",
+      "target": "gmv_trend",
+      "type": "DataFilter"
+    },
+    {
+      "source": "orders_trend",
+      "target": "cohort_table",
+      "type": "NoFilter"
+    },
+    {
+      "source": "orders_trend",
+      "target": "populations",
+      "type": "DataFilter"
+    },
+    {
+      "source": "orders_trend",
+      "target": "provenance",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cohort_table",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "cohort_table",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cohort_table",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "cohort_table",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "cohort_table",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "cohort_table",
+      "target": "kpi_3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "cohort_table",
+      "target": "gmv_trend",
+      "type": "DataFilter"
+    },
+    {
+      "source": "cohort_table",
+      "target": "orders_trend",
+      "type": "DataFilter"
+    },
+    {
+      "source": "cohort_table",
+      "target": "populations",
+      "type": "DataFilter"
+    },
+    {
+      "source": "cohort_table",
+      "target": "provenance",
+      "type": "NoFilter"
+    },
+    {
+      "source": "populations",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "populations",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "populations",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "populations",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "populations",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "populations",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "populations",
+      "target": "gmv_trend",
+      "type": "DataFilter"
+    },
+    {
+      "source": "populations",
+      "target": "orders_trend",
+      "type": "DataFilter"
+    },
+    {
+      "source": "populations",
+      "target": "cohort_table",
+      "type": "NoFilter"
+    },
+    {
+      "source": "populations",
+      "target": "provenance",
+      "type": "NoFilter"
+    },
+    {
+      "source": "provenance",
+      "target": "month",
+      "type": "DataFilter"
+    },
+    {
+      "source": "provenance",
+      "target": "mode",
+      "type": "NoFilter"
+    },
+    {
+      "source": "provenance",
+      "target": "kpi_0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "provenance",
+      "target": "kpi_1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "provenance",
+      "target": "kpi_2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "provenance",
+      "target": "kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "provenance",
+      "target": "gmv_trend",
+      "type": "DataFilter"
+    },
+    {
+      "source": "provenance",
+      "target": "orders_trend",
+      "type": "DataFilter"
+    },
+    {
+      "source": "provenance",
+      "target": "cohort_table",
+      "type": "NoFilter"
+    },
+    {
+      "source": "provenance",
+      "target": "populations",
+      "type": "DataFilter"
+    }
+  ],
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "overview_date",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Date"
+              }
+            },
+            "Property": "date"
+          }
+        },
+        "type": "Range",
+        "howCreated": "User"
+      }
+    ]
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F3F6F9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "annotations": [
+    {
+      "name": "FilterContract",
+      "value": "Date filters purchase and first-purchase dates. Single-direction relationships. Explicit interactions; see powerbi/README.md."
+    }
+  ]
+}

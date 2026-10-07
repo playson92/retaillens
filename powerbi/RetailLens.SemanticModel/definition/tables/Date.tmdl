@@ -1,0 +1,36 @@
+table 'Date'
+
+	column 'date'
+		dataType: dateTime
+		sourceColumn: date
+		summarizeBy: none
+		formatString: yyyy-MM-dd
+
+	column 'year'
+		dataType: int64
+		sourceColumn: year
+		summarizeBy: none
+
+	column 'month'
+		dataType: int64
+		sourceColumn: month
+		summarizeBy: none
+
+	column 'year_month'
+		dataType: string
+		sourceColumn: year_month
+		summarizeBy: none
+
+	column 'is_boundary_month'
+		dataType: boolean
+		sourceColumn: is_boundary_month
+		summarizeBy: none
+
+	partition 'Date' = m
+		mode: import
+		source =
+			let
+				Source = WarehouseTable("dim_date"),
+				Typed = Table.TransformColumnTypes(Source, {{"date", type datetime}, {"year", Int64.Type}, {"month", Int64.Type}, {"year_month", type text}, {"is_boundary_month", type logical}})
+			in
+				Typed

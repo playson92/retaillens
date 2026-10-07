@@ -1,0 +1,20 @@
+table 'Seller'
+
+	column 'seller_id'
+		dataType: string
+		sourceColumn: seller_id
+		summarizeBy: none
+
+	column 'seller_state'
+		dataType: string
+		sourceColumn: seller_state
+		summarizeBy: none
+
+	partition 'Seller' = m
+		mode: import
+		source =
+			let
+				Source = WarehouseTable("dim_seller"),
+				Typed = Table.TransformColumnTypes(Source, {{"seller_id", type text}, {"seller_state", type text}})
+			in
+				Typed

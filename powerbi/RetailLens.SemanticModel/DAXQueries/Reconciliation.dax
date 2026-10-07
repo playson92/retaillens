@@ -1,0 +1,72 @@
+// Run only after Refresh; select the same data mode/date interval as SQL exports.
+// Baseline query uses the full imported source, matching default SQL analysis.
+EVALUATE
+ROW (
+    "GMV_BRL", [Delivered GMV],
+    "Eligible_GMV_Orders", [GMV Eligible Orders],
+    "AOV_BRL", [Delivered AOV],
+    "Delivery_Eligible", [Delivery Eligible Orders],
+    "On_Time_Orders", [On Time Orders],
+    "On_Time_Rate", [On Time Rate],
+    "Reviewed_Delivery_Orders", [Reviewed Delivery Orders],
+    "Review_Coverage", [Review Coverage],
+    "Matched_Delivered", [Matched Delivered Orders],
+    "Mismatch_Delivered", [Mismatch Delivered Orders],
+    "Not_Comparable_Delivered", [Not Comparable Delivered Orders],
+    "Payment_Matched_Rate", [Payment Matched Rate],
+    "Eligible_Cohort_Customers", [Eligible Cohort Customers],
+    "Repeat_90d_Customers", [Repeat 90d Customers],
+    "Repeat_90d_Rate", [Observed Repeat 90d Rate],
+    "Incomplete_Cohort_Windows", [Incomplete Cohort Windows]
+)
+
+// Group counts, coverage and scores against SQL's delivery-review analysis.
+EVALUATE
+SUMMARIZECOLUMNS (
+    'Orders'[is_on_time],
+    "Eligible_Orders", [Delivery Eligible Orders],
+    "Reviewed_Orders", [Reviewed Delivery Orders],
+    "Review_Coverage", [Review Coverage],
+    "Mean_Review", [Mean Review Score]
+)
+
+// Fixture category filter: independently compare item-value numerator and order
+// denominator with SQL. Replace category literal with a value present in the mode.
+EVALUATE
+CALCULATETABLE (
+    ROW (
+        "Segment_Value", [Delivered Segment Item Value],
+        "Segment_Orders", [Segment Eligible Orders],
+        "Segment_Value_Per_Order", [Segment Item Value Per Order],
+        "Whole_Order_GMV", [Delivered GMV],
+        "Repeat_Unchanged", [Observed Repeat 90d Rate]
+    ),
+    TREATAS ( { "books" }, 'Product'[category] )
+)
+
+// Fixture seller filter: compare single-seller population to SQL, never allocate
+// the multi-seller order's delivery outcome to an individual seller.
+EVALUATE
+CALCULATETABLE (
+    ROW (
+        "Seller_Item_Value", [Delivered Segment Item Value],
+        "Seller_Delivery_Eligible", [Single Seller Delivery Orders],
+        "Seller_On_Time_Rate", [Single Seller On Time Rate],
+        "Seller_Reviewed_Orders", [Single Seller Reviewed Orders],
+        "Seller_Review_Coverage", [Single Seller Review Coverage],
+        "Seller_Mean_Review", [Single Seller Mean Review],
+        "Repeat_Unchanged", [Observed Repeat 90d Rate]
+    ),
+    TREATAS ( { "s1" }, 'Seller'[seller_id] )
+)
+
+// Empty date filter must produce BLANK AOV, on-time rate and repeat rate.
+EVALUATE
+CALCULATETABLE (
+    ROW (
+        "Empty_AOV", [Delivered AOV],
+        "Empty_On_Time_Rate", [On Time Rate],
+        "Empty_Repeat_Rate", [Observed Repeat 90d Rate]
+    ),
+    FILTER ( ALL ( 'Date' ), FALSE () )
+)

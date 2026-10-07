@@ -1,0 +1,59 @@
+table 'Run'
+
+	column 'data_mode'
+		dataType: string
+		sourceColumn: data_mode
+		summarizeBy: none
+
+	column 'source_version'
+		dataType: string
+		sourceColumn: source_version
+		summarizeBy: none
+
+	column 'analysis_start'
+		dataType: dateTime
+		sourceColumn: analysis_start
+		summarizeBy: none
+		formatString: yyyy-MM-dd
+
+	column 'analysis_end_exclusive'
+		dataType: dateTime
+		sourceColumn: analysis_end_exclusive
+		summarizeBy: none
+		formatString: yyyy-MM-dd
+
+	column 'observation_end'
+		dataType: dateTime
+		sourceColumn: observation_end
+		summarizeBy: none
+		formatString: yyyy-MM-dd
+
+	column 'observation_basis'
+		dataType: string
+		sourceColumn: observation_basis
+		summarizeBy: none
+
+	column 'imported_at'
+		dataType: dateTime
+		sourceColumn: imported_at
+		summarizeBy: none
+		formatString: yyyy-MM-dd HH:mm:ss
+
+	column 'reconciliation_tolerance'
+		dataType: string
+		sourceColumn: reconciliation_tolerance
+		summarizeBy: none
+
+	column 'source_manifest_sha256'
+		dataType: string
+		sourceColumn: source_manifest_sha256
+		summarizeBy: none
+
+	partition 'Run' = m
+		mode: import
+		source =
+			let
+				Source = WarehouseTable("run_metadata"),
+				Typed = Table.TransformColumnTypes(Source, {{"data_mode", type text}, {"source_version", type text}, {"analysis_start", type datetime}, {"analysis_end_exclusive", type datetime}, {"observation_end", type datetime}, {"observation_basis", type text}, {"imported_at", type datetime}, {"reconciliation_tolerance", type text}, {"source_manifest_sha256", type text}})
+			in
+				Typed

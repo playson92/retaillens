@@ -1,0 +1,23 @@
+expression ServerHost = "localhost" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	kind: m
+
+expression ServerPort = "5433" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	kind: m
+
+expression DatabaseName = "retaillens" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	kind: m
+
+expression DataMode = "real" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	kind: m
+
+expression WarehouseTable =
+		(tableName as text) as table =>
+		let
+			SchemaName = if DataMode = "real" then "rl_real" else if DataMode = "synthetic" then "rl_synthetic" else error "DataMode must be real or synthetic",
+			Source = PostgreSQL.Database(ServerHost & ":" & ServerPort, DatabaseName, [CreateNavigationProperties=false]),
+			Data = if tableName = "run_metadata" then
+				Value.NativeQuery(Source, "SELECT data_mode,source_version,analysis_start,analysis_end_exclusive,observation_end,observation_basis,imported_at,reconciliation_tolerance::text AS reconciliation_tolerance,source_manifest_sha256 FROM " & SchemaName & ".run_metadata", null, [EnableFolding=true])
+				else Source{[Schema=SchemaName, Item=tableName]}[Data]
+		in
+			Data
+	kind: m
