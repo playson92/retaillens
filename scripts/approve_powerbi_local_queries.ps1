@@ -1,5 +1,7 @@
 param([Parameter(Mandatory=$true)][int]$ProcessId, [Parameter(Mandatory=$true)][ValidateSet('rl_real','rl_synthetic')][string]$Schema)
 $ErrorActionPreference = 'Stop'
+$process = Get-Process -Id $ProcessId
+if ($process.ProcessName -ne 'PBIDesktop') { throw 'Target must be the authorized Power BI Desktop process.' }
 Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
 $source = [IO.File]::ReadAllText((Join-Path (Get-Location) 'scripts\authenticate_powerbi_local.ps1'))
