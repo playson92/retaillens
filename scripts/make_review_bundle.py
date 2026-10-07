@@ -1,12 +1,15 @@
-"""Compact source/evidence bundle, applicable EMPTY_TREE patch, checksum and ZIP audit."""
+"""Compact source/evidence bundle, patch from recorded baseline, checksum and ZIP audit."""
 
 import argparse
 import hashlib
 import json
+import os
 import subprocess
 import tempfile
 import zipfile
 from pathlib import Path
+
+from dotenv import dotenv_values
 
 ROOT = Path(__file__).resolve().parents[1]
 EMPTY_TREE = "4b825dc642cb6eb9a060e54bf8d69288fbee4904"
@@ -27,7 +30,7 @@ def digest(data):
 def main():
     cli = argparse.ArgumentParser()
     cli.add_argument("--run", type=Path)
-    cli.add_argument("--baseline", default=EMPTY_TREE)
+    cli.add_argument("--baseline", help="Defaults to the current run manifest's recorded baseline")
     args = cli.parse_args()
     run = (
         args.run
@@ -40,6 +43,11 @@ def main():
     if not run.is_relative_to(ROOT / "output" / "codex_runs"):
         raise ValueError("Run directory must stay inside output/codex_runs")
     run.mkdir(parents=True, exist_ok=True)
+    manifest_path = run / "manifest.json"
+    manifest = (
+        json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
+    )
+    args.baseline = args.baseline or manifest.get("baseline_sha", EMPTY_TREE)
     head = git("rev-parse", "HEAD").decode().strip()
     state = git("status", "--porcelain=v1").decode()
     if state:
@@ -86,10 +94,6 @@ def main():
             "check": "git apply --check, apply, git write-tree equality",
         },
     )
-    manifest_path = run / "manifest.json"
-    manifest = (
-        json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
-    )
     manifest.update(
         {
             "repo": str(ROOT),
@@ -108,17 +112,46 @@ def main():
     write_json(manifest_path, manifest)
     # Evidence only: explicit extension/size policy; never include a cache, database or ZIP.
     evidence = {}
-    for path in sorted(run.rglob("*")):
-        if any(
-            part in {"unit_tmp", "integration_tmp", "marts"} for part in path.relative_to(run).parts
-        ):
-            continue
+    included_paths = []
+    for directory, folders, files in os.walk(run):
+        folders[:] = sorted(
+            name
+            for name in folders
+            if name not in {"unit_tmp", "integration_tmp", "marts", ".pbi", ".venv", ".git"}
+            and not name.startswith(("test_tmp", "pytest-"))
+        )
+        included_paths.extend(Path(directory) / name for name in sorted(files))
+    for path in included_paths:
         if path.name == "bundle_contents.json":
             continue
-        if path.is_file() and path.suffix.lower() in {".json", ".md", ".log", ".patch", ".csv"}:
+        if path.is_file() and path.suffix.lower() in {
+            ".json",
+            ".md",
+            ".log",
+            ".patch",
+            ".csv",
+            ".png",
+            ".jpg",
+            ".jpeg",
+        }:
             if path.stat().st_size > 4 * 1024 * 1024:
                 raise ValueError(f"Evidence artifact too large for compact review: {path.name}")
             evidence[path.relative_to(run).as_posix()] = path.read_bytes()
+    private_values = {
+        os.getenv("DATABASE_PASSWORD", ""),
+        dotenv_values(ROOT / ".env").get("DATABASE_PASSWORD", ""),
+    } - {"", None}
+    for name, data in {**source, **evidence}.items():
+        for secret in private_values:
+            if secret.encode() in data or secret.encode("utf-16le") in data:
+                raise ValueError(f"Private database credential found in bundle artifact: {name}")
+    manifest["evidence_files"] = [
+        {"path": name, "bytes": len(data), "sha256": digest(data)}
+        for name, data in evidence.items()
+        if name != "manifest.json"
+    ]
+    write_json(manifest_path, manifest)
+    evidence["manifest.json"] = manifest_path.read_bytes()
     archive = run / "REVIEW_BUNDLE.zip"
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zipped:
         for name, data in source.items():
@@ -129,7 +162,12 @@ def main():
         if zipped.testzip() is not None:
             raise ValueError("ZIP integrity failure")
         contents = [
-            {"path": item.filename, "bytes": item.file_size, "compressed_bytes": item.compress_size}
+            {
+                "path": item.filename,
+                "bytes": item.file_size,
+                "compressed_bytes": item.compress_size,
+                "sha256": digest(zipped.read(item.filename)),
+            }
             for item in zipped.infolist()
         ]
         assert len(contents) == len({item["path"] for item in contents}), "Duplicate ZIP entries"
