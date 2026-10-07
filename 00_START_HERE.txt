@@ -1,0 +1,21 @@
+RETAILLENS — START DLA CODEXA
+
+To jest paczka startowa oparta na portfolio-project-template. Kod właściwego
+MVP ma wykonać Codex według CODEX_TASK_RETAILLENS.txt.
+
+Najprościej:
+1. Pobierz RetailLens_Codex_START_2026-10-07.zip.
+2. Wklej do Codexa treść PROMPT_CODEX_RETAILLENS.txt.
+3. Codex ma znaleźć paczkę w katalogu roboczym, C:\projekty lub folderze pobierania,
+   przygotować C:\projekty\retaillens i wykonać cały projekt.
+
+Jeśli projekt został już rozpakowany i otwarty w Codexie, wystarczy:
+Przeczytaj CODEX_TASK_RETAILLENS.txt i wykonaj całe opisane MVP. Zacznij teraz.
+
+Nie trzeba kopiować oryginalnej .venv ani ponownie przenosić plików template.
+Nie trzeba wkleić kolejnych sześciu promptów po każdym etapie.
+Codex przygotuje kod, konfigurację, modele, testy i raport Power BI w plikach.
+Weryfikacja uruchomienia Desktop wymaga rzeczywistego dostępnego środowiska;
+ewentualne brakujące sprawdzenie będzie wymienione w wyniku.
+
+Po wykonaniu przekaż REVIEW_BUNDLE.zip do review.

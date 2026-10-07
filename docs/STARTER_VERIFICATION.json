@@ -1,0 +1,15 @@
+{
+  "template_authored_files_read": 19,
+  "source_python_ast": "PASS",
+  "renamed_package_and_test_import": "PASS",
+  "pyproject_parse_and_inherited_configuration": "PASS",
+  "existing_static_health_smoke": "PASS",
+  "utf8_no_bom": "PASS",
+  "full_pytest": "NOT_RUN",
+  "ruff": "NOT_RUN",
+  "dependency_install": "NOT_RUN",
+  "postgres_or_docker_integration": "NOT_RUN",
+  "olist_download": "NOT_RUN",
+  "power_bi": "NOT_RUN",
+  "note": "Preparation checks only; Codex must implement and verify the MVP."
+}

@@ -1,0 +1,154 @@
+WYKONAJ CAŁY PROJEKT B1 RETAILLENS
+
+To jest polecenie zbudowania kompletnego lokalnego MVP, od danych do raportu.
+Wykonuj działający kod i sprawdzaj wynik. Etapy 00–05 są wewnętrznymi
+checkpointami jednego zadania. Po ukończeniu etapu przechodź dalej bez pytania
+o następny prompt. Nie kończ na samym szkielecie, planie lub opisaniu możliwości.
+
+1. KONTEKST I DOKUMENTY
+
+Użytkownik wybrał kolejność kategorii B -> C -> D -> A. Teraz wykonujesz tylko
+B1 RetailLens. Odczytaj AGENTS.md, CONTRIBUTING.md, pyproject.toml, CI oraz
+docs/PROJECT_PLAN.md, docs/DATA_CONTRACT.md, docs/PROJECT_STATE.json,
+docs/TEMPLATE_ADAPTATION.md i docs/DATA_SOURCES.md.
+
+Ta paczka jest adaptacją jego portfolio-project-template, nie zakończoną
+aplikacją. Python 3.12, src/tests, Ruff/pytest, lokalne uruchomienie i dobre
+README są istniejącym standardem. Implementację danych, bazy i raportu
+masz wykonać teraz. Nie kopiuj szczególnych ograniczeń firmowych projektów PzW
+lub metadanych do tego niezależnego projektu demonstracyjnego.
+
+2. REPO I ŚRODOWISKO
+
+Pracuj w docelowym katalogu RetailLens, standardowo C:\projekty\retaillens.
+Potwierdź katalog, Git, stan roboczy i faktycznie dostępne narzędzia.
+W nowym repo utwórz feat/retaillens-mvp. Brak HEAD lub remote jest normalnym
+stanem startowym; baseline = EMPTY_TREE, jeśli nie ma żadnego commita.
+Jeśli repo RetailLens już istnieje, kontynuuj je i zachowaj obce zmiany.
+Nie modyfikuj repo WTA, PzW ani oryginalnego portfolio-project-template.
+
+Użytkownik zleca lokalną implementację. Możesz utworzyć katalog/repo, lokalne
+środowisko i zależności, lokalne kontenery oraz małe lokalne commity z plikami
+tego projektu. Nie zmieniaj globalnej tożsamości Git. Brak skonfigurowanej
+tożsamości nie zatrzymuje implementacji: pozostaw zmiany i poprawny patch.
+Zakończ wynikiem do review; publikacja do remote, PR, merge i płatne wdrożenia
+nie są obecnie wymagane. Nie resetuj obcych zmian i nie kasuj wolumenów.
+
+Sprawdź Python 3.12, możliwość instalacji zależności, Docker/Compose,
+PostgreSQL, Power BI Desktop oraz dostępne narzędzia do parsowania TMDL,
+wykonywania DAX i obsługi UI. WSL/Linux i Windows mają różne możliwości:
+nie deklaruj Desktop tylko na podstawie istnienia plików PBIP.
+Brak opcjonalnego MCP nie jest blokadą budowania definicji raportu.
+
+Zależności aplikacji dodaj do pyproject, zachowując konfigurację jakości.
+Zapisz odtwarzalny zestaw wersji i używaj go w Docker/CI; nie wprowadzaj
+nowego managera pakietów bez korzyści. W świeżym .env wygeneruj lokalne dane
+dostępowe i nie publikuj wartości. Parametry hosta muszą odróżniać połączenie
+z Windows/hosta od połączenia między kontenerami. Domyślny port hosta 5433
+ma ograniczyć konflikt z innymi lokalnymi projektami; wykryj rzeczywisty konflikt.
+
+3. WYKONANIE
+
+Zrealizuj wszystkie etapy i kryteria docs/PROJECT_PLAN.md. Zacznij od małej
+działającej próbki, po czym przejdź do importu, modeli, analiz i raportu.
+Kryteria oceny są w docs/DATA_CONTRACT.md. Wszystkie wyniki biznesowe mają
+pochodzić z wykonania na oznaczonym wejściu.
+
+Zaimplementuj wygodne CLI: profilowanie, import, budowa modeli, kontrola jakości,
+analizy, eksport wyników i odtwarzalne demo. Nazwy komend dobierz spójnie
+i opisz w README. Skrypty PowerShell mają ograniczyć ręczne czynności użytkownika.
+Jeden przebieg demo powinien uruchomić potrzebne usługi, zbudować model i
+przygotować dane raportu. Nie wymagaj ręcznego wykonywania listy zapytań SQL.
+
+Nie ograniczaj się do syntetycznej próbki, jeśli oficjalne dane są dostępne:
+pobierz je, przypnij wersję i wykonaj właściwy przebieg. Jeśli dostęp faktycznie
+jest zablokowany, zaimplementuj pełną ścieżkę na jawnych fixtures, a rzeczywiste
+analizy pozostaw niewykonane. Nie mieszaj tych dwóch trybów w materiale portfolio.
+
+Przy dłuższym zadaniu zapisuj stan po każdym etapie oraz przed końcem kontekstu.
+W kolejnym runie kontynuuj od dowodów, nie od ponownego master planu.
+Jeśli pomoc agentów jest dostępna, deleguj niezależny review modelu/SQL,
+definicji Power BI lub diffu. Unikaj edycji tych samych plików przez kilku agentów.
+
+4. POWER BI MA POWSTAĆ W PLIKACH
+
+Utwórz kompletny powerbi/RetailLens.pbip oraz lokalne foldery
+RetailLens.Report i RetailLens.SemanticModel. Raport PBIR ma zawierać
+definition.pbir z względnym byPath do modelu, właściwe definicje wersji,
+raportu, stron i visual.json dla działających wizualizacji.
+Model zawiera definition.pbism oraz pliki TMDL tabel, miar, relacji,
+parametrów i partycji Power Query. Zweryfikuj dokładne wymagane pliki
+według oficjalnych aktualnych schematów Microsoft. Nie wymyślaj schematu
+starszego nieudokumentowanego report.json.
+
+Zbuduj cztery strony opisane w planie, powiązania pól, filtry i interakcje.
+Pojedynczy plik .pbip, zbiór luźnych miar DAX lub makiety nie spełniają zakresu.
+Zapisuj definicje UTF-8 bez BOM. Cache i lokalne ustawienia są wyłączone z Git.
+
+Najpierw wykonaj walidację JSON/schematów, ścieżek, identyfikatorów oraz
+zgodności odwołań do modelu. Jeśli dostępny jest oficjalny parser TMDL,
+użyj go; parsowanie nie jest wykonaniem DAX.
+Jeśli masz działający Desktop/silnik i odpowiednie narzędzia, otwórz projekt,
+odśwież dane, wykonaj DAX dla przykładów i filtrów oraz obejrzyj wszystkie
+strony. Napraw błędy, które ujawniają te kontrole.
+
+Jeżeli nie masz dostępu do runtime lub jego UI, ukończ definicje, dane,
+skrypty i dokumentację; zaznacz niewykonane kontrole oddzielnie.
+Przygotuj skrypt otwarcia projektu w istniejącym Desktop i najkrótszą
+instrukcję ewentualnego pierwszego połączenia. Nie zlecaj użytkownikowi
+ręcznego projektowania stron, modeli ani miar.
+Nie wymagaj PBIX ani publikacji Power BI Service jako końcowego artefaktu MVP.
+
+5. WERYFIKACJA
+
+Uruchom Ruff lint i format, pytest, rzeczywiste testy integracyjne PostgreSQL,
+powtórzenie importu i przebudowy, kontrolę przykładów finansowych oraz build
+obrazu/Compose. Testy mają sprawdzać wynik biznesowy, nie liczbę funkcji.
+Zachowaj zwykły test startera, jeśli nadal ma sens, ale nie traktuj go jako
+dowodu gotowości aplikacji. CI nie może potrzebować prywatnego konta Kaggle
+ani pełnego pobrania danych do każdego PR.
+
+Rozdziel statusy i dowody co najmniej dla:
+PYTHON_QUALITY, UNIT_TESTS, POSTGRES_INTEGRATION, REIMPORT,
+SQL_METRICS, REAL_DATA_RUN, DOCKER_BUILD, COMPOSE_DEMO,
+PBIP_SCHEMA, TMDL_PARSE, DESKTOP_OPEN, DATA_REFRESH,
+DAX_RUNTIME_RECONCILIATION, VISUAL_QA oraz REMOTE_CI.
+
+PASS = kontrola wykonana i udana. FAIL = wykonana i wykazała błąd.
+NOT_RUN = nie wykonano, z powodem. PARTIAL = część zakresu wykonana.
+BLOCKED = konkretna zależność uniemożliwia dalszą daną pracę.
+Naprawialny błąd implementacji nie jest powodem do zakończenia zadania.
+Jeśli nie ma zdalnego uruchomienia Actions, REMOTE_CI pozostaje NOT_RUN;
+lokalne kontrole raportuj niezależnie.
+
+6. WYNIK KAŻDEGO RUNU I ZAKOŃCZENIE
+
+Utwórz output/codex_runs/<UTC_TIMESTAMP>/ i zapisz:
+- README.md: zakres i sposób oceny paczki;
+- review.md: zmiany, decyzje, wyniki oraz rzeczywiste blokady;
+- manifest.json: repo, branch, baseline i końcowy HEAD jeśli istnieje,
+  początkowy/końcowy stan roboczy, lista plików, źródło danych i kontrole;
+- changes.patch: pełny diff tego runu wraz z istotnymi nowymi plikami;
+- verification.log: wykonane komendy, kody zakończenia, wyniki bez sekretów;
+- handoff.md: co działa, co pozostało, dokładny następny krok;
+- potrzebne małe dowody wyników oraz REVIEW_BUNDLE.zip.
+
+Patch musi być możliwy do zastosowania na zapisanym baseline. Dla EMPTY_TREE
+uwzględnij komplet nowych istotnych plików. Przy obcych zmianach wyodrębnij
+swój zakres i opisz warunek odtworzenia; nie usuwaj obcych zmian.
+Sprawdź integralność ZIP i, w czystym katalogu kontrolnym, zastosowanie patcha.
+ZIP bez .venv, node_modules, .git, pełnej bazy, pełnych danych, sekretów,
+cache Power BI i rekursywnego włączenia samego ZIP. Zapisz listę zawartości
+i rozmiar. Dołącz aktualny stan i małe dowody niezbędne do odtworzenia review.
+
+Uaktualnij docs/PROJECT_STATE.json w oparciu o wykonanie. Dokończ dokumentację
+EN i raport PL. Zakończ, gdy pełne MVP spełnia kryteria albo po wykonaniu
+wszystkich możliwych niezależnych prac pozostaje rzeczywista blokada.
+W tym drugim przypadku podaj dokładnie brakującą czynność, zamiast pytać
+czy kontynuować. Brak zewnętrznego dostępu nie zwalnia z ukończenia kodu
+i definicji, które można przygotować.
+
+Końcowa odpowiedź: co powstało, jak uruchomić, co naprawdę przetestowano,
+czy działają realne dane i Power BI, gdzie jest REVIEW_BUNDLE.zip oraz
+trzy pytania o decyzje projektu do przygotowania na rozmowę rekrutacyjną.
+Zacznij wykonywanie teraz.

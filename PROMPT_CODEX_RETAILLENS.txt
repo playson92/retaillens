@@ -1,0 +1,30 @@
+Wykonaj projekt B1 RetailLens na podstawie paczki
+RetailLens_Codex_START_2026-10-07.zip.
+
+Kolejność mojego portfolio to B -> C -> D -> A. Teraz robisz B1 RetailLens:
+Python 3.12, SQL, PostgreSQL, Docker i Power BI.
+
+1. Znajdź wskazaną paczkę w bieżącym katalogu, C:\projekty albo moim standardowym
+   folderze pobierania. Szukaj tylko tej nazwy i jej wariantów z numerem pobrania.
+   Jeśli pliki paczki są już rozpakowane, użyj ich bez ponownego nadpisywania.
+2. Przygotuj C:\projekty\retaillens. Archiwum ma jeden folder główny retaillens:
+   uniknij podwójnego zagnieżdżenia. Sprawdź ścieżki archiwum przed rozpakowaniem.
+   Jeśli katalog zawiera już RetailLens, sprawdź stan i kontynuuj. Nie nadpisuj
+   istniejącego innego projektu, WTA ani źródłowego portfolio-project-template.
+3. Odczytaj AGENTS.md, CODEX_TASK_RETAILLENS.txt, CONTRIBUTING.md i dokumenty
+   wskazane w tych plikach. Paczka wykorzystuje mój wcześniejszy template;
+   zachowaj jego układ, proces, Python 3.12, Ruff, pytest i CI.
+4. Zbuduj całe MVP zgodnie z poleceniem. Pracuj na feat/retaillens-mvp.
+   Możesz zakładać lokalne repo, środowisko, zależności i kontenery oraz robić
+   małe lokalne commity. Etapy 00–05 realizuj samodzielnie, bez czekania na
+   kolejny prompt. Nie kończ na samym planie lub szkielecie.
+5. Przygotuj import, model SQL, analizy i pełny projekt PBIP z czterema stronami,
+   modelem TMDL, miarami i wizualizacjami. Wykonaj dostępne testy i napraw błędy.
+   Jeśli brak danych lub Desktop, dokończ wszystkie niezależne prace i osobno
+   wskaż niewykonane kontrole. Nie oznaczaj niewykonanej kontroli jako PASS.
+6. Zapisuj stan i wyniki runu w output/codex_runs/<UTC_TIMESTAMP>/.
+   Na końcu daj kompaktowy REVIEW_BUNDLE.zip, instrukcję uruchomienia
+   i rzetelny raport po polsku. Pozostaw wynik do review bez automatycznego
+   merge, publikacji repo ani płatnego wdrożenia.
+
+Wykonuj projekt teraz.

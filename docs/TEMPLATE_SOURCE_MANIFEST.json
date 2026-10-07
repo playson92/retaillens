@@ -1,0 +1,100 @@
+{
+  "source_archive_sha256": "2dbe488ed094405a95ea7aef45ef8038f941381222d6073f5526543dba6a103b",
+  "files": [
+    {
+      "path": ".env.example",
+      "bytes": 258,
+      "sha256": "c22d188f961bbf80296708486092afc219658cd9df294eb0981278453445bd21"
+    },
+    {
+      "path": ".gitattributes",
+      "bytes": 605,
+      "sha256": "2eb4d1fa2981d8286aa1345ffd071d4d6c87be9a8cd69dd2fa31c9079a83d3d5"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 981,
+      "sha256": "b214a05d9b33e94a2cf34e50ca77cb9cc485d6ee46e32dcaaa50377199c14361"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 717,
+      "sha256": "b3c4113a55cc4e95df2e4dc945b9b8e0e9e9c7685e21053e6de8f27cb7104038"
+    },
+    {
+      "path": ".python-version",
+      "bytes": 6,
+      "sha256": "8dfda54ba2f66ab3a8ebab460f4338bbeea1fb1e0f85ce06fe3530aa3c64679b"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "bytes": 870,
+      "sha256": "2d73ea584d1eda2f6d807503f86a590548ae4e42fdc37cbad2351de5c68b4655"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1080,
+      "sha256": "98671e6c7377f191400174d34fdd512b7d5feb9e502fe0bb9ba855e4d826ef6e"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1801,
+      "sha256": "1adf25607e8c4891724a8e1053987694085708d6b721a52dd296b2135beb7629"
+    },
+    {
+      "path": "data/processed/.gitkeep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/raw/.gitkeep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/sample/.gitkeep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docker/.gitkeep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/.gitkeep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 1227,
+      "sha256": "b42bf2d82f39693a6d70d7bce49d50dd4858657397ea2a7e214ece930af1e61b"
+    },
+    {
+      "path": "scripts/.gitkeep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sql/.gitkeep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/portfolio_project_template/__init__.py",
+      "bytes": 80,
+      "sha256": "3cd9aefe588c04fe6aca0b27bc517d01d229b9a34744bd56dfa467132c1b5f1f"
+    },
+    {
+      "path": "src/portfolio_project_template/health.py",
+      "bytes": 161,
+      "sha256": "7ac6a7b649b250cdc16745a141c88356db16a3de4cd04bf9205594d31d824b8b"
+    },
+    {
+      "path": "tests/test_health.py",
+      "bytes": 259,
+      "sha256": "bb6d89ab111eaad4db756c3249abc43dd0b929aaa0f8b851f17ca1ed1f7231da"
+    }
+  ]
+}
