@@ -101,17 +101,34 @@ jobs:
     name: Docker build and Compose fixture demo
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      COMPOSE_PROJECT_NAME: retaillens-ci
+      DATABASE_HOST: 127.0.0.1
+      DATABASE_PORT: 5433
+      DATABASE_NAME: retaillens
+      DATABASE_USER: retaillens_app
+      DATABASE_PASSWORD: fixture_ci_only
     steps:
       - uses: actions/checkout@v7
       - run: docker build -f docker/Dockerfile -t retaillens:ci .
+      - name: Validate Compose configuration
+        run: docker compose config --quiet
       - name: One-command Compose demo
-        env:
-          DATABASE_PASSWORD: fixture_ci_only
         run: |
           mkdir -p output
           chmod 777 output
           docker compose up -d --wait db
           docker compose run --rm app
+      - name: Check cleanup after failed demo
+        shell: bash
+        run: |
+          set +e
+          docker compose run --rm app demo --mode synthetic --tolerance -0.01
+          demo_exit=$?
+          set -e
+          test "$demo_exit" -eq 1
+          docker compose stop
+          test -z "$(docker compose ps --status running --quiet)"
       - name: Stop services; preserve volumes
         if: always()
         run: docker compose stop
