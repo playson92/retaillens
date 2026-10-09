@@ -9,7 +9,7 @@ reconciliation and observed repeat purchases with explicit populations and exclu
 ## Actual verification
 
 Full official **Olist version 2** has run on PostgreSQL 17.6. Reimport/rebuild preserve counts
-and metrics. This review-fix run executed **96 unit tests and 26 PostgreSQL tests**. Python
+and metrics. Accepted run `20261007T204100Z` executed **96 unit tests and 26 PostgreSQL tests**. Python
 quality, PostgreSQL business tests, official Microsoft JSON
 schemas and official TOM TMDL parsing have passed. Details: [PROJECT_STATE.json](docs/PROJECT_STATE.json).
 
@@ -23,6 +23,13 @@ reconciliation queries and date/category/seller/empty selections.
 Docker Desktop 4.93.0 is installed, but its Linux daemon is unavailable: WSL is missing and
 pipe probes fail/time out. Remote CI was intentionally not triggered; no publication is requested.
 See [POWER_BI.md](docs/POWER_BI.md) and [PROJECT_STATE.json](docs/PROJECT_STATE.json) for exact evidence.
+
+**Local MVP: ready and accepted.** RL-01–RL-07, Portable PostgreSQL and Desktop are closed
+against the reviewed HEAD. Stage05 run `20261009T091005Z` added one isolated Docker verification
+command and **49 passing scenario regressions**. Fresh read-only Portable results agree with
+the accepted run; its data and metadata remain unchanged. Actual Compose5.5.1 configuration
+passed, but Linux daemon probes still time out and WSL is not installed. Container acceptance
+remains blocked. Previous tests/Desktop evidence are retained references, not new executions.
 
 ## Run on Windows
 
@@ -56,6 +63,28 @@ enter credentials from local `.env`, and refresh. No password is stored in TMDL.
 [POWER_BI.md](docs/POWER_BI.md) for the runtime checklist. `demo.ps1 -OpenReport` opens after import.
 
 ## Docker / Linux
+
+On this Windows checkout, verify the complete container path with one command:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\verify_docker.ps1
+```
+
+It creates a fresh evidence run, uses its own Compose project and a free port starting at6433,
+and leaves Portable at5433 available. It validates Compose without printing credentials,
+builds/records the exact app image used by synthetic and pinned Olist demos, compares all SQL
+results with fresh read-only Portable references, checks the application-specific negative
+tolerance error, and stops only its own containers in finally after both scenarios. Volumes
+and previous results remain. Native failures retain their codes; exits0/1/2 mean PASS/FAIL/BLOCKED.
+After a system reboot it can start the existing Portable cluster; it never initializes a new
+cluster for this check. Source Olist is mounted read-only and is never downloaded by this scenario.
+
+For the currently confirmed missing WSL prerequisite, an administrator must run
+`wsl --install --no-distribution` and restart if Windows requests it. Then rerun the command above;
+it starts the installed Desktop if needed. See the
+[Microsoft installation instructions](https://learn.microsoft.com/en-us/windows/wsl/install)
+and [no-distribution option](https://learn.microsoft.com/en-us/windows/wsl/basic-commands).
+No administrator feature changes or reboot were forced here.
 
 Generate private credentials in `.env` from `.env.example`, then:
 

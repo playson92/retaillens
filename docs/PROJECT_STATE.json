@@ -18,8 +18,8 @@
     "04": "PASS",
     "05": "PARTIAL"
   },
-  "last_implementation_run": "20261007T204100Z",
-  "last_updated_utc": "2026-10-07T22:23:15.617803+00:00",
+  "last_implementation_run": "20261009T091005Z",
+  "last_updated_utc": "2026-10-09T09:50:02.011770+00:00",
   "data_mode": "real; synthetic isolated in a separate schema",
   "real_data_downloaded": true,
   "power_bi_runtime_verified": true,
@@ -36,75 +36,102 @@
     "CI definitions, reproducible review patch and compact ZIP workflow",
     "RL-01 through RL-07 implementation and executed regressions",
     "Actual Desktop refresh, DAX/SQL reconciliation and four-page visual QA in both modes",
-    "Zero-numerator DAX correction, readable native slicers and metadata row"
+    "Zero-numerator DAX correction, readable native slicers and metadata row",
+    "Stage05 one-command isolated Docker acceptance automation and49scoped regressions",
+    "Fresh READ ONLY Portable comparison; accepted source/data/model and earlier bundles preserved"
   ],
   "verification": {
     "UNIT_TESTS": {
       "status": "PASS",
       "exit_code": 0,
       "result": "96 passed,26 deselected; Compose CLI and official TOM regressions executed;33 runtime-helper regressions included",
-      "evidence": "logs/UNIT_FINAL_20261007T220430808862Z.log"
+      "evidence": "logs/UNIT_FINAL_20261007T220430808862Z.log",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "POSTGRES_INTEGRATION": {
       "status": "PASS",
       "exit_code": 0,
       "result": "26 passed on actual PostgreSQL17.6, including ambiguous header preflight and audit fault injection",
-      "evidence": "logs/POSTGRES_INTEGRATION_SQL_REVIEW.log"
+      "evidence": "logs/POSTGRES_INTEGRATION_SQL_REVIEW.log",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "REAL_DATA_RUN": {
       "status": "PASS",
       "exit_code": 0,
-      "evidence": "evidence/real/analysis.json"
+      "evidence": "evidence/real/analysis.json",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "PORTABLE_DEMO": {
       "status": "PASS",
       "exit_code": 0,
-      "result": "real and synthetic demo; schemas isolated"
+      "result": "real and synthetic demo; schemas isolated",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "REIMPORT": {
       "status": "PASS",
       "exit_code": 0,
-      "evidence": "evidence/real/reimport.json"
+      "evidence": "evidence/real/reimport.json",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "KPI_BEFORE_AFTER": {
       "status": "PASS",
       "exit_code": 0,
       "evidence": "evidence/real/kpi_comparison.json",
-      "result": "0 changed Olist orders;0 KPI changes; same source hash and observation_end2018-09-01"
+      "result": "0 changed Olist orders;0 KPI changes; same source hash and observation_end2018-09-01",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "EXPORT_CONSISTENCY": {
       "status": "PASS",
       "exit_code": 0,
       "evidence": "evidence/real/export_check.json",
-      "result": "All analytical CSV/JSON and independently summed marts agree in both modes; January/empty ranges and negative corruption controls passed"
+      "result": "All analytical CSV/JSON and independently summed marts agree in both modes; January/empty ranges and negative corruption controls passed",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "DEPENDENCY_CHECK": {
       "status": "PASS",
       "exit_code": 0,
       "result": "pip check: No broken requirements",
-      "evidence": "logs/DEPENDENCY_RELEASE_20261007T221756127717Z.log"
+      "evidence": "logs/DEPENDENCY_RELEASE_20261007T221756127717Z.log",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "WHEEL_BUILD": {
       "status": "PASS",
       "exit_code": 0,
       "evidence": "evidence/wheel_check.json",
       "result": "Normal wheel includes CLI and8 exact SQL resources",
-      "build_evidence": "logs/WHEEL_RELEASE_20261007T221757616936Z.log"
+      "build_evidence": "logs/WHEEL_RELEASE_20261007T221757616936Z.log",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "COMPOSE_CONFIG": {
       "status": "PASS",
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
       "exit_code": 0,
-      "evidence": "rl01_review.json",
-      "result": "Actual Compose5.6.0 baseline cleanup exits1; corrected configurations exit0;5 regression tests"
+      "result": "Actual Compose5.5.1 quiet and JSON config parsing; unique project, own volume/image, free6433port, read-only Olist and per-run output verified privately",
+      "evidence": "docker_verification.json"
     },
     "DOCKER_BUILD": {
       "status": "NOT_RUN",
-      "evidence": "docker_host_probes.json",
-      "reason": "Docker Desktop4.93.0 installed/running but Linux daemon unavailable; pipe probes timeout/HTTP500. WSL not installed; administrator feature setup/reboot required."
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
+      "evidence": "docker_verification.json",
+      "reason": "Confirmed missing WSL; existing Desktop Linux daemon timed out. Administrator prerequisite is required before actual build/demo/cleanup."
     },
     "COMPOSE_DEMO": {
       "status": "NOT_RUN",
-      "reason": "No working Docker daemon; real container demo/cleanup cannot run"
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
+      "evidence": "docker_verification.json",
+      "reason": "Confirmed missing WSL; existing Desktop Linux daemon timed out. Administrator prerequisite is required before actual build/demo/cleanup."
     },
     "DESKTOP_OPEN": {
       "status": "PASS",
@@ -113,7 +140,9 @@
         "synthetic": "PASS"
       },
       "evidence": "evidence/powerbi_runtime/runtime.json",
-      "result": "Official Store Desktop2.158.1304.0 opened exact fresh real/synthetic copies; model/report hashes remained unchanged"
+      "result": "Official Store Desktop2.158.1304.0 opened exact fresh real/synthetic copies; model/report hashes remained unchanged",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "DATA_REFRESH": {
       "status": "PASS",
@@ -122,7 +151,9 @@
         "synthetic": "PASS"
       },
       "evidence": "evidence/powerbi_runtime/runtime.json",
-      "result": "All8tables imported in both modes; counts and Run/source metadata match independent PostgreSQL proofs"
+      "result": "All8tables imported in both modes; counts and Run/source metadata match independent PostgreSQL proofs",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "DAX_RUNTIME_RECONCILIATION": {
       "status": "PASS",
@@ -131,7 +162,9 @@
         "synthetic": "PASS"
       },
       "evidence": "evidence/powerbi_runtime/runtime.json",
-      "result": "Actual Desktop engine:32/32queries,962strict comparisons,0mismatches; real17/553,synthetic15/409; all5supplied EVALUATE blocks per mode and49measure filter matrix"
+      "result": "Actual Desktop engine:32/32queries,962strict comparisons,0mismatches; real17/553,synthetic15/409; all5supplied EVALUATE blocks per mode and49measure filter matrix",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "VISUAL_QA": {
       "status": "PASS",
@@ -140,49 +173,135 @@
         "synthetic": "PASS"
       },
       "evidence": "evidence/powerbi_runtime/runtime.json",
-      "result": "All4native pages inspected in both modes;8final screenshots plus actual date/category/seller/order interactions; zero-numerator and clipping fixes verified"
+      "result": "All4native pages inspected in both modes;8final screenshots plus actual date/category/seller/order interactions; zero-numerator and clipping fixes verified",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "REMOTE_CI": {
       "status": "NOT_RUN",
-      "reason": "No push/publication requested; local checks reported separately"
+      "reason": "No merge, push or publication requested; this is outside the authorized local scope, not an application failure."
     },
     "PYTHON_QUALITY": {
       "status": "PASS",
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
       "exit_code": 0,
-      "evidence": "logs/RUFF_RELEASE_20261007T221754178638Z.log",
-      "result": "Ruff lint and format passed on all32final Python files",
-      "format_evidence": "logs/FORMAT_RELEASE_20261007T221755136585Z.log"
+      "result": "Ruff lint+format36Python files",
+      "evidence": "logs/RUFF_FROZEN_20261009T094757613084Z.log",
+      "format_evidence": "logs/FORMAT_FROZEN_20261009T094758086820Z.log"
     },
     "PBIP_SCHEMA": {
       "status": "PASS",
       "exit_code": 0,
       "evidence": "evidence/powerbi_final/source_schema.json",
-      "result": "Source and exact fresh real/synthetic:65JSON,12officialschemas,4pages,8tables,49measures,55visuals,114refs,actualrelationships and PostgreSQL keys"
+      "result": "Source and exact fresh real/synthetic:65JSON,12officialschemas,4pages,8tables,49measures,55visuals,114refs,actualrelationships and PostgreSQL keys",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "TMDL_PARSE": {
       "status": "PASS",
       "exit_code": 0,
       "evidence": "evidence/powerbi_final/source_tom.json",
-      "result": "Source and exact fresh real/synthetic officialTOM19.117.0; actualproperties match all5relationships"
+      "result": "Source and exact fresh real/synthetic officialTOM19.117.0; actualproperties match all5relationships",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "CLEANUP_RUNTIME": {
       "status": "NOT_RUN",
-      "reason": "Docker daemon unavailable; actual cleanup after successful and deliberately failed container demos could not run",
-      "evidence": "docker_host_probes.json"
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
+      "evidence": "docker_verification.json",
+      "reason": "Confirmed missing WSL; existing Desktop Linux daemon timed out. Administrator prerequisite is required before actual build/demo/cleanup."
     },
     "POWERSHELL_SYNTAX": {
       "status": "PASS",
       "exit_code": 0,
       "result": "Native PowerShell AST parser found no errors in12scripts",
       "evidence": "evidence/powershell_syntax.json",
-      "log": "logs/POWERSHELL_SYNTAX_FINAL_CORRECTED_20261007T222230976349Z.log"
+      "log": "logs/POWERSHELL_SYNTAX_FINAL_CORRECTED_20261007T222230976349Z.log",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "UI_PROCESS_GUARD": {
       "status": "PASS",
       "observed_exit_code": 1,
       "expected_exit_code": 1,
       "result": "Non-Desktop process rejected before UI actions",
-      "evidence": "logs/POWERBI_PROCESS_GUARD_NEGATIVE_20261007T222204185192Z.log"
+      "evidence": "logs/POWERBI_PROCESS_GUARD_NEGATIVE_20261007T222204185192Z.log",
+      "evidence_run": "20261007T204100Z",
+      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+    },
+    "DOCKER_CONTEXT": {
+      "status": "PASS",
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
+      "exit_code": 0,
+      "result": "desktop-linux, local npipe:////./pipe/dockerDesktopLinuxEngine; global context unchanged",
+      "evidence": "logs/DOCKER_CONTEXT_20261009T091113800446Z.log"
+    },
+    "LINUX_DAEMON": {
+      "status": "FAIL",
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
+      "actual_exit_code": 124,
+      "result": "Initial version timeout12s and3bounded info probes timeout8s each; Desktop/backend already running",
+      "evidence": "docker_verification.json"
+    },
+    "WSL_PREREQUISITE": {
+      "status": "BLOCKED",
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
+      "result": "wsl --status exit50; --version exit1: not installed. Windows user is not administrator.",
+      "evidence": "logs/WSL_STATUS_20261009T091127690667Z.log",
+      "admin_evidence": "logs/WINDOWS_DOCKER_PROCESSES_20261009T091128020317Z.log"
+    },
+    "DOCKER_SCENARIO_TESTS": {
+      "status": "PASS",
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
+      "exit_code": 0,
+      "result": "49new tests:32result comparison and17orchestration. Mock lifecycle tests do not certify containers.",
+      "evidence": "logs/DOCKER_TESTS_FROZEN_20261009T094756213259Z.log"
+    },
+    "DOCKER_POWERSHELL_SYNTAX": {
+      "status": "PASS",
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
+      "exit_code": 0,
+      "evidence": "logs/DOCKER_POWERSHELL_SYNTAX_20261009T093535304545Z.log"
+    },
+    "PINNED_OLIST_INPUT": {
+      "status": "PASS",
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
+      "result": "All9existing CSV hashes match SOURCE.json; no download or source mutation",
+      "evidence": "evidence/docker_input.json"
+    },
+    "PORTABLE_READ_ONLY_REFERENCE": {
+      "status": "PASS",
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
+      "exit_code": 0,
+      "result": "Both modes freshly analysed on127.0.0.1:5433 through READ ONLY; source/SQL/results match accepted run; counts and metadata preserved",
+      "evidence": "evidence/portable/capture.json",
+      "scenario_reference": "evidence/docker_reference/capture.json"
+    },
+    "PORTABLE_RUNNING_GUARD": {
+      "status": "PASS",
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
+      "exit_code": 0,
+      "result": "Healthy5433service retained; no restart/reset/native command",
+      "evidence": "logs/PORTABLE_RUNNING_GUARD_20261009T093723164819Z.log"
+    },
+    "DOCKER_AUTOMATION_ATTEMPT": {
+      "status": "BLOCKED",
+      "evidence_run": "20261009T091005Z",
+      "execution": "Executed in current stage05 run",
+      "expected_exit_code": 2,
+      "actual_exit_code": 2,
+      "evidence": "logs/DOCKER_ACCEPTANCE_20261009T092759520186Z.log",
+      "result": "Actual config/pins/Portable passed; server unavailable; no build/up/run/cleanup attempted"
     }
   },
   "runtime_gaps": [
@@ -193,17 +312,28 @@
   ],
   "observation_end": "2018-09-01",
   "observation_basis": "Assumed start-of-day cutoff before sparse September/October tail; source completeness not certified",
-  "next_action": "Administrator WSL setup/reboot, then ready isolated Docker build/demo/failed-demo/cleanup commands from the handoff. Remote CI remains NOT_RUN until publication is separately authorized.",
-  "note": "All available local implementation, PostgreSQL and Desktop verification is complete. Overall PARTIAL reflects unavailable Docker runtime and intentionally unexecuted remote CI. No merge, push or publication.",
-  "previous_implementation_run": "20261007T191556Z",
-  "baseline_sha": "a2c51e9f038a1c81e029d3212c4f6e8c2055d1f4",
+  "next_action": "Administrator: wsl --install --no-distribution; restart only if Windows requires it. Then normal terminal: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_docker.ps1. Remote CI remains NOT_RUN without publication.",
+  "note": "Local Portable+Desktop MVP is ready/accepted; RL01-07 closed. Stage05 local release artifacts are complete; overall/stage05 remain PARTIAL for outstanding container runtime acceptance. Prior96unit/26PG and32DAX/962 comparisons are accepted references, not new executions. No merge/push/publication.",
+  "previous_implementation_run": "20261007T204100Z",
+  "baseline_sha": "922502a8ae65fd87597a98abffe0707fa031b84e",
   "review_fixes": {
-    "RL-01": "IMPLEMENTED; regression PASS",
-    "RL-02": "IMPLEMENTED; regression PASS",
-    "RL-03": "IMPLEMENTED; regression PASS",
-    "RL-04": "IMPLEMENTED; regression PASS",
-    "RL-05": "IMPLEMENTED; regression PASS",
-    "RL-06": "IMPLEMENTED; regression PASS",
-    "RL-07": "IMPLEMENTED; regression PASS"
-  }
+    "RL-01": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
+    "RL-02": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
+    "RL-03": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
+    "RL-04": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
+    "RL-05": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
+    "RL-06": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
+    "RL-07": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work"
+  },
+  "accepted_mvp_run": "20261007T204100Z",
+  "accepted_mvp_head": "922502a8ae65fd87597a98abffe0707fa031b84e",
+  "local_mvp_status": "READY_ACCEPTED",
+  "local_release_artifacts": "PASS",
+  "container_acceptance": "BLOCKED",
+  "accepted_review_date": "2026-10-08",
+  "run_history": [
+    "20261007T191556Z",
+    "20261007T204100Z",
+    "20261009T091005Z"
+  ]
 }
