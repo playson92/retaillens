@@ -118,7 +118,7 @@ def main():
             name
             for name in folders
             if name not in {"unit_tmp", "integration_tmp", "marts", ".pbi", ".venv", ".git"}
-            and not name.startswith(("test_tmp", "pytest-"))
+            and not name.startswith(("test_tmp", "pytest-", "unit_tmp", "integration_tmp"))
         )
         included_paths.extend(Path(directory) / name for name in sorted(files))
     for path in included_paths:
