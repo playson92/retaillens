@@ -18,8 +18,8 @@
     "04": "PASS",
     "05": "PARTIAL"
   },
-  "last_implementation_run": "20261009T091005Z",
-  "last_updated_utc": "2026-10-09T09:50:02.011770+00:00",
+  "last_implementation_run": "20261009T1342581150025Z",
+  "last_updated_utc": "2026-10-09T13:50:19.120772+00:00",
   "data_mode": "real; synthetic isolated in a separate schema",
   "real_data_downloaded": true,
   "power_bi_runtime_verified": true,
@@ -113,25 +113,25 @@
     },
     "COMPOSE_CONFIG": {
       "status": "PASS",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
-      "exit_code": 0,
-      "result": "Actual Compose5.5.1 quiet and JSON config parsing; unique project, own volume/image, free6433port, read-only Olist and per-run output verified privately",
-      "evidence": "docker_verification.json"
+      "evidence_run": "20261009T1342581150025Z",
+      "execution": "Executed in current Docker continuation",
+      "result": "Actual quiet/JSON parsing; isolated own image, volume, port6433 and read-only source mount validated privately.",
+      "evidence": "docker_verification.json",
+      "exit_code": 0
     },
     "DOCKER_BUILD": {
       "status": "NOT_RUN",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
+      "evidence_run": "20261009T1342581150025Z",
+      "execution": "Not executed in current continuation",
       "evidence": "docker_verification.json",
-      "reason": "Confirmed missing WSL; existing Desktop Linux daemon timed out. Administrator prerequisite is required before actual build/demo/cleanup."
+      "reason": "PORTABLE_REFERENCE failed because the unrelated WTA database occupies required Portable port5433; no build/up/run/cleanup occurred."
     },
     "COMPOSE_DEMO": {
       "status": "NOT_RUN",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
+      "evidence_run": "20261009T1342581150025Z",
+      "execution": "Not executed in current continuation",
       "evidence": "docker_verification.json",
-      "reason": "Confirmed missing WSL; existing Desktop Linux daemon timed out. Administrator prerequisite is required before actual build/demo/cleanup."
+      "reason": "PORTABLE_REFERENCE failed because the unrelated WTA database occupies required Portable port5433; no build/up/run/cleanup occurred."
     },
     "DESKTOP_OPEN": {
       "status": "PASS",
@@ -179,12 +179,12 @@
     },
     "REMOTE_CI": {
       "status": "NOT_RUN",
-      "reason": "No merge, push or publication requested; this is outside the authorized local scope, not an application failure."
+      "reason": "No merge, push or publication authorized; outside local scope."
     },
     "PYTHON_QUALITY": {
       "status": "PASS",
       "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
+      "execution": "Accepted prior-run execution; not rerun in current Docker continuation",
       "exit_code": 0,
       "result": "Ruff lint+format36Python files",
       "evidence": "logs/RUFF_FROZEN_20261009T094757613084Z.log",
@@ -208,10 +208,10 @@
     },
     "CLEANUP_RUNTIME": {
       "status": "NOT_RUN",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
+      "evidence_run": "20261009T1342581150025Z",
+      "execution": "Not executed in current continuation",
       "evidence": "docker_verification.json",
-      "reason": "Confirmed missing WSL; existing Desktop Linux daemon timed out. Administrator prerequisite is required before actual build/demo/cleanup."
+      "reason": "PORTABLE_REFERENCE failed because the unrelated WTA database occupies required Portable port5433; no build/up/run/cleanup occurred."
     },
     "POWERSHELL_SYNTAX": {
       "status": "PASS",
@@ -233,32 +233,33 @@
     },
     "DOCKER_CONTEXT": {
       "status": "PASS",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
-      "exit_code": 0,
-      "result": "desktop-linux, local npipe:////./pipe/dockerDesktopLinuxEngine; global context unchanged",
-      "evidence": "logs/DOCKER_CONTEXT_20261009T091113800446Z.log"
+      "evidence_run": "20261009T1342581150025Z",
+      "execution": "Executed in current Docker continuation",
+      "result": "desktop-linux uses local npipe:////./pipe/dockerDesktopLinuxEngine; global context unchanged",
+      "evidence": "logs/DOCKER_ENDPOINT_CURRENT.log",
+      "exit_code": 0
     },
     "LINUX_DAEMON": {
-      "status": "FAIL",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
-      "actual_exit_code": 124,
-      "result": "Initial version timeout12s and3bounded info probes timeout8s each; Desktop/backend already running",
-      "evidence": "docker_verification.json"
+      "status": "PASS",
+      "evidence_run": "20261009T1342581150025Z",
+      "execution": "Executed in current Docker continuation",
+      "result": "Current Docker server29.8.1 Linux/amd64; info returns linux, actual exit0. Historical missing-WSL blocker resolved.",
+      "evidence": "logs/DOCKER_LINUX_INFO_CURRENT.log",
+      "exit_code": 0
     },
     "WSL_PREREQUISITE": {
-      "status": "BLOCKED",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
-      "result": "wsl --status exit50; --version exit1: not installed. Windows user is not administrator.",
-      "evidence": "logs/WSL_STATUS_20261009T091127690667Z.log",
-      "admin_evidence": "logs/WINDOWS_DOCKER_PROCESSES_20261009T091128020317Z.log"
+      "status": "PASS",
+      "evidence_run": "20261009T1342581150025Z",
+      "execution": "Executed in current Docker continuation",
+      "result": "WSL3.0.1.0, default distribution docker-desktop, default version2; both status/version exit0. WSL1-only warning is not WSL2 failure.",
+      "evidence": "logs/WSL_STATUS_CURRENT.log",
+      "exit_code": 0,
+      "version_evidence": "logs/WSL_VERSION_CURRENT.log"
     },
     "DOCKER_SCENARIO_TESTS": {
       "status": "PASS",
       "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
+      "execution": "Accepted prior-run execution; not rerun in current Docker continuation",
       "exit_code": 0,
       "result": "49new tests:32result comparison and17orchestration. Mock lifecycle tests do not certify containers.",
       "evidence": "logs/DOCKER_TESTS_FROZEN_20261009T094756213259Z.log"
@@ -266,42 +267,47 @@
     "DOCKER_POWERSHELL_SYNTAX": {
       "status": "PASS",
       "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
+      "execution": "Accepted prior-run execution; not rerun in current Docker continuation",
       "exit_code": 0,
       "evidence": "logs/DOCKER_POWERSHELL_SYNTAX_20261009T093535304545Z.log"
     },
     "PINNED_OLIST_INPUT": {
       "status": "PASS",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
-      "result": "All9existing CSV hashes match SOURCE.json; no download or source mutation",
+      "evidence_run": "20261009T1342581150025Z",
+      "execution": "Executed in current Docker continuation",
+      "result": "All9 existing Olist v2 file hashes still match SOURCE.json; no new download or input mutation.",
       "evidence": "evidence/docker_input.json"
     },
     "PORTABLE_READ_ONLY_REFERENCE": {
-      "status": "PASS",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
-      "exit_code": 0,
-      "result": "Both modes freshly analysed on127.0.0.1:5433 through READ ONLY; source/SQL/results match accepted run; counts and metadata preserved",
-      "evidence": "evidence/portable/capture.json",
-      "scenario_reference": "evidence/docker_reference/capture.json"
+      "status": "FAIL",
+      "evidence_run": "20261009T1342581150025Z",
+      "execution": "Executed in current Docker continuation",
+      "result": "Capture command exit1/OperationalError. Port5433 belongs to wta-demo-postgres-1; RetailLens credentials are rejected. No fresh Portable reference generated.",
+      "evidence": "logs/DOCKER_03_PORTABLE_REFERENCE.log",
+      "actual_exit_code": 1
     },
     "PORTABLE_RUNNING_GUARD": {
       "status": "PASS",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
       "exit_code": 0,
-      "result": "Healthy5433service retained; no restart/reset/native command",
-      "evidence": "logs/PORTABLE_RUNNING_GUARD_20261009T093723164819Z.log"
+      "result": "Healthy5433service retained in accepted prior run; not a current readiness claim.",
+      "evidence": "logs/PORTABLE_RUNNING_GUARD_20261009T093723164819Z.log",
+      "evidence_run": "20261009T091005Z",
+      "execution": "Accepted prior-run execution; not rerun in current continuation"
     },
     "DOCKER_AUTOMATION_ATTEMPT": {
+      "status": "FAIL",
+      "evidence_run": "20261009T1342581150025Z",
+      "execution": "Executed in current Docker continuation",
+      "result": "Existing verify_docker.ps1 actually ran, exit1; Compose/pins passed; Portable reference failed before build or container start.",
+      "evidence": "scenario-command.json",
+      "actual_exit_code": 1
+    },
+    "PORTABLE_PORT_AVAILABILITY": {
       "status": "BLOCKED",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Executed in current stage05 run",
-      "expected_exit_code": 2,
-      "actual_exit_code": 2,
-      "evidence": "logs/DOCKER_ACCEPTANCE_20261009T092759520186Z.log",
-      "result": "Actual config/pins/Portable passed; server unavailable; no build/up/run/cleanup attempted"
+      "evidence_run": "20261009T1342581150025Z",
+      "execution": "Not executed or blocked; see current prerequisite evidence",
+      "result": "127.0.0.1:5433 is published by the unrelated wta-demo-postgres-1 container; existing Portable cluster is stopped and was not replaced.",
+      "evidence": "port-conflict-containers.json"
     }
   },
   "runtime_gaps": [
@@ -312,10 +318,10 @@
   ],
   "observation_end": "2018-09-01",
   "observation_basis": "Assumed start-of-day cutoff before sparse September/October tail; source completeness not certified",
-  "next_action": "Administrator: wsl --install --no-distribution; restart only if Windows requires it. Then normal terminal: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_docker.ps1. Remote CI remains NOT_RUN without publication.",
-  "note": "Local Portable+Desktop MVP is ready/accepted; RL01-07 closed. Stage05 local release artifacts are complete; overall/stage05 remain PARTIAL for outstanding container runtime acceptance. Prior96unit/26PG and32DAX/962 comparisons are accepted references, not new executions. No merge/push/publication.",
-  "previous_implementation_run": "20261007T204100Z",
-  "baseline_sha": "922502a8ae65fd87597a98abffe0707fa031b84e",
+  "next_action": "User decision: free127.0.0.1:5433 currently published by wta-demo-postgres-1; for example temporarily stop only that container, retaining its volume. Then retry existing verify_docker.ps1 in a new run. Do not reinstall WSL or change model/SQL/Power BI.",
+  "note": "Local Portable+Desktop MVP remains READY_ACCEPTED and RL01-07 remain closed. Current WSL2 and local Linux Docker server actually PASS. Existing Docker scenario FAIL/exit1 at Portable reference because WTA owns5433. Build/demo/cleanup NOT_RUN; acceptance BLOCKED until port conflict is resolved with owner approval. No WTA stop, credential change, database reset, merge, push or publication.",
+  "previous_implementation_run": "20261009T091005Z",
+  "baseline_sha": "709975b0e5c068bbf6742421e1d238eeebb9e84a",
   "review_fixes": {
     "RL-01": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
     "RL-02": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
@@ -334,6 +340,7 @@
   "run_history": [
     "20261007T191556Z",
     "20261007T204100Z",
-    "20261009T091005Z"
+    "20261009T091005Z",
+    "20261009T1342581150025Z"
   ]
 }
