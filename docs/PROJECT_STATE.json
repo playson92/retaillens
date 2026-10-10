@@ -19,7 +19,7 @@
     "05": "PASS"
   },
   "last_implementation_run": "20261009T2049086587846Z",
-  "last_updated_utc": "2026-10-10T07:38:42.928628+00:00",
+  "last_updated_utc": "2026-10-10T08:50:32.284635+00:00",
   "data_mode": "real; synthetic isolated in a separate schema",
   "real_data_downloaded": true,
   "power_bi_runtime_verified": true,
@@ -41,7 +41,8 @@
     "Fresh READ ONLY Portable comparison; accepted source/data/model and earlier bundles preserved",
     "RL08 authenticated own Portable on5435 before readiness/creation/capture; WTA retained",
     "Actual isolated Docker build/full Olist+fixture/comparison/negative-control/both cleanup phases PASS",
-    "Fresh real/synthetic Desktop endpoint refresh,8table/source/fiveKPI proof and two Overview screenshots"
+    "Fresh real/synthetic Desktop endpoint refresh,8table/source/fiveKPI proof and two Overview screenshots",
+    "Final local MVP/Docker acceptance recorded; RL-08 CLOSED_ACCEPTED by review2026-10-10"
   ],
   "verification": {
     "UNIT_TESTS": {
@@ -50,7 +51,7 @@
       "result": "96 passed,26 deselected; Compose CLI and official TOM regressions executed;33 runtime-helper regressions included",
       "evidence": "logs/UNIT_FINAL_20261007T220430808862Z.log",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "POSTGRES_INTEGRATION": {
       "status": "PASS",
@@ -58,28 +59,28 @@
       "result": "26 passed on actual PostgreSQL17.6, including ambiguous header preflight and audit fault injection",
       "evidence": "logs/POSTGRES_INTEGRATION_SQL_REVIEW.log",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "REAL_DATA_RUN": {
       "status": "PASS",
       "exit_code": 0,
       "evidence": "evidence/real/analysis.json",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "PORTABLE_DEMO": {
       "status": "PASS",
       "exit_code": 0,
       "result": "real and synthetic demo; schemas isolated",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "REIMPORT": {
       "status": "PASS",
       "exit_code": 0,
       "evidence": "evidence/real/reimport.json",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "KPI_BEFORE_AFTER": {
       "status": "PASS",
@@ -87,7 +88,7 @@
       "evidence": "evidence/real/kpi_comparison.json",
       "result": "0 changed Olist orders;0 KPI changes; same source hash and observation_end2018-09-01",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "EXPORT_CONSISTENCY": {
       "status": "PASS",
@@ -95,7 +96,7 @@
       "evidence": "evidence/real/export_check.json",
       "result": "All analytical CSV/JSON and independently summed marts agree in both modes; January/empty ranges and negative corruption controls passed",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "DEPENDENCY_CHECK": {
       "status": "PASS",
@@ -103,7 +104,7 @@
       "result": "pip check: No broken requirements",
       "evidence": "logs/DEPENDENCY_RELEASE_20261007T221756127717Z.log",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "WHEEL_BUILD": {
       "status": "PASS",
@@ -112,12 +113,12 @@
       "result": "Normal wheel includes CLI and8 exact SQL resources",
       "build_evidence": "logs/WHEEL_RELEASE_20261007T221757616936Z.log",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "COMPOSE_CONFIG": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Actual existing Docker scenario passed; own port6433, isolated project/image, volumes preserved",
       "evidence": "docker_verification.json",
       "exit_code": 0
@@ -125,7 +126,7 @@
     "DOCKER_BUILD": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Actual existing Docker scenario passed; own port6433, isolated project/image, volumes preserved",
       "evidence": "docker_verification.json",
       "exit_code": 0
@@ -133,7 +134,7 @@
     "COMPOSE_DEMO": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Actual existing Docker scenario passed; own port6433, isolated project/image, volumes preserved",
       "evidence": "docker_verification.json",
       "exit_code": 0
@@ -147,7 +148,7 @@
       "evidence": "evidence/powerbi_runtime/runtime.json",
       "result": "Official Store Desktop2.158.1304.0 opened exact fresh real/synthetic copies; model/report hashes remained unchanged",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "DATA_REFRESH": {
       "status": "PASS",
@@ -158,7 +159,7 @@
       "evidence": "evidence/powerbi_runtime/runtime.json",
       "result": "All8tables imported in both modes; counts and Run/source metadata match independent PostgreSQL proofs",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "DAX_RUNTIME_RECONCILIATION": {
       "status": "PASS",
@@ -169,7 +170,7 @@
       "evidence": "evidence/powerbi_runtime/runtime.json",
       "result": "Actual Desktop engine:32/32queries,962strict comparisons,0mismatches; real17/553,synthetic15/409; all5supplied EVALUATE blocks per mode and49measure filter matrix",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "VISUAL_QA": {
       "status": "PASS",
@@ -180,7 +181,7 @@
       "evidence": "evidence/powerbi_runtime/runtime.json",
       "result": "All4native pages inspected in both modes;8final screenshots plus actual date/category/seller/order interactions; zero-numerator and clipping fixes verified",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "REMOTE_CI": {
       "status": "NOT_RUN",
@@ -189,7 +190,7 @@
     "PYTHON_QUALITY": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Ruff lint and format40Python files",
       "evidence": "logs/RL08_RELEASE_LINT_20261010T073513505948Z.log",
       "exit_code": 0,
@@ -201,7 +202,7 @@
       "evidence": "evidence/powerbi_final/source_schema.json",
       "result": "Source and exact fresh real/synthetic:65JSON,12officialschemas,4pages,8tables,49measures,55visuals,114refs,actualrelationships and PostgreSQL keys",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "TMDL_PARSE": {
       "status": "PASS",
@@ -209,12 +210,12 @@
       "evidence": "evidence/powerbi_final/source_tom.json",
       "result": "Source and exact fresh real/synthetic officialTOM19.117.0; actualproperties match all5relationships",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "CLEANUP_RUNTIME": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Actual existing Docker scenario passed; own port6433, isolated project/image, volumes preserved",
       "evidence": "docker_verification.json",
       "exit_code": 0
@@ -222,7 +223,7 @@
     "POWERSHELL_SYNTAX": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Actual Windows PowerShell5.1 AST parser14scripts",
       "evidence": "logs/RL08_RELEASE_POWERSHELL_20261010T073525417132Z.log",
       "exit_code": 0
@@ -234,12 +235,12 @@
       "result": "Non-Desktop process rejected before UI actions",
       "evidence": "logs/POWERBI_PROCESS_GUARD_NEGATIVE_20261007T222204185192Z.log",
       "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "DOCKER_CONTEXT": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Actual existing Docker scenario passed; own port6433, isolated project/image, volumes preserved",
       "evidence": "docker_verification.json",
       "exit_code": 0
@@ -247,7 +248,7 @@
     "LINUX_DAEMON": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Actual existing Docker scenario passed; own port6433, isolated project/image, volumes preserved",
       "evidence": "docker_verification.json",
       "exit_code": 0
@@ -255,7 +256,7 @@
     "WSL_PREREQUISITE": {
       "status": "PASS",
       "evidence_run": "20261009T1342581150025Z",
-      "execution": "Executed in current Docker continuation",
+      "execution": "Historical accepted execution in 20261009T1342581150025Z; not rerun for documentation-only closure.",
       "result": "WSL3.0.1.0, default distribution docker-desktop, default version2; both status/version exit0. WSL1-only warning is not WSL2 failure.",
       "evidence": "logs/WSL_STATUS_CURRENT.log",
       "exit_code": 0,
@@ -264,7 +265,7 @@
     "DOCKER_SCENARIO_TESTS": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "77scoped tests including existing comparisons/orchestration, endpoint/PBIP/Windows guards and refresh validation; no schema reset",
       "evidence": "logs/RL08_RELEASE_TESTS_20261010T073512803274Z.log",
       "exit_code": 0
@@ -272,7 +273,7 @@
     "DOCKER_POWERSHELL_SYNTAX": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Included in actual14script AST check",
       "evidence": "logs/RL08_RELEASE_POWERSHELL_20261010T073525417132Z.log",
       "exit_code": 0
@@ -280,7 +281,7 @@
     "PINNED_OLIST_INPUT": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "All9Olistv2 hashes checked; full Docker demo used existing read-only source",
       "evidence": "evidence/docker_input.json",
       "exit_code": 0
@@ -288,7 +289,7 @@
     "PORTABLE_READ_ONLY_REFERENCE": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Actual configured5435 on every connection; same-connection data_directory check; both modes preserved",
       "evidence": "evidence/portable-preserved-comparison.json",
       "exit_code": 0
@@ -296,7 +297,7 @@
     "PORTABLE_RUNNING_GUARD": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Actual own status/identity; repeated start reused owned server",
       "evidence": "logs/PORTABLE_IDENTITY_NO_RESTART_20261010T071202512478Z.log",
       "exit_code": 0
@@ -304,7 +305,7 @@
     "DOCKER_AUTOMATION_ATTEMPT": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "verify_docker.ps1 actual exit0;14gates PASS",
       "evidence": "scenario-command.json",
       "exit_code": 0
@@ -312,7 +313,7 @@
     "PORTABLE_PORT_AVAILABILITY": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "WTA5433 untouched;5434 occupied;5435 chosen privately with credentials retained",
       "evidence": "private-port-change.json",
       "exit_code": 0
@@ -320,7 +321,7 @@
     "CURRENT_ENDPOINT_REFRESH": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Both fresh projects opened/refreshed; TOM source5435 and6finalADOMD proof queries:8tables/sourcehash/fiveKPIs",
       "evidence": "evidence/endpoint-refresh.json",
       "exit_code": 0
@@ -328,7 +329,7 @@
     "WTA_COEXISTENCE": {
       "status": "PASS",
       "evidence_run": "20261009T2049086587846Z",
-      "execution": "Actually executed in current RL08 run",
+      "execution": "Historical accepted execution in 20261009T2049086587846Z; not rerun for documentation-only closure.",
       "result": "Same healthy WTA containers/ports/creation IDs; authenticated own Portable data_directory",
       "evidence": "evidence/coexistence.json",
       "exit_code": 0
@@ -339,8 +340,8 @@
   ],
   "observation_end": "2018-09-01",
   "observation_basis": "Assumed start-of-day cutoff before sparse September/October tail; source completeness not certified",
-  "next_action": "Review RL08 and current compact bundle; remote CI remains NOT_RUN, no publication requested.",
-  "note": "Current local coexistence, Portable preservation, Docker and fresh Desktop refresh PASS. Local MVP READY_ACCEPTED and RL01-07 remain historical accepted controls. Overall PARTIAL refers only to remote CI outside local scope.",
+  "next_action": "Local acceptance is complete; no further implementation review is required for this documentation-only closure. REMOTE_CI remains NOT_RUN; remote execution/publication is outside the authorized scope. Portfolio order remains B -> C -> D -> A.",
+  "note": "Final local MVP and Docker acceptance PASS; RL-08 CLOSED_ACCEPTED by review2026-10-10 for cd8ad721933e0fa9c5e1636aa61a3a57e75cc237 only. Local MVP remains READY_ACCEPTED. Overall PARTIAL refers solely to REMOTE_CI NOT_RUN, not to a pending local review or material local defect. Application verification entries are historical accepted executions, not tests of the documentation closure.",
   "previous_implementation_run": "20261009T1342581150025Z",
   "baseline_sha": "42f359e1b8f92e140246f1e5d7d8bd02212a2489",
   "review_fixes": {
@@ -351,7 +352,7 @@
     "RL-05": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
     "RL-06": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
     "RL-07": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
-    "RL-08": "IMPLEMENTED_VERIFIED; configurable endpoints, authenticated cluster identity, guarded Desktop reconnection and actual Docker acceptance; ready for review"
+    "RL-08": "CLOSED_ACCEPTED"
   },
   "accepted_mvp_run": "20261007T204100Z",
   "accepted_mvp_head": "922502a8ae65fd87597a98abffe0707fa031b84e",
@@ -364,7 +365,8 @@
     "20261007T204100Z",
     "20261009T091005Z",
     "20261009T1342581150025Z",
-    "20261009T2049086587846Z"
+    "20261009T2049086587846Z",
+    "20261010T084859794283Z"
   ],
   "current_endpoint_reports": {
     "real": "C:\\projekty\\retaillens\\output\\powerbi\\real\\20261009T205857907973Z-zrxzkqat\\RetailLens.pbip",
@@ -375,5 +377,24 @@
     "wta_dashboard": "http://127.0.0.1:8501",
     "retaillens_portable": "127.0.0.1:5435",
     "docker_review": "127.0.0.1:6433; own containers stopped after cleanup"
-  }
+  },
+  "state_scope": "Overall verification including REMOTE_CI; local MVP and Docker are accepted.",
+  "last_acceptance_record_run": "20261010T084859794283Z",
+  "final_local_acceptance": {
+    "review_date": "2026-10-10",
+    "decision": "ACCEPTED",
+    "local_verification": "PASS",
+    "rl08_status": "CLOSED_ACCEPTED",
+    "accepted_commit": "cd8ad721933e0fa9c5e1636aa61a3a57e75cc237",
+    "accepted_git_tree": "adc1d583ba564493082b5bcc974ac6b468658379",
+    "evidence_run": "20261009T2049086587846Z",
+    "accepted_bundle_sha256": "b13695ca4db4d97e91ac3a4149daf2df4217f982cc95dfe4c4b85cc92089a598",
+    "material_defects": [],
+    "documentation": "docs/FINAL_ACCEPTANCE.md",
+    "acceptance_scope": "Local MVP and Docker at the accepted commit; no automatic acceptance of later implementation changes.",
+    "remote_ci": "NOT_RUN",
+    "historical_evidence_only": true,
+    "reviewer_results": "2026-10-10 review: 202 source files and 301 evidence files verified; accepted Git tree reproduced;73 tests PASS and4 Windows-only SKIP; Docker/Portable and44 Power BI/SQL fields PASS."
+  },
+  "verification_context": "Every application verification result below belongs to its recorded evidence_run. The acceptance-record run performs documentation, Git identity, JSON, diff and bundle checks only; no application, database, Docker or Power BI tests are rerun."
 }

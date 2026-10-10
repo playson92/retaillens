@@ -19,7 +19,13 @@ interactions are retained. The actual Desktop engine executed **32 required DAX 
 with **962 strict comparisons against PostgreSQL and no mismatches**, including the supplied
 reconciliation queries and date/category/seller/empty selections.
 
-**Current local acceptance: PASS.** Run `20261009T2049086587846Z` fixes RL-08.
+**Final local acceptance: ACCEPTED / PASS; RL-08: CLOSED_ACCEPTED (2026-10-10).**
+The accepted implementation is `cd8ad721933e0fa9c5e1636aa61a3a57e75cc237`,
+with evidence run `20261009T2049086587846Z`. The review found no material defects.
+The results below are historical accepted executions, not tests of the documentation
+closure. **Local MVP: READY_ACCEPTED; container acceptance: PASS; REMOTE_CI: NOT_RUN.**
+The overall `PARTIAL` state refers only to remote CI, outside the accepted local scope.
+See [final acceptance](docs/FINAL_ACCEPTANCE.md) for the decision and evidence identity.
 WTA keeps PostgreSQL5433 and dashboard8501. The preserved RetailLens Portable cluster
 runs at **127.0.0.1:5435** because5434 was occupied too. Authenticated
 `SHOW data_directory` identifies `output/postgres_data` before readiness, database
@@ -170,7 +176,8 @@ while preserving volumes. Local Compose parsing and a remote container run are s
 
 Run evidence, Polish review, patch, manifest, handoff and `REVIEW_BUNDLE.zip` are under
 `output/codex_runs/<UTC_TIMESTAMP>`. Bundles omit secrets, environments, databases, full inputs,
-Git and caches. Work is left for review on `feat/retaillens-mvp`, without merge or publication.
+Git and caches. Local MVP acceptance is closed on `feat/retaillens-mvp`. Remote CI remains
+unexecuted; no merge, push or publication is part of the documentation closure.
 
 ```mermaid
 flowchart LR
