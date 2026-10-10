@@ -1,5 +1,10 @@
 # Three-minute demo
 
+[Short presenter setup and publication guide](PRESENTATION.md).
+Local MVP and Docker are accepted; RL-01–RL-08 are CLOSED_ACCEPTED.
+REMOTE_CI remains NOT_RUN. The evidence sections below describe historical
+executions; portfolio preparation does not repeat the demo.
+
 Prepare: `scripts/setup.ps1`, then `scripts/demo.ps1 -Mode real -ObservationEnd 2018-09-01`.
 Invoke scripts with `powershell -NoProfile -ExecutionPolicy Bypass -File` as shown in README;
 this works with the host's default restricted script policy without a global policy change.
@@ -34,11 +39,11 @@ Troubleshooting: change an occupied DATABASE_PORT and regenerate local report; s
 without Docker; install Python3.12 rather than changing required version. Connection failures
 are failed executions, not skipped tests. No command resets unrelated projects or volumes.
 
-## Current RL-08 verification and coexistence
+## Historical accepted RL-08 verification and coexistence
 
 Run `20261009T2049086587846Z`, baseline `42f359e1b8f92e140246f1e5d7d8bd02212a2489`,
 preserves the accepted cluster, schemas, source hashes and business rules.
-WTA remains healthy at PostgreSQL5433 and dashboard8501. Port5434 was occupied too;
+In that accepted run, WTA remained healthy at PostgreSQL5433 and dashboard8501. Port5434 was occupied too;
 private RetailLens configuration now uses5435 with database/username/password retained.
 
 ~~~powershell
@@ -59,7 +64,7 @@ cleanup phases. Own containers stopped; named volumes remain. All14gates PASS in
 `docker_verification.json`. Image:
 `sha256:31d1ca0afb534ea6d0eb90ea318c54ce5adbae916c13259a85410a6021546c1d`.
 
-## Fresh Desktop reports on5435
+## Historical fresh Desktop reports on5435
 
 Both fresh projects opened and actually refreshed on this Windows machine:
 
@@ -68,14 +73,14 @@ Both fresh projects opened and actually refreshed on this Windows machine:
 | real | `C:\projekty\retaillens\output\powerbi\real\20261009T205857907973Z-zrxzkqat\RetailLens.pbip` |
 | synthetic | `C:\projekty\retaillens\output\powerbi\synthetic\20261009T205858485709Z-4ziudmlx\RetailLens.pbip` |
 
-Current `evidence/endpoint-refresh.json` verifies TOM provider/source, eight table counts,
+That run's `evidence/endpoint-refresh.json` verifies TOM provider/source, eight table counts,
 source hashes and five main KPIs through six final ADOMD queries:
 real99441orders/112650items/13221498.11BRL GMV/137.0416AOV/93.15435818%on time/2.00652550%repeat;
 synthetic8orders/10items/340BRL GMV/56.6667AOV/60%on time/25%repeat.
 Currency precision, Decimal comparison allowances and NULL semantics are unchanged.
 
-`real-refreshed-overview.png` and `synthetic-refreshed-overview.png` are real current
-screenshots, full source date ranges and no additional segment selection. Historical
+`real-refreshed-overview.png` and `synthetic-refreshed-overview.png` are real captures from that run,
+with full source date ranges and no additional segment selection. Historical
 four-page visual QA and32DAX/962comparisons remain accepted in run20261007T204100Z.
 
 Helpers resolve environment > SettingsPath/.env > defaults and retain exact source,

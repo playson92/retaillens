@@ -6,6 +6,10 @@ single-direction relationships. Definition validation and report execution are
 separate checks. An official schema or TMDL parse does not demonstrate that the
 report has opened, refreshed or rendered in Desktop.
 
+**Local report/MVP and Docker: ACCEPTED / PASS; RL-01–RL-08: CLOSED_ACCEPTED.**
+**REMOTE_CI: NOT_RUN.** [Final acceptance](../docs/FINAL_ACCEPTANCE.md) records exact
+implementation and evidence identities; portfolio documentation does not rerun Desktop.
+
 Start the database and prepare real or synthetic marts using the repository demo
 commands, then open the existing project:
 
@@ -16,15 +20,17 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/open_powerbi.ps1 -Mo
 For the fixture use `-Mode synthetic`. The model defaults to real data. Both modes
 share definitions but use separate PostgreSQL schemas, `rl_real` and
 `rl_synthetic`; the mode is displayed on every page. On first connection, use
-Desktop's **Database** credentials for `localhost:5433`, database `retaillens`,
-with the local username and password from `.env`. Credentials are entered only
-into Desktop's local credential store. Select **Refresh**. No Power BI account,
-Service publication or manually designed visuals are needed for the local report.
+Desktop's **Database** credentials for the host, port and database resolved from
+process environment > private `.env` > defaults, with the configured username and
+password. Current Portable RetailLens uses **127.0.0.1:5435**; use the prepared
+copy's actual parameters instead of the authored/template connection defaults.
+Credentials are entered only into Desktop's local credential store. Select **Refresh**.
+No Power BI account, Service publication or manually designed visuals are needed for the local report.
 Use Desktop **Transform data > Edit parameters** if connection settings differ.
 Parameters `ServerHost`, `ServerPort`, `DatabaseName` and `DataMode` are text
 expressions in `RetailLens.SemanticModel/definition/expressions.tmdl`.
 
-The Desktop client uses the published host port (default `localhost:5433`). A
+The Desktop client uses the configured host port (currently **127.0.0.1:5435**). A
 client inside Compose uses service `db` and its internal port `5432`. Refresh the
 whole model after changing DataMode; a partial table refresh must not mix modes.
 
@@ -129,3 +135,16 @@ connection catalog IDs, SQL proofs and failed attempts with their resolutions
 remain in that evidence directory. Native long tables/crowded axes use scrolling
 and tooltips. Optional UI helper scripts target this Polish Desktop locale and
 require an explicit owned process ID; core project dependencies are unchanged.
+
+## Portfolio images and current endpoint acceptance
+
+[Four actual real screenshots and their provenance](../docs/images/README.md) are
+included in the repository. [Overview](../README.md) is the entry image;
+[the case study](../docs/CASE_STUDY.md) shows the other pages and relative SQL/result links.
+All are historical accepted captures, not new renders or mockups.
+
+The later RL-08 run `20261009T2049086587846Z` refreshed two fresh real/synthetic
+projects on the preserved Portable cluster at 5435, proving 8 tables and 5 main KPIs
+per mode with 6 final queries. The earlier 32-query / 962-comparison model acceptance
+remains valid. The screenshots' recorded historical ports do not override current
+configuration. WTA/CI 5433 contexts remain separate; a Compose client still uses `db:5432`.

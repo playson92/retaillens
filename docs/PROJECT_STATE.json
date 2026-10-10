@@ -19,7 +19,7 @@
     "05": "PASS"
   },
   "last_implementation_run": "20261009T2049086587846Z",
-  "last_updated_utc": "2026-10-10T08:50:32.284635+00:00",
+  "last_updated_utc": "2026-10-10T10:05:26.102052+00:00",
   "data_mode": "real; synthetic isolated in a separate schema",
   "real_data_downloaded": true,
   "power_bi_runtime_verified": true,
@@ -42,7 +42,8 @@
     "RL08 authenticated own Portable on5435 before readiness/creation/capture; WTA retained",
     "Actual isolated Docker build/full Olist+fixture/comparison/negative-control/both cleanup phases PASS",
     "Fresh real/synthetic Desktop endpoint refresh,8table/source/fiveKPI proof and two Overview screenshots",
-    "Final local MVP/Docker acceptance recorded; RL-08 CLOSED_ACCEPTED by review2026-10-10"
+    "Final local MVP/Docker acceptance recorded; RL-08 CLOSED_ACCEPTED by review2026-10-10",
+    "Portfolio entry refreshed with four unchanged real screenshots, small SQL proof copies and presentation/publication guide"
   ],
   "verification": {
     "UNIT_TESTS": {
@@ -340,7 +341,7 @@
   ],
   "observation_end": "2018-09-01",
   "observation_basis": "Assumed start-of-day cutoff before sparse September/October tail; source completeness not certified",
-  "next_action": "Local acceptance is complete; no further implementation review is required for this documentation-only closure. REMOTE_CI remains NOT_RUN; remote execution/publication is outside the authorized scope. Portfolio order remains B -> C -> D -> A.",
+  "next_action": "Portfolio materials prepared locally; first repository publication and REMOTE_CI remain NOT_RUN and need separate authorization. No repeated local implementation acceptance is required. Portfolio order B -> C -> D -> A.",
   "note": "Final local MVP and Docker acceptance PASS; RL-08 CLOSED_ACCEPTED by review2026-10-10 for cd8ad721933e0fa9c5e1636aa61a3a57e75cc237 only. Local MVP remains READY_ACCEPTED. Overall PARTIAL refers solely to REMOTE_CI NOT_RUN, not to a pending local review or material local defect. Application verification entries are historical accepted executions, not tests of the documentation closure.",
   "previous_implementation_run": "20261009T1342581150025Z",
   "baseline_sha": "42f359e1b8f92e140246f1e5d7d8bd02212a2489",
@@ -366,7 +367,8 @@
     "20261009T091005Z",
     "20261009T1342581150025Z",
     "20261009T2049086587846Z",
-    "20261010T084859794283Z"
+    "20261010T084859794283Z",
+    "20261010T095706964784Z"
   ],
   "current_endpoint_reports": {
     "real": "C:\\projekty\\retaillens\\output\\powerbi\\real\\20261009T205857907973Z-zrxzkqat\\RetailLens.pbip",
@@ -396,5 +398,20 @@
     "historical_evidence_only": true,
     "reviewer_results": "2026-10-10 review: 202 source files and 301 evidence files verified; accepted Git tree reproduced;73 tests PASS and4 Windows-only SKIP; Docker/Portable and44 Power BI/SQL fields PASS."
   },
-  "verification_context": "Every application verification result below belongs to its recorded evidence_run. The acceptance-record run performs documentation, Git identity, JSON, diff and bundle checks only; no application, database, Docker or Power BI tests are rerun."
+  "verification_context": "Every application verification result below belongs to its recorded evidence_run. The acceptance-record run performs documentation, Git identity, JSON, diff and bundle checks only; no application, database, Docker or Power BI tests are rerun.",
+  "last_portfolio_preparation_run": "20261010T095706964784Z",
+  "portfolio_preparation": {
+    "status": "PREPARED_LOCALLY",
+    "run": "20261010T095706964784Z",
+    "baseline_sha": "3496729bbc3d0db0144cbd01d845f3c3ffe18124",
+    "scope": "Documentation, unchanged accepted real screenshots and aggregate result copies with only Git text line-ending normalization; no data value changes",
+    "readme": "README.md",
+    "case_study": "docs/CASE_STUDY.md",
+    "presentation": "docs/PRESENTATION.md",
+    "image_provenance": "docs/images/provenance.json",
+    "result_provenance": "docs/evidence/real/provenance.json",
+    "publication": "NOT_RUN",
+    "remote_ci": "NOT_RUN",
+    "runtime_checks_this_step": "NOT_RUN; existing local acceptance preserved"
+  }
 }

@@ -1,0 +1,2 @@
+data_mode,source_version,source_manifest_sha256,analysis_start,analysis_end_exclusive,observation_end,observation_basis,imported_at,reconciliation_tolerance
+real,olist-v2,523b3bb82915828886d5e726fbe1c03cb6dfcedf60fbd9fa1c0d329db18690b9,2016-09-04,2018-10-18,2018-09-01,Explicit user-supplied historical observation boundary; completeness assumed,2026-10-07 20:57:39.791803,0.01

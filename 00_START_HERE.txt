@@ -1,3 +1,25 @@
+RETAILLENS — AKTUALNY START / HISTORIA
+
+Stan z 2026-10-10: lokalny MVP i Docker ACCEPTED / PASS; RL-01–RL-08
+CLOSED_ACCEPTED. REMOTE_CI pozostaje NOT_RUN. Nie buduj ponownie MVP
+na podstawie archiwalnej instrukcji poniżej.
+
+Aktualne materiały:
+- README.md — problem, prawdziwy Overview, wyniki i uruchomienie;
+- docs/CASE_STUDY.md — trzy ustalenia i linki do SQL/wyników;
+- docs/PRESENTATION.md — trzyminutowe demo i pierwsza publikacja;
+- docs/FINAL_ACCEPTANCE.md — decyzja odbioru i dokładne dowody.
+
+Połączenie korzysta z konfiguracji: środowisko procesu > prywatny .env >
+wartości domyślne. Aktualny Portable RetailLens: 127.0.0.1:5435,
+istniejący output/postgres_data. WTA zachowuje PostgreSQL 5433 / dashboard 8501.
+Docker testował 6433 i zatrzymał własne kontenery; CI ma osobny kontekst.
+Nie zmieniaj zbiorczo portów i nie publikuj lokalnych poświadczeń.
+
+MATERIAŁ HISTORYCZNY — PONIŻSZY TEKST TO STARTER Z 2026-10-07.
+PROMPT_CODEX_RETAILLENS.txt i CODEX_TASK_RETAILLENS.txt także dokumentują
+pierwotne zlecenie implementacji, a nie bieżący stan odebranego projektu.
+
 RETAILLENS — START DLA CODEXA
 
 To jest paczka startowa oparta na portfolio-project-template. Kod właściwego

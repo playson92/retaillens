@@ -1,0 +1,17 @@
+order_status,reconciliation_status,orders,expected_brl,paid_brl,delta_brl
+approved,matched,2,241.08,241.08,0.00
+canceled,matched,459,105728.00,105728.00,0.00
+canceled,mismatch,2,157.72,189.73,32.01
+canceled,not_comparable,164,,37337.87,
+created,not_comparable,5,,688.10,
+delivered,matched,96178,15369539.72,15369539.06,-0.66
+delivered,mismatch,299,50090.57,52922.71,2832.14
+delivered,not_comparable,1,143.46,,
+invoiced,matched,312,68988.75,68988.76,0.01
+invoiced,not_comparable,2,,149.23,
+processing,matched,301,69394.11,69394.11,0.00
+shipped,matched,1104,177056.63,177056.61,-0.02
+shipped,mismatch,2,72.71,79.62,6.91
+shipped,not_comparable,1,,77.73,
+unavailable,matched,6,2140.49,2140.49,0.00
+unavailable,not_comparable,603,,124339.02,

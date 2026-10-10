@@ -1,0 +1,89 @@
+{
+  "status": "PASS",
+  "postgres_version": "PostgreSQL 17.6 on x86_64-windows, compiled by msvc-19.44.35213, 64-bit",
+  "review_groups": [
+    {
+      "is_on_time": false,
+      "eligible_orders": 6510,
+      "reviewed_orders": 6357,
+      "mean_review_score": "2.2691521157778826",
+      "review_coverage": "0.97649769585253456221"
+    },
+    {
+      "is_on_time": true,
+      "eligible_orders": 88587,
+      "reviewed_orders": 88101,
+      "mean_review_score": "4.2898377997979592",
+      "review_coverage": "0.99451386772325510515"
+    }
+  ],
+  "tail_months": [
+    {
+      "month": "2018-08",
+      "orders": 6512,
+      "delivered": 6351
+    },
+    {
+      "month": "2018-09",
+      "orders": 16,
+      "delivered": 0
+    },
+    {
+      "month": "2018-10",
+      "orders": 4,
+      "delivered": 0
+    }
+  ],
+  "direct_financial": {
+    "item_value": "13221498.11",
+    "expected": "15419773.75"
+  },
+  "source_files": [
+    {
+      "table_name": "customers",
+      "row_count": 99441,
+      "sha256": "983a422239e1712ded753b3bf9ecf47dc73f144d306029dcfa99e70a226883d2"
+    },
+    {
+      "table_name": "geolocation",
+      "row_count": 1000163,
+      "sha256": "b514f6fc991b9566aeba02aa5d67e2c3630f034b60a0e05aa0d082a3b66d88d6"
+    },
+    {
+      "table_name": "items",
+      "row_count": 112650,
+      "sha256": "0bc4d068c4fe38cbb01bd90e8746e3c613fe7b4baef75fab7b0e329701c3e279"
+    },
+    {
+      "table_name": "orders",
+      "row_count": 99441,
+      "sha256": "8df58ef3d2d7e9944010f7beecd9b75367f5588ec6e3c91cec19ae3345ef9ecf"
+    },
+    {
+      "table_name": "payments",
+      "row_count": 103886,
+      "sha256": "4f713964f2815dbbaa40b9488268c55aac3627bfce5aa96cf58d1f3616de3cc0"
+    },
+    {
+      "table_name": "products",
+      "row_count": 32951,
+      "sha256": "3e6569628a17fbc75fd206ee357b59e20364b9afa90f5b6cd5b4d624c58aa9cc"
+    },
+    {
+      "table_name": "reviews",
+      "row_count": 99224,
+      "sha256": "012b61c7593e34f51fa614efdf802b9c7056ce6aae5307ddb93236e7cfc797d7"
+    },
+    {
+      "table_name": "sellers",
+      "row_count": 3095,
+      "sha256": "1f643d2b950373b85735e7794b20986f528d7a000432e7c6f9bcbb44d0846a0e"
+    },
+    {
+      "table_name": "translations",
+      "row_count": 71,
+      "sha256": "a81f0d1f27b27e7293f761bc79e3ce8f348ee39c4b3ed3e49bde38f478586278"
+    }
+  ],
+  "observation_assumption": "Start of 2018-09-01: sparse September/October tail is excluded from 90-day follow-up; source completeness is still assumed"
+}

@@ -1,0 +1,126 @@
+{
+  "description": "Previously executed and accepted Power BI Desktop screenshots; no report execution or image editing in portfolio preparation.",
+  "current_portable_endpoint": "127.0.0.1:5435",
+  "historical_endpoint_note": "Three pages were captured before RL-08 on5433. This is historical provenance, not current connection guidance. WTA and CI keep their separate port contexts.",
+  "data_source": {
+    "data_mode": "real",
+    "source_version": "olist-v2",
+    "official_url": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
+    "handle": "olistbr/brazilian-ecommerce/versions/2",
+    "retrieved_at_utc": "2026-10-07T19:27:54.161195+00:00",
+    "license": "CC BY-NC-SA 4.0",
+    "license_reference": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
+    "attribution": "Olist and collaborators",
+    "metadata_verified": "Kaggle public datasets/list API: dataset id55151, currentVersionNumber2, lastUpdated2021-10-01T19:08:27.97Z"
+  },
+  "images": [
+    {
+      "page": "overview",
+      "source_run": "20261009T2049086587846Z",
+      "source_path": "evidence/real-refreshed-overview.png",
+      "bytes": 192561,
+      "sha256": "44e04ccd7f82b0501062ed34299ba0d17307550634d3258aa4f14735dfa47bf1",
+      "matches_evidence_archive": true,
+      "published_path": "docs/images/real-overview.png",
+      "page_title": "Overview",
+      "data_mode": "real",
+      "source_version": "olist-v2",
+      "width": 1920,
+      "height": 1029,
+      "filters": {
+        "purchase_dates_inclusive": [
+          "2016-09-04",
+          "2018-10-17"
+        ],
+        "extra_selections": "None; full-source date range and All/default page slicers visible in the accepted screenshots"
+      },
+      "observation_end": "2018-09-01",
+      "source_manifest_sha256": "523b3bb82915828886d5e726fbe1c03cb6dfcedf60fbd9fa1c0d329db18690b9",
+      "runtime_record_completed_at_utc": "2026-10-10T07:43:27.484344+00:00",
+      "historical_postgres_endpoint": "127.0.0.1:5435",
+      "acceptance_reference_commit": "cd8ad721933e0fa9c5e1636aa61a3a57e75cc237",
+      "transformation": "None; original screenshot bytes copied unchanged"
+    },
+    {
+      "page": "deliveries",
+      "source_run": "20261007T204100Z",
+      "source_path": "evidence/powerbi_runtime/real-final-deliveries.png",
+      "bytes": 185524,
+      "sha256": "4dea32ba9d40f1d8606407614f5cc2da575fbb4f025f5d4f6df411114f8be342",
+      "matches_evidence_archive": true,
+      "published_path": "docs/images/real-deliveries.png",
+      "page_title": "Deliveries and reviews",
+      "data_mode": "real",
+      "source_version": "olist-v2",
+      "width": 1920,
+      "height": 1029,
+      "filters": {
+        "purchase_dates_inclusive": [
+          "2016-09-04",
+          "2018-10-17"
+        ],
+        "extra_selections": "None; full-source date range and All/default page slicers visible in the accepted screenshots"
+      },
+      "observation_end": "2018-09-01",
+      "source_manifest_sha256": "523b3bb82915828886d5e726fbe1c03cb6dfcedf60fbd9fa1c0d329db18690b9",
+      "runtime_record_completed_at_utc": "2026-10-07T22:19:46.722752+00:00",
+      "historical_postgres_endpoint": "127.0.0.1:5433",
+      "acceptance_reference_commit": "922502a8ae65fd87597a98abffe0707fa031b84e",
+      "transformation": "None; original screenshot bytes copied unchanged"
+    },
+    {
+      "page": "segments",
+      "source_run": "20261007T204100Z",
+      "source_path": "evidence/powerbi_runtime/real-final-segments.png",
+      "bytes": 197680,
+      "sha256": "cd00bf28843257206b084b1158962505d8446b03fee44abbedf5a9c3d72ea28f",
+      "matches_evidence_archive": true,
+      "published_path": "docs/images/real-segments.png",
+      "page_title": "Sellers and categories",
+      "data_mode": "real",
+      "source_version": "olist-v2",
+      "width": 1920,
+      "height": 1029,
+      "filters": {
+        "purchase_dates_inclusive": [
+          "2016-09-04",
+          "2018-10-17"
+        ],
+        "extra_selections": "None; full-source date range and All/default page slicers visible in the accepted screenshots"
+      },
+      "observation_end": "2018-09-01",
+      "source_manifest_sha256": "523b3bb82915828886d5e726fbe1c03cb6dfcedf60fbd9fa1c0d329db18690b9",
+      "runtime_record_completed_at_utc": "2026-10-07T22:19:46.722752+00:00",
+      "historical_postgres_endpoint": "127.0.0.1:5433",
+      "acceptance_reference_commit": "922502a8ae65fd87597a98abffe0707fa031b84e",
+      "transformation": "None; original screenshot bytes copied unchanged"
+    },
+    {
+      "page": "quality",
+      "source_run": "20261007T204100Z",
+      "source_path": "evidence/powerbi_runtime/real-final-quality.png",
+      "bytes": 203378,
+      "sha256": "fa77df4e200316f5b32adfa45e1bfc9ba7e534ce1624f3f9279c45e5257d9117",
+      "matches_evidence_archive": true,
+      "published_path": "docs/images/real-quality.png",
+      "page_title": "Data quality",
+      "data_mode": "real",
+      "source_version": "olist-v2",
+      "width": 1920,
+      "height": 1029,
+      "filters": {
+        "purchase_dates_inclusive": [
+          "2016-09-04",
+          "2018-10-17"
+        ],
+        "extra_selections": "None; full-source date range and All/default page slicers visible in the accepted screenshots"
+      },
+      "observation_end": "2018-09-01",
+      "source_manifest_sha256": "523b3bb82915828886d5e726fbe1c03cb6dfcedf60fbd9fa1c0d329db18690b9",
+      "runtime_record_completed_at_utc": "2026-10-07T22:19:46.722752+00:00",
+      "historical_postgres_endpoint": "127.0.0.1:5433",
+      "acceptance_reference_commit": "922502a8ae65fd87597a98abffe0707fa031b84e",
+      "transformation": "None; original screenshot bytes copied unchanged"
+    }
+  ]
+}

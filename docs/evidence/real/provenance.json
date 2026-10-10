@@ -1,0 +1,98 @@
+{
+  "description": "Accepted aggregate results and source provenance copied for presentation; Git text copies normalize only line endings, with original and published hashes recorded. No query execution or data value changes.",
+  "data_source": {
+    "data_mode": "real",
+    "source_version": "olist-v2",
+    "official_url": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
+    "handle": "olistbr/brazilian-ecommerce/versions/2",
+    "retrieved_at_utc": "2026-10-07T19:27:54.161195+00:00",
+    "license": "CC BY-NC-SA 4.0",
+    "license_reference": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
+    "attribution": "Olist and collaborators",
+    "metadata_verified": "Kaggle public datasets/list API: dataset id55151, currentVersionNumber2, lastUpdated2021-10-01T19:08:27.97Z"
+  },
+  "query_parameters": {
+    "data_mode": "real",
+    "source_version": "olist-v2",
+    "start_inclusive": "2016-09-04",
+    "end_exclusive": "2018-10-18",
+    "observation_end": "2018-09-01",
+    "reconciliation_tolerance_brl": "0.01",
+    "source_completeness": "Not certified"
+  },
+  "historical_accepted_run": "20261007T204100Z",
+  "acceptance_reference_commit": "922502a8ae65fd87597a98abffe0707fa031b84e",
+  "files": [
+    {
+      "path": "docs/evidence/real/03_overview.csv",
+      "source_run": "20261007T204100Z",
+      "source_path": "evidence/real/03_overview.csv",
+      "bytes": 228,
+      "sha256": "eb303e3e95a5a83d8e08995bedcfeb00bf779bbdb272c86ef4ad5f2f56949d7f",
+      "transformation": "CRLF->LF text line endings only for Git; all rows, values and metadata unchanged",
+      "original_bytes": 230,
+      "original_sha256": "f8f4beadfdc0cbbcdd40e770fa204cc4830d1dc2f0fb0b77e207cd8e107f5fcf"
+    },
+    {
+      "path": "docs/evidence/real/05_deliveries_reviews.csv",
+      "source_run": "20261007T204100Z",
+      "source_path": "evidence/real/05_deliveries_reviews.csv",
+      "bytes": 4951,
+      "sha256": "e293e6f5123859f5742609306ee0795e484e98260309e6b48db25daa109dc33e",
+      "transformation": "CRLF->LF text line endings only for Git; all rows, values and metadata unchanged",
+      "original_bytes": 5006,
+      "original_sha256": "6269020f49d8a722f63d1122034df5265e7459ba6c9d1c56326ff107ab288e1e"
+    },
+    {
+      "path": "docs/evidence/real/07_reconciliation.csv",
+      "source_run": "20261007T204100Z",
+      "source_path": "evidence/real/07_reconciliation.csv",
+      "bytes": 737,
+      "sha256": "e46b6a5751580a44516e7042bd1ee1f9eb21c9ac5b378d2027e0d3164912f66a",
+      "transformation": "CRLF->LF text line endings only for Git; all rows, values and metadata unchanged",
+      "original_bytes": 754,
+      "original_sha256": "ca1385064ea3a22d70742bdb4ba38a10b9e78cf99867c6c03436a2642505e6ed"
+    },
+    {
+      "path": "docs/evidence/real/08_repeat.csv",
+      "source_run": "20261007T204100Z",
+      "source_path": "evidence/real/08_repeat.csv",
+      "bytes": 191,
+      "sha256": "22f2fec46b35082542b3a264e1b1ab11820d1beb9897c14ca8556ecc5cbdd296",
+      "transformation": "CRLF->LF text line endings only for Git; all rows, values and metadata unchanged",
+      "original_bytes": 193,
+      "original_sha256": "d986dbab52fafdb39e3b2935384a40238221089473515dd96c68d42cb8a8d899"
+    },
+    {
+      "path": "docs/evidence/real/sql_evidence.json",
+      "source_run": "20261007T204100Z",
+      "source_path": "evidence/real/sql_evidence.json",
+      "bytes": 2472,
+      "sha256": "2656a65fd10516d390992d066179263811cf1f8e84c73ee38de84592cd189242",
+      "transformation": "CRLF->LF text line endings only for Git; all rows, values and metadata unchanged",
+      "original_bytes": 2561,
+      "original_sha256": "05d8f7555a14a35abd48a18541318ce6c9e8e28afa3d75c7cfd2ba29e97d5641"
+    },
+    {
+      "path": "docs/evidence/real/run_metadata.csv",
+      "source_run": "20261007T204100Z",
+      "source_path": "evidence/real/run_metadata.csv",
+      "bytes": 378,
+      "sha256": "f385ffd0f7c73f7a6b439b5c43ee58d95e6574846259dc3109802179fcc221d1",
+      "transformation": "CRLF->LF text line endings only for Git; all rows, values and metadata unchanged",
+      "original_bytes": 380,
+      "original_sha256": "482f2c0d1290c6d68cf54ad156ddce604d68bf7cb7ccfdc4310c400360c18560"
+    },
+    {
+      "path": "docs/evidence/real/source_manifest.json",
+      "source_run": "20261007T204100Z",
+      "source_path": "evidence/real/source_manifest.json",
+      "bytes": 6218,
+      "sha256": "752131e388ff2b0c07755cd1221e6857cfd6f8f73e75e84a1f123ca19691533d",
+      "transformation": "CRLF->LF text line endings only for Git; all rows, values and metadata unchanged",
+      "original_bytes": 6409,
+      "original_sha256": "bd7bb3b4e5d356480621b632ceecf12472b5bac9b0f2cc9f124136e84e0f36a8"
+    }
+  ],
+  "published_hash_basis": "Git blob / exported source snapshot with LF; a Windows checkout may restore CRLF"
+}

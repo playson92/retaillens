@@ -66,7 +66,8 @@ retained as history; final successful gates have separate artifacts and exit cod
 2. Use Power BI Desktop (2.158.1304.0 is installed here) and enable PBIP/PBIR features if requested.
 3. Run `scripts/open_powerbi.ps1 -Mode real` (optionally `-DesktopPath <exe>`).
 4. For PostgreSQL Database authentication, enter DATABASE_USER/PASSWORD from local `.env`.
-   Desktop connects to host DATABASE_HOST:DATABASE_PORT (default127.0.0.1:5433), database retaillens.
+   Desktop connects to resolved DATABASE_HOST:DATABASE_PORT and DATABASE_NAME;
+   current Portable RetailLens is 127.0.0.1:5435. Environment > private .env > defaults.
    Do not type those credentials into TMDL or commit local Desktop settings.
 5. Refresh all tables, confirm source/version/observation labels and inspect all four pages.
 
@@ -118,3 +119,12 @@ Consult `docs/PROJECT_STATE.json` and the current run's `evidence/powerbi_runtim
 gates and exact evidence. Installation and process launch alone do not prove report opening;
 an evaluating refresh dialog does not prove data loading. Preserve unavailable gates separately
 from errors actually observed. Do not mark runtime PASS from JSON/TOM or matching SQL alone.
+
+## Accepted portfolio presentation
+
+Local MVP/report and Docker are accepted; RL-01–RL-08 are CLOSED_ACCEPTED.
+REMOTE_CI remains NOT_RUN. The later RL-08 Desktop endpoint refresh used 5435;
+the earlier complete model/rendering checks above remain historical accepted evidence.
+See [final acceptance](FINAL_ACCEPTANCE.md), [real screenshots](images/README.md)
+and [presentation guide](PRESENTATION.md). No runtime checks were repeated to prepare
+these documentation and image copies.
