@@ -1,13 +1,15 @@
 RETAILLENS — AKTUALNY START / HISTORIA
 
 Stan z 2026-10-10: lokalny MVP i Docker ACCEPTED / PASS; RL-01–RL-08
-CLOSED_ACCEPTED. REMOTE_CI pozostaje NOT_RUN. Nie buduj ponownie MVP
+CLOSED_ACCEPTED. REMOTE_CI: PASS dla SHA i runu w docs/PUBLICATION.md.
+Publiczne repo: https://github.com/playson92/retaillens. Nie buduj ponownie MVP
 na podstawie archiwalnej instrukcji poniżej.
 
 Aktualne materiały:
 - README.md — problem, prawdziwy Overview, wyniki i uruchomienie;
 - docs/CASE_STUDY.md — trzy ustalenia i linki do SQL/wyników;
-- docs/PRESENTATION.md — trzyminutowe demo i pierwsza publikacja;
+- docs/PRESENTATION.md — trzyminutowe demo i sprawdzenie publikacji;
+- docs/PUBLICATION.md — rzeczywisty run Actions i cztery zadania PASS;
 - docs/FINAL_ACCEPTANCE.md — decyzja odbioru i dokładne dowody.
 
 Połączenie korzysta z konfiguracji: środowisko procesu > prywatny .env >

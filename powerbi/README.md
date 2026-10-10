@@ -7,8 +7,10 @@ separate checks. An official schema or TMDL parse does not demonstrate that the
 report has opened, refreshed or rendered in Desktop.
 
 **Local report/MVP and Docker: ACCEPTED / PASS; RL-01–RL-08: CLOSED_ACCEPTED.**
-**REMOTE_CI: NOT_RUN.** [Final acceptance](../docs/FINAL_ACCEPTANCE.md) records exact
-implementation and evidence identities; portfolio documentation does not rerun Desktop.
+**REMOTE_CI: PASS.** The [publication record](../docs/PUBLICATION.md) links all four
+completed jobs, including the official Windows TMDL parser.
+[Final local acceptance](../docs/FINAL_ACCEPTANCE.md) retains Desktop execution evidence;
+remote parser/schema checks do not claim a new Desktop refresh.
 
 Start the database and prepare real or synthetic marts using the repository demo
 commands, then open the existing project:

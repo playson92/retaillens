@@ -8,7 +8,7 @@
     "D",
     "A"
   ],
-  "state": "PARTIAL",
+  "state": "DONE",
   "active_stage": "05",
   "stage_status": {
     "00": "PASS",
@@ -19,7 +19,7 @@
     "05": "PASS"
   },
   "last_implementation_run": "20261009T2049086587846Z",
-  "last_updated_utc": "2026-10-10T10:05:26.102052+00:00",
+  "last_updated_utc": "2026-10-10T19:53:00.450492+00:00",
   "data_mode": "real; synthetic isolated in a separate schema",
   "real_data_downloaded": true,
   "power_bi_runtime_verified": true,
@@ -43,7 +43,8 @@
     "Actual isolated Docker build/full Olist+fixture/comparison/negative-control/both cleanup phases PASS",
     "Fresh real/synthetic Desktop endpoint refresh,8table/source/fiveKPI proof and two Overview screenshots",
     "Final local MVP/Docker acceptance recorded; RL-08 CLOSED_ACCEPTED by review2026-10-10",
-    "Portfolio entry refreshed with four unchanged real screenshots, small SQL proof copies and presentation/publication guide"
+    "Portfolio entry refreshed with four unchanged real screenshots, small SQL proof copies and presentation/publication guide",
+    "Authorized public playson92/retaillens publication and actual four-job remote CI PASS; canonical schema checkout bytes preserved without KPI/model changes"
   ],
   "verification": {
     "UNIT_TESTS": {
@@ -185,8 +186,45 @@
       "execution": "Historical accepted execution in 20261007T204100Z; not rerun for documentation-only closure."
     },
     "REMOTE_CI": {
-      "status": "NOT_RUN",
-      "reason": "No merge, push or publication authorized; outside local scope."
+      "status": "PASS",
+      "checked_sha": "f6e165e7d93b0bdd2593fd352ae9ccbce8bb8b10",
+      "event": "push",
+      "workflow": ".github/workflows/ci.yml",
+      "run_id": 38081359468,
+      "run_url": "https://github.com/playson92/retaillens/actions/runs/38081359468",
+      "checked_at_utc": "2026-10-10T19:51:06.533694+00:00",
+      "evidence_run": "20261010T121427904382Z",
+      "jobs": {
+        "quality": {
+          "status": "PASS",
+          "job_id": 114298769498,
+          "url": "https://github.com/playson92/retaillens/actions/runs/38081359468/job/114298769498",
+          "github_status": "completed",
+          "github_conclusion": "success"
+        },
+        "tmdl": {
+          "status": "PASS",
+          "job_id": 114298769787,
+          "url": "https://github.com/playson92/retaillens/actions/runs/38081359468/job/114298769787",
+          "github_status": "completed",
+          "github_conclusion": "success"
+        },
+        "postgres": {
+          "status": "PASS",
+          "job_id": 114298769651,
+          "url": "https://github.com/playson92/retaillens/actions/runs/38081359468/job/114298769651",
+          "github_status": "completed",
+          "github_conclusion": "success"
+        },
+        "docker": {
+          "status": "PASS",
+          "job_id": 114298769705,
+          "url": "https://github.com/playson92/retaillens/actions/runs/38081359468/job/114298769705",
+          "github_status": "completed",
+          "github_conclusion": "success"
+        }
+      },
+      "execution": "Actual remote GitHub Actions at the exact checked SHA; every required job completed success. Final documentation-commit CI is recorded separately in the local publication run."
     },
     "PYTHON_QUALITY": {
       "status": "PASS",
@@ -336,13 +374,11 @@
       "exit_code": 0
     }
   },
-  "runtime_gaps": [
-    "REMOTE_CI"
-  ],
+  "runtime_gaps": [],
   "observation_end": "2018-09-01",
   "observation_basis": "Assumed start-of-day cutoff before sparse September/October tail; source completeness not certified",
-  "next_action": "Portfolio materials prepared locally; first repository publication and REMOTE_CI remain NOT_RUN and need separate authorization. No repeated local implementation acceptance is required. Portfolio order B -> C -> D -> A.",
-  "note": "Final local MVP and Docker acceptance PASS; RL-08 CLOSED_ACCEPTED by review2026-10-10 for cd8ad721933e0fa9c5e1636aa61a3a57e75cc237 only. Local MVP remains READY_ACCEPTED. Overall PARTIAL refers solely to REMOTE_CI NOT_RUN, not to a pending local review or material local defect. Application verification entries are historical accepted executions, not tests of the documentation closure.",
+  "next_action": "B1 RetailLens publication and required remote CI are complete. No repeat local acceptance is needed; no further project work is started. Portfolio order B -> C -> D -> A.",
+  "note": "Local MVP READY_ACCEPTED, Docker PASS and RL-01 through RL-08 CLOSED_ACCEPTED remain historical acceptance. Overall DONE includes actual REMOTE_CI PASS at verification.REMOTE_CI.checked_sha. The later documentation commit's own remote run is recorded in the local publication evidence, without recursive self-SHA commits.",
   "previous_implementation_run": "20261009T1342581150025Z",
   "baseline_sha": "42f359e1b8f92e140246f1e5d7d8bd02212a2489",
   "review_fixes": {
@@ -368,7 +404,8 @@
     "20261009T1342581150025Z",
     "20261009T2049086587846Z",
     "20261010T084859794283Z",
-    "20261010T095706964784Z"
+    "20261010T095706964784Z",
+    "20261010T121427904382Z"
   ],
   "current_endpoint_reports": {
     "real": "C:\\projekty\\retaillens\\output\\powerbi\\real\\20261009T205857907973Z-zrxzkqat\\RetailLens.pbip",
@@ -380,7 +417,7 @@
     "retaillens_portable": "127.0.0.1:5435",
     "docker_review": "127.0.0.1:6433; own containers stopped after cleanup"
   },
-  "state_scope": "Overall verification including REMOTE_CI; local MVP and Docker are accepted.",
+  "state_scope": "Accepted local MVP/Docker plus authorized repository publication and completed four-job remote CI at its recorded SHA.",
   "last_acceptance_record_run": "20261010T084859794283Z",
   "final_local_acceptance": {
     "review_date": "2026-10-10",
@@ -398,7 +435,7 @@
     "historical_evidence_only": true,
     "reviewer_results": "2026-10-10 review: 202 source files and 301 evidence files verified; accepted Git tree reproduced;73 tests PASS and4 Windows-only SKIP; Docker/Portable and44 Power BI/SQL fields PASS."
   },
-  "verification_context": "Every application verification result below belongs to its recorded evidence_run. The acceptance-record run performs documentation, Git identity, JSON, diff and bundle checks only; no application, database, Docker or Power BI tests are rerun.",
+  "verification_context": "Historical application results retain their individual evidence_run and accepted commit. REMOTE_CI is a new actual exact-SHA Actions execution, not inherited local evidence. final_local_acceptance and portfolio_preparation preserve their historical NOT_RUN remote statuses; current status is verification.REMOTE_CI.",
   "last_portfolio_preparation_run": "20261010T095706964784Z",
   "portfolio_preparation": {
     "status": "PREPARED_LOCALLY",
@@ -413,5 +450,20 @@
     "publication": "NOT_RUN",
     "remote_ci": "NOT_RUN",
     "runtime_checks_this_step": "NOT_RUN; existing local acceptance preserved"
-  }
+  },
+  "publication": {
+    "status": "PUBLISHED",
+    "repository_url": "https://github.com/playson92/retaillens",
+    "repository_id": 1413593836,
+    "visibility": "public",
+    "default_branch": "feat/retaillens-mvp",
+    "published_branch": "feat/retaillens-mvp",
+    "initial_published_sha": "605f4ffe9183a03e82e89ec3f993dfe2322d2a49",
+    "documented_ci_sha": "f6e165e7d93b0bdd2593fd352ae9ccbce8bb8b10",
+    "documented_ci_url": "https://github.com/playson92/retaillens/actions/runs/38081359468",
+    "run": "20261010T121427904382Z",
+    "authorization": "Explicit user approval of repository, visibility, exact initial SHA, full history, ordinary CI-fix/documentation pushes and default-branch setting.",
+    "documentation": "docs/PUBLICATION.md"
+  },
+  "last_publication_run": "20261010T121427904382Z"
 }

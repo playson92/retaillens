@@ -2,8 +2,9 @@
 
 [Short presenter setup and publication guide](PRESENTATION.md).
 Local MVP and Docker are accepted; RL-01–RL-08 are CLOSED_ACCEPTED.
-REMOTE_CI remains NOT_RUN. The evidence sections below describe historical
-executions; portfolio preparation does not repeat the demo.
+REMOTE_CI is PASS for the exact SHA in [publication](PUBLICATION.md).
+The evidence sections below describe historical local executions;
+publication does not repeat the full real demo or Desktop refresh.
 
 Prepare: `scripts/setup.ps1`, then `scripts/demo.ps1 -Mode real -ObservationEnd 2018-09-01`.
 Invoke scripts with `powershell -NoProfile -ExecutionPolicy Bypass -File` as shown in README;
@@ -29,7 +30,8 @@ reconciliation status, inspect expected/paid/delta/order ID. Global quality warn
 their source-wide scope under purchase-date filters.
 
 **2:40–3:00 — Engineering proof.** Show the contract, independent SQL aggregation, one rollback
-or equal-price fixture test and the review bundle. Include NOT_RUN gates in the presentation.
+or equal-price fixture test and the review bundle. Show the completed four-job
+remote run separately from historical Desktop and full real-data verification.
 
 Without Desktop, present executed SQL evidence and authored definitions with that limitation
 stated. Do not claim a rendered dashboard. Synthetic demo: GMV340.00 BRL, on-time3/5, repeat1/4.
@@ -91,5 +93,6 @@ credentials stay private. Failed initial imports/attempts remain in evidence; fi
 refresh and production authentication passed.
 
 Final:77scoped tests, Ruff lint/format40Python files and Windows PowerShell5.1 parser14scripts
-PASS. REMOTE_CI NOT_RUN; no merge/push/publication.
+PASS. At that historical local run, REMOTE_CI was NOT_RUN and no publication occurred.
+The subsequent authorized publication is recorded in [PUBLICATION.md](PUBLICATION.md).
 Bundle: `output/codex_runs/20261009T2049086587846Z/REVIEW_BUNDLE.zip`.

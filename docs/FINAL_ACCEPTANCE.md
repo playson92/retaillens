@@ -1,5 +1,8 @@
 # Final local MVP acceptance
 
+This is the historical local acceptance record. Repository publication and
+REMOTE_CI subsequently passed in the separate [publication record](PUBLICATION.md).
+
 ## Decision and exact implementation
 
 Review date: **10 October 2026**. **B1 RetailLens local MVP: ACCEPTED / PASS.**
@@ -38,7 +41,7 @@ The historical MVP identity remains `accepted_mvp_run=20261007T204100Z` and
 The later RL-08 acceptance is recorded separately in
 [PROJECT_STATE.json](PROJECT_STATE.json). Earlier runs and bundles are preserved.
 
-## Status and limits
+## Status and limits at the local closure
 
 - Local MVP: **READY_ACCEPTED**. Container acceptance: **PASS**.
 - RL-08: **CLOSED_ACCEPTED**, with no outstanding material local defects.
@@ -84,5 +87,6 @@ Their outcomes and exact exit codes are recorded in the closure run; the commit
 that records the documentation is identified in its manifest and handoff.
 
 No further review of the same accepted implementation is requested. Remote CI
-remains unexecuted; any later remote action needs separate authorization.
+was unexecuted at this local closure; the subsequently authorized publication
+and CI outcome are recorded separately in [PUBLICATION.md](PUBLICATION.md).
 Portfolio category order remains **B → C → D → A**.

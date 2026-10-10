@@ -1,5 +1,7 @@
 # RetailLens — marketplace analytics
 
+[![CI](https://github.com/playson92/retaillens/actions/workflows/ci.yml/badge.svg?branch=feat%2Fretaillens-mvp&event=push)](https://github.com/playson92/retaillens/actions/workflows/ci.yml)
+
 A marketplace analyst needs to compare sales value, delivery outcomes and repeat
 purchases without multiplying money through joins or hiding incomplete observations.
 RetailLens turns official Olist CSVs into PostgreSQL marts and a four-page Power BI
@@ -29,7 +31,7 @@ The study uses all official Olist v2 source purchases from 2016-09-04–2018-10-
 **source completeness is not certified**.
 
 **Stack:** Python 3.12 · PostgreSQL 17.6 · SQL · Docker Compose ·
-Power BI (PBIP / TMDL / PBIR / DAX) · pytest / Ruff · GitHub Actions workflow.
+Power BI (PBIP / TMDL / PBIR / DAX) · pytest / Ruff · GitHub Actions.
 Python handles ingestion/provenance; SQL defines analytical rules; Power BI imports
 published marts. Real and synthetic modes use separate schemas.
 
@@ -83,14 +85,18 @@ The [contract](docs/DATA_CONTRACT.md) defines KPI populations and filter behavio
 
 **Local MVP: READY_ACCEPTED; RL-01–RL-08: CLOSED_ACCEPTED; local Docker: PASS.**
 The accepted implementation is `cd8ad721933e0fa9c5e1636aa61a3a57e75cc237`.
-**REMOTE_CI: NOT_RUN**. Overall `PARTIAL` refers only to that unexecuted remote scope.
+**REMOTE_CI: PASS** — quality, Windows TMDL, PostgreSQL and Docker/Compose all passed.
+[Verified run](https://github.com/playson92/retaillens/actions/runs/38081359468) at `f6e165e7d93b0bdd2593fd352ae9ccbce8bb8b10`.
+Public repository: [playson92/retaillens](https://github.com/playson92/retaillens); default branch: `feat/retaillens-mvp`.
+[Publication record](docs/PUBLICATION.md) keeps the checked SHA and job evidence.
 
 Actual accepted evidence includes local Portable and Docker real/fixture runs,
 Power BI refresh and four-page rendering, plus SQL/DAX reconciliation.
 The [final acceptance](docs/FINAL_ACCEPTANCE.md),
 [state](docs/PROJECT_STATE.json) and [Power BI verification](docs/POWER_BI.md)
-retain exact runs, counts and limitations. Portfolio preparation copies accepted
-evidence and changes documentation only; it does not claim another runtime execution.
+retain exact local acceptance runs, counts and limitations. Portfolio images/results
+remain copies of accepted real evidence. Remote CI is a separate executed verification;
+the publication step changes checkout line endings for pinned schemas and documentation.
 
 To run checks deliberately later:
 

@@ -102,9 +102,10 @@ Fresh real/synthetic Desktop projects then refreshed on the configured Portable
 endpoint **127.0.0.1:5435**, with 8 tables and 5 KPI proofs per mode.
 
 **Local MVP and Docker: ACCEPTED / PASS; RL-01–RL-08: CLOSED_ACCEPTED.**
-**REMOTE_CI: NOT_RUN**; overall `PARTIAL` refers only to that remote scope.
-[Final acceptance](FINAL_ACCEPTANCE.md) and [PROJECT_STATE.json](PROJECT_STATE.json)
-preserve exact accepted commits/runs and distinguish historical results from this
-documentation-only preparation. No additional runtime acceptance is claimed.
+**REMOTE_CI: PASS** — all four required Actions jobs completed successfully.
+[Publication record](PUBLICATION.md) links the exact verified SHA and run.
+[Final local acceptance](FINAL_ACCEPTANCE.md) and [PROJECT_STATE.json](PROJECT_STATE.json)
+preserve the historical accepted commits/runs separately. Remote CI runs the fixture;
+the real-study results and Desktop captures above remain the accepted local evidence.
 
 Follow the [three-minute presentation and publication guide](PRESENTATION.md).

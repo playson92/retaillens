@@ -123,7 +123,8 @@ from errors actually observed. Do not mark runtime PASS from JSON/TOM or matchin
 ## Accepted portfolio presentation
 
 Local MVP/report and Docker are accepted; RL-01–RL-08 are CLOSED_ACCEPTED.
-REMOTE_CI remains NOT_RUN. The later RL-08 Desktop endpoint refresh used 5435;
+REMOTE_CI is PASS; [publication](PUBLICATION.md) records the separately executed
+Windows parser and other Actions jobs. The RL-08 Desktop endpoint refresh used 5435;
 the earlier complete model/rendering checks above remain historical accepted evidence.
 See [final acceptance](FINAL_ACCEPTANCE.md), [real screenshots](images/README.md)
 and [presentation guide](PRESENTATION.md). No runtime checks were repeated to prepare

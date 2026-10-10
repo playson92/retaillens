@@ -2,7 +2,8 @@
 
 Source metadata verified during implementation on 7 October 2026; not re-fetched
 for portfolio preparation. Local MVP and Docker were accepted on 10 October 2026;
-REMOTE_CI remains NOT_RUN. See [final acceptance](FINAL_ACCEPTANCE.md).
+REMOTE_CI is now PASS for the separately recorded published SHA.
+See [final local acceptance](FINAL_ACCEPTANCE.md) and [publication](PUBLICATION.md).
 
 Historical source executions on 7 October 2026: Official Olist was downloaded,
 profiled, imported and analysed on PostgreSQL 17.6 in run 20261007T191556Z. Review-fix run
@@ -90,9 +91,10 @@ scripts/local_postgres.py pins its archive URL/SHA256. Actual server version is
 recorded in sql_evidence.json. Docker image tags are version pinned, not digest pinned.
 Actual local Linux Docker build, full pinned Olist v2 and fixture demos, comparison,
 negative tolerance and cleanup passed all 14 gates in `20261009T2049086587846Z`.
-Local Docker is accepted; REMOTE_CI is still NOT_RUN. Image IDs and detailed runtime
-records remain in the accepted local evidence; no new runtime check was performed
-for this documentation preparation.
+Local Docker is accepted. Remote Actions separately passed Docker/Compose on the
+synthetic fixture; [publication](PUBLICATION.md) records all four jobs and exact SHA.
+The full Olist Docker run and image IDs remain historical accepted local evidence;
+publication does not rerun the full real-data import or Desktop refresh.
 
 Power BI schema source revisions and hashes are in powerbi/schemas/manifest.json.
 The official TOM parser version 19.117.0 and
