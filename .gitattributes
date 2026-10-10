@@ -35,6 +35,9 @@
 *.pbir text eol=crlf
 *.pbism text eol=crlf
 powerbi/**/*.json text eol=crlf
+
+# Pinned schema checksums use canonical LF bytes on every platform.
+powerbi/schemas/*.json text eol=lf
 *.pbix binary
 *.abf binary
 *.parquet binary
