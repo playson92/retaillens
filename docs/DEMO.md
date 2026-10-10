@@ -34,32 +34,57 @@ Troubleshooting: change an occupied DATABASE_PORT and regenerate local report; s
 without Docker; install Python3.12 rather than changing required version. Connection failures
 are failed executions, not skipped tests. No command resets unrelated projects or volumes.
 
-## Stage05 local release and Docker verification
+## Current RL-08 verification and coexistence
 
-The Portable + Desktop MVP and RL-01–RL-07 are accepted. Run `20261009T091005Z` adds Docker
-acceptance automation; it does not rebuild the model or claim another Desktop execution.
-Fresh read-only Portable analysis matches the accepted results. All49new scenario tests and
-Ruff passed. Actual Compose configuration passed; the current `desktop-linux` daemon remains
-unavailable after bounded probes, with WSL absent and no administrator session. DOCKER_BUILD,
-COMPOSE_DEMO and CLEANUP_RUNTIME remain NOT_RUN. REMOTE_CI is NOT_RUN because no publication
-was requested. The current review bundle includes logs, status/exit codes and Portable proofs.
+Run `20261009T2049086587846Z`, baseline `42f359e1b8f92e140246f1e5d7d8bd02212a2489`,
+preserves the accepted cluster, schemas, source hashes and business rules.
+WTA remains healthy at PostgreSQL5433 and dashboard8501. Port5434 was occupied too;
+private RetailLens configuration now uses5435 with database/username/password retained.
 
-After an administrator enables the confirmed missing prerequisite with
-`wsl --install --no-distribution` (restart only when Windows requests it), from the project root:
-
-```powershell
+~~~powershell
+$env:DATABASE_PORT = '5435'
+.\.venv\Scripts\python.exe scripts\local_postgres.py start
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\verify_docker.ps1
-```
+~~~
 
-This single command starts installed Desktop if needed and performs the entire isolated
-scenario: free port6433or higher, unique Compose project, configuration validation, app build
-and image ID, PostgreSQL healthcheck, synthetic and pinned real demos, complete SQL agreement,
-intentional application exit1 and verified cleanup in finally for success and failure.
-Read-only source files, per-run output and process-local configuration preserve Portable5433,
-its data, other projects and all volumes. An existing Portable cluster can be started after
-reboot; missing cluster/binaries fail preflight instead of initializing a replacement.
-Previous attempts are never overwritten. Result/evidence paths are printed; exits0/1/2 mean
-PASS/FAIL/BLOCKED. Current mock-based scenario tests do not certify actual container execution.
+The process-only override prevents an inherited old port from overriding private .env.
+Readiness and capture require authenticated `SHOW data_directory` matching the preserved
+Windows path, with case/slash normalization. An unrelated server is refused before data
+queries/creation. An already running owned cluster is reused without restart.
 
-WSL commands: [Microsoft install](https://learn.microsoft.com/en-us/windows/wsl/install),
-[no-distribution flag](https://learn.microsoft.com/en-us/windows/wsl/basic-commands).
+The actual Docker entrypoint completed on Linux: isolated project/image/6433host port,
+build, PostgreSQL health, fixture and full Olist v2 with observation_end2018-09-01,
+all9result sets/7queries per mode, intentional negative-tolerance exit1, and both finally
+cleanup phases. Own containers stopped; named volumes remain. All14gates PASS in
+`docker_verification.json`. Image:
+`sha256:31d1ca0afb534ea6d0eb90ea318c54ce5adbae916c13259a85410a6021546c1d`.
+
+## Fresh Desktop reports on5435
+
+Both fresh projects opened and actually refreshed on this Windows machine:
+
+| Mode | Project |
+| --- | --- |
+| real | `C:\projekty\retaillens\output\powerbi\real\20261009T205857907973Z-zrxzkqat\RetailLens.pbip` |
+| synthetic | `C:\projekty\retaillens\output\powerbi\synthetic\20261009T205858485709Z-4ziudmlx\RetailLens.pbip` |
+
+Current `evidence/endpoint-refresh.json` verifies TOM provider/source, eight table counts,
+source hashes and five main KPIs through six final ADOMD queries:
+real99441orders/112650items/13221498.11BRL GMV/137.0416AOV/93.15435818%on time/2.00652550%repeat;
+synthetic8orders/10items/340BRL GMV/56.6667AOV/60%on time/25%repeat.
+Currency precision, Decimal comparison allowances and NULL semantics are unchanged.
+
+`real-refreshed-overview.png` and `synthetic-refreshed-overview.png` are real current
+screenshots, full source date ranges and no additional segment selection. Historical
+four-page visual QA and32DAX/962comparisons remain accepted in run20261007T204100Z.
+
+Helpers resolve environment > SettingsPath/.env > defaults and retain exact source,
+PostgreSQL, PID, schema and SELECT guards. DOM submission alone retained an empty password
+in this Desktop version. Native input now waits for actual processing, commits with Tab
+and clicks only an unoccluded control in the verified owned credential dialog. Existing
+credentials stay private. Failed initial imports/attempts remain in evidence; final
+refresh and production authentication passed.
+
+Final:77scoped tests, Ruff lint/format40Python files and Windows PowerShell5.1 parser14scripts
+PASS. REMOTE_CI NOT_RUN; no merge/push/publication.
+Bundle: `output/codex_runs/20261009T2049086587846Z/REVIEW_BUNDLE.zip`.

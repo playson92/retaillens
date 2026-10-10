@@ -14,7 +14,10 @@ import uuid
 from datetime import UTC, datetime
 from pathlib import Path
 
+import psycopg
+
 from retaillens.config import resolve_connection
+from retaillens.portable import inspect_portable, local_parameters
 from retaillens.source import FILES, sha256
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,9 +44,9 @@ def write_json(path, data):
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def free_port(preferred):
+def free_port(preferred, *, excluded=()):
     for port in range(preferred, min(preferred + 100, 65536)):
-        if port == 5433:
+        if port in excluded:
             continue
         with socket.socket() as probe:
             try:
@@ -51,7 +54,7 @@ def free_port(preferred):
             except OSError:
                 continue
             return port
-    raise ValueError("No free review port; Portable port5433 is excluded")
+    raise ValueError("No free review port; configured Portable port is excluded")
 
 
 def command_text(raw):
@@ -67,10 +70,10 @@ class Verification:
     def __init__(self, run, docker, context, port, *, executor=subprocess.run):
         self.run, self.docker, self.context = run, str(docker), context
         self.executor = executor
-        self.port = free_port(port)
+        self.connection = local_parameters(resolve_connection())
+        self.port = free_port(port, excluded={int(self.connection["port"])})
         self.project = f"retaillens-review-{run.name.lower()}-{uuid.uuid4().hex[:8]}"
         self.image = f"retaillens:{self.project}"
-        self.connection = resolve_connection()
         if not self.connection["password"]:
             raise ValueError("Private DATABASE_PASSWORD is required")
         self.original_env = os.environ.copy()
@@ -131,7 +134,7 @@ class Verification:
             "context": context,
             "image": self.image,
             "image_id": None,
-            "portable_host": "127.0.0.1:5433",
+            "portable_host": f"{self.connection['host']}:{self.connection['port']}",
             "volumes_preserved": True,
             "gates": {key: {"status": "NOT_RUN"} for key in GATES},
             "commands": [],
@@ -398,25 +401,32 @@ class Verification:
         self.gate("DATABASE_HEALTH")
 
     def ensure_portable(self):
+        cluster = ROOT / "output/postgres_data"
         try:
-            with socket.create_connection(("127.0.0.1", 5433), timeout=1):
-                return
-        except OSError:
-            pass
-        if self.connection["port"] != "5433":
-            raise ValueError("Existing Portable startup must use configured port5433")
-        cluster = ROOT / "output/postgres_data/PG_VERSION"
-        binary = ROOT / "output/tools/postgres17/pgsql/bin/postgres.exe"
-        if not cluster.is_file() or not binary.is_file():
-            raise ValueError(
-                "Preserved Portable cluster/binaries are unavailable; no new database initialized"
+            proof = inspect_portable(self.connection, cluster)
+        except psycopg.OperationalError:
+            try:
+                with socket.create_connection(
+                    (self.connection["host"], int(self.connection["port"])), timeout=1
+                ):
+                    pass
+            except OSError:
+                pass
+            else:
+                raise ValueError("Configured Portable endpoint is occupied by an unverified server")
+            binary = ROOT / "output/tools/postgres17/pgsql/bin/postgres.exe"
+            if not (cluster / "PG_VERSION").is_file() or not binary.is_file():
+                raise ValueError(
+                    "Preserved Portable cluster/binaries are unavailable; no new database initialized"
+                ) from None
+            self.checked(
+                "PORTABLE_START",
+                [sys.executable, str(ROOT / "scripts/local_postgres.py"), "start"],
+                env=self.original_env,
+                timeout=60,
             )
-        self.checked(
-            "PORTABLE_START",
-            [sys.executable, str(ROOT / "scripts/local_postgres.py"), "start"],
-            env=self.original_env,
-            timeout=60,
-        )
+            proof = inspect_portable(self.connection, cluster)
+        write_json(self.run / "evidence/portable_identity.json", proof)
 
     def expected_failure(self):
         self.up()
@@ -522,7 +532,7 @@ def main():
     if not run.is_relative_to(ROOT / "output/codex_runs"):
         parser.error("Run directory must stay inside this project's output/codex_runs")
     if not 1024 <= args.port <= 65535:
-        parser.error("Use an unprivileged TCP port; Portable port5433 is always excluded")
+        parser.error("Use an unprivileged TCP port; the configured Portable port is excluded")
     if (run / "docker_verification.json").exists() or (run / "compose.review.json").exists():
         parser.error(
             "This attempt already exists; omit --run to preserve it and create a fresh run"

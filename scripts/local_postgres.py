@@ -12,7 +12,9 @@ import zipfile
 from pathlib import Path, PurePosixPath
 
 import psycopg
-from dotenv import dotenv_values
+
+from retaillens.config import resolve_connection
+from retaillens.portable import assert_data_directory, inspect_portable, local_parameters
 
 ROOT = Path(__file__).resolve().parents[1]
 URL = "https://get.enterprisedb.com/postgresql/postgresql-17.6-1-windows-x64-binaries.zip"
@@ -27,13 +29,20 @@ def private_env():
             "DATABASE_USER=retaillens_app\nDATABASE_PASSWORD=" + secrets.token_hex(32) + "\n",
             encoding="utf-8",
         )
+    connection = local_parameters(resolve_connection(env_file=target))
     return {
-        **dotenv_values(target),
-        **{k: v for k, v in os.environ.items() if k.startswith("DATABASE_")},
+        "DATABASE_" + name: connection[field]
+        for name, field in [
+            ("HOST", "host"),
+            ("PORT", "port"),
+            ("NAME", "dbname"),
+            ("USER", "user"),
+            ("PASSWORD", "password"),
+        ]
     }
 
 
-def run(command):
+def run(command, *, check=True):
     # A detached Windows server can inherit pipes. Redirect to a file so pg_ctl can exit.
     with tempfile.TemporaryFile() as log:
         result = subprocess.run(
@@ -43,7 +52,7 @@ def run(command):
             timeout=120,
             creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
         )
-        if result.returncode:
+        if result.returncode and check:
             log.seek(0)
             raise RuntimeError(log.read().decode(errors="replace"))
         return result
@@ -65,11 +74,22 @@ def main():
         print("Stopped RetailLens portable PostgreSQL; cluster retained")
         return
     port = int(env["DATABASE_PORT"])
-    if cluster.exists() and (cluster / "postmaster.pid").exists():
-        run([str(binaries / "pg_ctl.exe"), "-D", str(cluster), "status"])
-        ensure_database(env)
-        print("RetailLens portable PostgreSQL already running")
-        return
+    if (binaries / "pg_ctl.exe").is_file():
+        status = run([str(binaries / "pg_ctl.exe"), "-D", str(cluster), "status"], check=False)
+        if status.returncode not in {0, 3}:
+            raise ValueError("Unable to determine preserved Portable cluster status")
+        if status.returncode == 0:
+            actual_port = int((cluster / "postmaster.pid").read_text().splitlines()[3])
+            actual = parameters(env, dbname="postgres", port=actual_port)
+            inspect_portable(actual, cluster)
+            if actual_port == port:
+                ensure_database(env)
+                print("RetailLens portable PostgreSQL already running; identity verified")
+                return
+            with socket.socket() as probe:
+                if probe.connect_ex((env["DATABASE_HOST"], port)) == 0:
+                    raise ValueError("Requested port occupied; preserved cluster was not stopped")
+            run([str(binaries / "pg_ctl.exe"), "-D", str(cluster), "-m", "fast", "-w", "stop"])
     with socket.socket() as probe:
         if probe.connect_ex(("127.0.0.1", port)) == 0:
             raise SystemExit(
@@ -120,26 +140,38 @@ def main():
             "-l",
             str(ROOT / "output" / "postgres.log"),
             "-o",
-            f"-h 127.0.0.1 -p {port}",
+            f"-h {env['DATABASE_HOST']} -p {port}",
             "-w",
             "start",
         ]
     )
     ensure_database(env)
     print(
-        f"RetailLens PostgreSQL ready on 127.0.0.1:{port}; isolated cluster in output/postgres_data"
+        f"RetailLens PostgreSQL ready on {env['DATABASE_HOST']}:{port}; identity verified in output/postgres_data"
     )
+
+
+def parameters(env, *, dbname=None, port=None):
+    return {
+        "host": env["DATABASE_HOST"],
+        "port": str(port or env["DATABASE_PORT"]),
+        "dbname": dbname or env["DATABASE_NAME"],
+        "user": env["DATABASE_USER"],
+        "password": env["DATABASE_PASSWORD"],
+    }
 
 
 def ensure_database(env):
     with psycopg.connect(
-        host="127.0.0.1",
+        host=env["DATABASE_HOST"],
         port=int(env["DATABASE_PORT"]),
         dbname="postgres",
         user=env["DATABASE_USER"],
         password=env["DATABASE_PASSWORD"],
         autocommit=True,
+        connect_timeout=5,
     ) as connection:
+        assert_data_directory(connection, ROOT / "output/postgres_data")
         from psycopg import sql
 
         exists = connection.execute(

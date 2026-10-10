@@ -1,5 +1,6 @@
-param([Parameter(Mandatory=$true)][int]$ProcessId, [Parameter(Mandatory=$true)][ValidateSet('rl_real','rl_synthetic')][string]$Schema)
+﻿param([Parameter(Mandatory=$true)][int]$ProcessId, [Parameter(Mandatory=$true)][ValidateSet('rl_real','rl_synthetic')][string]$Schema, [string]$SettingsPath = (Join-Path (Get-Location) '.env'))
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'powerbi_source_guard.ps1')
 $process = Get-Process -Id $ProcessId
 if ($process.ProcessName -ne 'PBIDesktop') { throw 'Target must be the authorized Power BI Desktop process.' }
 Add-Type -AssemblyName UIAutomationClient
@@ -7,15 +8,33 @@ Add-Type -AssemblyName UIAutomationTypes
 $source = [IO.File]::ReadAllText((Join-Path (Get-Location) 'scripts\authenticate_powerbi_local.ps1'))
 $start = $source.IndexOf("Add-Type @'")
 Invoke-Expression $source.Substring($start,$source.IndexOf("'@")+2-$start)
+$expected = Get-RetailLensPowerBIConnection -SettingsPath $SettingsPath
 $approved = 0
 for ($attempt=0; $attempt -lt 12; $attempt++) {
     $roots = [Windows.Automation.AutomationElement]::RootElement.FindAll([Windows.Automation.TreeScope]::Children,(New-Object Windows.Automation.PropertyCondition([Windows.Automation.AutomationElement]::ProcessIdProperty,$ProcessId)))
-    $ies = @($roots[0].FindAll([Windows.Automation.TreeScope]::Descendants,[Windows.Automation.Condition]::TrueCondition) | Where-Object { $_.Current.ClassName -eq 'Internet Explorer_Server' })
-    if (-not $ies.Count) { break }
-    $doc = [RetailLensHtmlDialog]::Document([IntPtr]$ies[0].Current.NativeWindowHandle)
-    $body = [string]$doc.body.innerText
+    $doc = $null
+    foreach ($root in $roots) {
+        $ies = @($root.FindAll([Windows.Automation.TreeScope]::Descendants,[Windows.Automation.Condition]::TrueCondition) | Where-Object { $_.Current.ClassName -eq 'Internet Explorer_Server' -and -not $_.Current.IsOffscreen })
+        foreach ($ie in $ies) {
+            try { $candidateDoc = [RetailLensHtmlDialog]::Document([IntPtr]$ie.Current.NativeWindowHandle) }
+            catch {
+                $inner = $_.Exception
+                while ($inner.InnerException) { $inner = $inner.InnerException }
+                if ($inner.HResult -eq -2147467259) { continue } # A closing MSHTML dialog no longer exposes a document.
+                throw
+            }
+            $candidateBody = [string]$candidateDoc.body.innerText
+            if ([regex]::IsMatch($candidateBody,'(?m)^SELECT [^\r\n]+')) {
+                if (-not (Test-RetailLensQuerySource -Body $candidateBody -Schema $Schema -ExpectedPath $expected.resource_path)) { throw 'Prompt is not a reviewed read-only query for the authorized local warehouse.' }
+                $doc = $candidateDoc
+                $body = $candidateBody
+                break
+            }
+        }
+        if ($doc) { break }
+    }
+    if (-not $doc) { break }
     $sql = [regex]::Match($body,'(?m)^SELECT [^\r\n]+').Value.Trim()
-    if (-not $body.Contains('127.0.0.1:5433;retaillens') -or $sql -notmatch ('^SELECT [^;]+ FROM '+$Schema+'\.(mart_orders|mart_items|dim_date|dim_product|dim_seller|mart_cohorts|quality_summary|run_metadata)$')) { throw 'Prompt is not a reviewed read-only query for the authorized local warehouse.' }
     $button = $null
     for ($i=0; $i -lt $doc.all.length; $i++) {
         $candidate = $doc.all.item($i)

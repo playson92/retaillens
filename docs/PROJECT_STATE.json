@@ -16,10 +16,10 @@
     "02": "PASS",
     "03": "PASS",
     "04": "PASS",
-    "05": "PARTIAL"
+    "05": "PASS"
   },
-  "last_implementation_run": "20261009T1342581150025Z",
-  "last_updated_utc": "2026-10-09T13:50:19.120772+00:00",
+  "last_implementation_run": "20261009T2049086587846Z",
+  "last_updated_utc": "2026-10-10T07:38:42.928628+00:00",
   "data_mode": "real; synthetic isolated in a separate schema",
   "real_data_downloaded": true,
   "power_bi_runtime_verified": true,
@@ -38,7 +38,10 @@
     "Actual Desktop refresh, DAX/SQL reconciliation and four-page visual QA in both modes",
     "Zero-numerator DAX correction, readable native slicers and metadata row",
     "Stage05 one-command isolated Docker acceptance automation and49scoped regressions",
-    "Fresh READ ONLY Portable comparison; accepted source/data/model and earlier bundles preserved"
+    "Fresh READ ONLY Portable comparison; accepted source/data/model and earlier bundles preserved",
+    "RL08 authenticated own Portable on5435 before readiness/creation/capture; WTA retained",
+    "Actual isolated Docker build/full Olist+fixture/comparison/negative-control/both cleanup phases PASS",
+    "Fresh real/synthetic Desktop endpoint refresh,8table/source/fiveKPI proof and two Overview screenshots"
   ],
   "verification": {
     "UNIT_TESTS": {
@@ -113,25 +116,27 @@
     },
     "COMPOSE_CONFIG": {
       "status": "PASS",
-      "evidence_run": "20261009T1342581150025Z",
-      "execution": "Executed in current Docker continuation",
-      "result": "Actual quiet/JSON parsing; isolated own image, volume, port6433 and read-only source mount validated privately.",
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Actual existing Docker scenario passed; own port6433, isolated project/image, volumes preserved",
       "evidence": "docker_verification.json",
       "exit_code": 0
     },
     "DOCKER_BUILD": {
-      "status": "NOT_RUN",
-      "evidence_run": "20261009T1342581150025Z",
-      "execution": "Not executed in current continuation",
+      "status": "PASS",
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Actual existing Docker scenario passed; own port6433, isolated project/image, volumes preserved",
       "evidence": "docker_verification.json",
-      "reason": "PORTABLE_REFERENCE failed because the unrelated WTA database occupies required Portable port5433; no build/up/run/cleanup occurred."
+      "exit_code": 0
     },
     "COMPOSE_DEMO": {
-      "status": "NOT_RUN",
-      "evidence_run": "20261009T1342581150025Z",
-      "execution": "Not executed in current continuation",
+      "status": "PASS",
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Actual existing Docker scenario passed; own port6433, isolated project/image, volumes preserved",
       "evidence": "docker_verification.json",
-      "reason": "PORTABLE_REFERENCE failed because the unrelated WTA database occupies required Portable port5433; no build/up/run/cleanup occurred."
+      "exit_code": 0
     },
     "DESKTOP_OPEN": {
       "status": "PASS",
@@ -183,12 +188,12 @@
     },
     "PYTHON_QUALITY": {
       "status": "PASS",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Accepted prior-run execution; not rerun in current Docker continuation",
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Ruff lint and format40Python files",
+      "evidence": "logs/RL08_RELEASE_LINT_20261010T073513505948Z.log",
       "exit_code": 0,
-      "result": "Ruff lint+format36Python files",
-      "evidence": "logs/RUFF_FROZEN_20261009T094757613084Z.log",
-      "format_evidence": "logs/FORMAT_FROZEN_20261009T094758086820Z.log"
+      "format_evidence": "logs/RL08_RELEASE_FORMAT_20261010T073512493848Z.log"
     },
     "PBIP_SCHEMA": {
       "status": "PASS",
@@ -207,20 +212,20 @@
       "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
     },
     "CLEANUP_RUNTIME": {
-      "status": "NOT_RUN",
-      "evidence_run": "20261009T1342581150025Z",
-      "execution": "Not executed in current continuation",
+      "status": "PASS",
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Actual existing Docker scenario passed; own port6433, isolated project/image, volumes preserved",
       "evidence": "docker_verification.json",
-      "reason": "PORTABLE_REFERENCE failed because the unrelated WTA database occupies required Portable port5433; no build/up/run/cleanup occurred."
+      "exit_code": 0
     },
     "POWERSHELL_SYNTAX": {
       "status": "PASS",
-      "exit_code": 0,
-      "result": "Native PowerShell AST parser found no errors in12scripts",
-      "evidence": "evidence/powershell_syntax.json",
-      "log": "logs/POWERSHELL_SYNTAX_FINAL_CORRECTED_20261007T222230976349Z.log",
-      "evidence_run": "20261007T204100Z",
-      "execution": "Accepted prior-run execution; not rerun in current stage05 continuation"
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Actual Windows PowerShell5.1 AST parser14scripts",
+      "evidence": "logs/RL08_RELEASE_POWERSHELL_20261010T073525417132Z.log",
+      "exit_code": 0
     },
     "UI_PROCESS_GUARD": {
       "status": "PASS",
@@ -233,18 +238,18 @@
     },
     "DOCKER_CONTEXT": {
       "status": "PASS",
-      "evidence_run": "20261009T1342581150025Z",
-      "execution": "Executed in current Docker continuation",
-      "result": "desktop-linux uses local npipe:////./pipe/dockerDesktopLinuxEngine; global context unchanged",
-      "evidence": "logs/DOCKER_ENDPOINT_CURRENT.log",
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Actual existing Docker scenario passed; own port6433, isolated project/image, volumes preserved",
+      "evidence": "docker_verification.json",
       "exit_code": 0
     },
     "LINUX_DAEMON": {
       "status": "PASS",
-      "evidence_run": "20261009T1342581150025Z",
-      "execution": "Executed in current Docker continuation",
-      "result": "Current Docker server29.8.1 Linux/amd64; info returns linux, actual exit0. Historical missing-WSL blocker resolved.",
-      "evidence": "logs/DOCKER_LINUX_INFO_CURRENT.log",
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Actual existing Docker scenario passed; own port6433, isolated project/image, volumes preserved",
+      "evidence": "docker_verification.json",
       "exit_code": 0
     },
     "WSL_PREREQUISITE": {
@@ -258,70 +263,86 @@
     },
     "DOCKER_SCENARIO_TESTS": {
       "status": "PASS",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Accepted prior-run execution; not rerun in current Docker continuation",
-      "exit_code": 0,
-      "result": "49new tests:32result comparison and17orchestration. Mock lifecycle tests do not certify containers.",
-      "evidence": "logs/DOCKER_TESTS_FROZEN_20261009T094756213259Z.log"
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "77scoped tests including existing comparisons/orchestration, endpoint/PBIP/Windows guards and refresh validation; no schema reset",
+      "evidence": "logs/RL08_RELEASE_TESTS_20261010T073512803274Z.log",
+      "exit_code": 0
     },
     "DOCKER_POWERSHELL_SYNTAX": {
       "status": "PASS",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Accepted prior-run execution; not rerun in current Docker continuation",
-      "exit_code": 0,
-      "evidence": "logs/DOCKER_POWERSHELL_SYNTAX_20261009T093535304545Z.log"
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Included in actual14script AST check",
+      "evidence": "logs/RL08_RELEASE_POWERSHELL_20261010T073525417132Z.log",
+      "exit_code": 0
     },
     "PINNED_OLIST_INPUT": {
       "status": "PASS",
-      "evidence_run": "20261009T1342581150025Z",
-      "execution": "Executed in current Docker continuation",
-      "result": "All9 existing Olist v2 file hashes still match SOURCE.json; no new download or input mutation.",
-      "evidence": "evidence/docker_input.json"
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "All9Olistv2 hashes checked; full Docker demo used existing read-only source",
+      "evidence": "evidence/docker_input.json",
+      "exit_code": 0
     },
     "PORTABLE_READ_ONLY_REFERENCE": {
-      "status": "FAIL",
-      "evidence_run": "20261009T1342581150025Z",
-      "execution": "Executed in current Docker continuation",
-      "result": "Capture command exit1/OperationalError. Port5433 belongs to wta-demo-postgres-1; RetailLens credentials are rejected. No fresh Portable reference generated.",
-      "evidence": "logs/DOCKER_03_PORTABLE_REFERENCE.log",
-      "actual_exit_code": 1
+      "status": "PASS",
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Actual configured5435 on every connection; same-connection data_directory check; both modes preserved",
+      "evidence": "evidence/portable-preserved-comparison.json",
+      "exit_code": 0
     },
     "PORTABLE_RUNNING_GUARD": {
       "status": "PASS",
-      "exit_code": 0,
-      "result": "Healthy5433service retained in accepted prior run; not a current readiness claim.",
-      "evidence": "logs/PORTABLE_RUNNING_GUARD_20261009T093723164819Z.log",
-      "evidence_run": "20261009T091005Z",
-      "execution": "Accepted prior-run execution; not rerun in current continuation"
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Actual own status/identity; repeated start reused owned server",
+      "evidence": "logs/PORTABLE_IDENTITY_NO_RESTART_20261010T071202512478Z.log",
+      "exit_code": 0
     },
     "DOCKER_AUTOMATION_ATTEMPT": {
-      "status": "FAIL",
-      "evidence_run": "20261009T1342581150025Z",
-      "execution": "Executed in current Docker continuation",
-      "result": "Existing verify_docker.ps1 actually ran, exit1; Compose/pins passed; Portable reference failed before build or container start.",
+      "status": "PASS",
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "verify_docker.ps1 actual exit0;14gates PASS",
       "evidence": "scenario-command.json",
-      "actual_exit_code": 1
+      "exit_code": 0
     },
     "PORTABLE_PORT_AVAILABILITY": {
-      "status": "BLOCKED",
-      "evidence_run": "20261009T1342581150025Z",
-      "execution": "Not executed or blocked; see current prerequisite evidence",
-      "result": "127.0.0.1:5433 is published by the unrelated wta-demo-postgres-1 container; existing Portable cluster is stopped and was not replaced.",
-      "evidence": "port-conflict-containers.json"
+      "status": "PASS",
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "WTA5433 untouched;5434 occupied;5435 chosen privately with credentials retained",
+      "evidence": "private-port-change.json",
+      "exit_code": 0
+    },
+    "CURRENT_ENDPOINT_REFRESH": {
+      "status": "PASS",
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Both fresh projects opened/refreshed; TOM source5435 and6finalADOMD proof queries:8tables/sourcehash/fiveKPIs",
+      "evidence": "evidence/endpoint-refresh.json",
+      "exit_code": 0
+    },
+    "WTA_COEXISTENCE": {
+      "status": "PASS",
+      "evidence_run": "20261009T2049086587846Z",
+      "execution": "Actually executed in current RL08 run",
+      "result": "Same healthy WTA containers/ports/creation IDs; authenticated own Portable data_directory",
+      "evidence": "evidence/coexistence.json",
+      "exit_code": 0
     }
   },
   "runtime_gaps": [
-    "DOCKER_BUILD",
-    "COMPOSE_DEMO",
-    "CLEANUP_RUNTIME",
     "REMOTE_CI"
   ],
   "observation_end": "2018-09-01",
   "observation_basis": "Assumed start-of-day cutoff before sparse September/October tail; source completeness not certified",
-  "next_action": "User decision: free127.0.0.1:5433 currently published by wta-demo-postgres-1; for example temporarily stop only that container, retaining its volume. Then retry existing verify_docker.ps1 in a new run. Do not reinstall WSL or change model/SQL/Power BI.",
-  "note": "Local Portable+Desktop MVP remains READY_ACCEPTED and RL01-07 remain closed. Current WSL2 and local Linux Docker server actually PASS. Existing Docker scenario FAIL/exit1 at Portable reference because WTA owns5433. Build/demo/cleanup NOT_RUN; acceptance BLOCKED until port conflict is resolved with owner approval. No WTA stop, credential change, database reset, merge, push or publication.",
-  "previous_implementation_run": "20261009T091005Z",
-  "baseline_sha": "709975b0e5c068bbf6742421e1d238eeebb9e84a",
+  "next_action": "Review RL08 and current compact bundle; remote CI remains NOT_RUN, no publication requested.",
+  "note": "Current local coexistence, Portable preservation, Docker and fresh Desktop refresh PASS. Local MVP READY_ACCEPTED and RL01-07 remain historical accepted controls. Overall PARTIAL refers only to remote CI outside local scope.",
+  "previous_implementation_run": "20261009T1342581150025Z",
+  "baseline_sha": "42f359e1b8f92e140246f1e5d7d8bd02212a2489",
   "review_fixes": {
     "RL-01": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
     "RL-02": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
@@ -329,18 +350,30 @@
     "RL-04": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
     "RL-05": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
     "RL-06": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
-    "RL-07": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work"
+    "RL-07": "CLOSED_ACCEPTED in review2026-10-08; unchanged by stage05 Docker work",
+    "RL-08": "IMPLEMENTED_VERIFIED; configurable endpoints, authenticated cluster identity, guarded Desktop reconnection and actual Docker acceptance; ready for review"
   },
   "accepted_mvp_run": "20261007T204100Z",
   "accepted_mvp_head": "922502a8ae65fd87597a98abffe0707fa031b84e",
   "local_mvp_status": "READY_ACCEPTED",
   "local_release_artifacts": "PASS",
-  "container_acceptance": "BLOCKED",
+  "container_acceptance": "PASS",
   "accepted_review_date": "2026-10-08",
   "run_history": [
     "20261007T191556Z",
     "20261007T204100Z",
     "20261009T091005Z",
-    "20261009T1342581150025Z"
-  ]
+    "20261009T1342581150025Z",
+    "20261009T2049086587846Z"
+  ],
+  "current_endpoint_reports": {
+    "real": "C:\\projekty\\retaillens\\output\\powerbi\\real\\20261009T205857907973Z-zrxzkqat\\RetailLens.pbip",
+    "synthetic": "C:\\projekty\\retaillens\\output\\powerbi\\synthetic\\20261009T205858485709Z-4ziudmlx\\RetailLens.pbip"
+  },
+  "current_endpoints": {
+    "wta_postgres": "127.0.0.1:5433",
+    "wta_dashboard": "http://127.0.0.1:8501",
+    "retaillens_portable": "127.0.0.1:5435",
+    "docker_review": "127.0.0.1:6433; own containers stopped after cleanup"
+  }
 }

@@ -126,6 +126,7 @@ def main():
             continue
         if path.is_file() and path.suffix.lower() in {
             ".json",
+            ".xml",
             ".md",
             ".log",
             ".patch",

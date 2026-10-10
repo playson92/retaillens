@@ -89,7 +89,7 @@ class FakeDocker:
 @pytest.fixture
 def make_verification(tmp_path, monkeypatch):
     monkeypatch.setattr(module, "ROOT", tmp_path)
-    monkeypatch.setattr(module, "free_port", lambda port: port)
+    monkeypatch.setattr(module, "free_port", lambda port, **kwargs: port)
     monkeypatch.setattr(module.time, "sleep", lambda seconds: None)
     monkeypatch.setattr(
         module,
@@ -236,9 +236,9 @@ def test_port_selection_preserves_portable_and_skips_occupied_port():
     with socket.socket() as occupied:
         occupied.bind(("127.0.0.1", 0))
         port = occupied.getsockname()[1]
-        available = module.free_port(port)
+        available = module.free_port(port, excluded={5433})
         assert available != port and available != 5433
-    assert module.free_port(5433) != 5433
+    assert module.free_port(5433, excluded={5433}) != 5433
 
 
 def test_portable_restart_requires_existing_cluster_and_binary(make_verification, monkeypatch):
@@ -247,6 +247,15 @@ def test_portable_restart_requires_existing_cluster_and_binary(make_verification
     def refused(*args, **kwargs):
         raise ConnectionRefusedError
 
+    checks = []
+
+    def identity(*args):
+        checks.append(args)
+        if len(checks) < 3:
+            raise module.psycopg.OperationalError("refused")
+        return {"port": 5433, "read_only": True}
+
+    monkeypatch.setattr(module, "inspect_portable", identity)
     monkeypatch.setattr(module.socket, "create_connection", refused)
     with pytest.raises(ValueError, match="no new database initialized"):
         module.Verification.ensure_portable(v)
@@ -266,8 +275,46 @@ def test_portable_restart_requires_existing_cluster_and_binary(make_verification
 
 def test_running_portable_is_not_restarted(make_verification, monkeypatch):
     v, fake = make_verification()
-    from contextlib import nullcontext
-
-    monkeypatch.setattr(module.socket, "create_connection", lambda *args, **kwargs: nullcontext())
+    identity = {"port": 5433, "read_only": True, "data_directory": str(module.ROOT)}
+    monkeypatch.setattr(module, "inspect_portable", lambda *args: identity)
     module.Verification.ensure_portable(v)
     assert not fake.calls
+    assert json.loads((v.run / "evidence/portable_identity.json").read_text()) == identity
+
+
+def test_open_foreign_port_is_not_portable_and_does_not_trigger_start(
+    make_verification, monkeypatch
+):
+    from contextlib import nullcontext
+
+    v, fake = make_verification()
+
+    def unauthenticated(*args):
+        raise module.psycopg.OperationalError("wrong server")
+
+    monkeypatch.setattr(module, "inspect_portable", unauthenticated)
+    monkeypatch.setattr(module.socket, "create_connection", lambda *args, **kwargs: nullcontext())
+    with pytest.raises(ValueError, match="occupied by an unverified"):
+        module.Verification.ensure_portable(v)
+    assert not fake.calls
+
+
+def test_configured_portable_port_is_excluded_even_without_a_listener():
+    assert module.free_port(6433, excluded={6433}) != 6433
+
+
+def test_constructor_resolves_portable_before_excluding_it(make_verification, monkeypatch):
+    v, _ = make_verification()
+    parameters = {**v.connection, "port": "6433"}
+    monkeypatch.setattr(module, "resolve_connection", lambda: parameters)
+    excluded = []
+
+    def choose(port, **kwargs):
+        excluded.append(kwargs["excluded"])
+        return 6434
+
+    monkeypatch.setattr(module, "free_port", choose)
+    current = module.Verification(v.run.parent / "second", "docker.exe", "desktop-linux", 6433)
+    assert excluded == [{6433}]
+    assert current.port == 6434
+    assert current.report["portable_host"] == "127.0.0.1:6433"

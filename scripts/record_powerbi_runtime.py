@@ -19,13 +19,107 @@ def digest_manifest(values: dict[str, str]) -> str:
     ).hexdigest()
 
 
+def record_endpoint_refresh(evidence, projects):
+    """Record the new endpoint/import check separately from historical model acceptance."""
+    if __package__:
+        from scripts.compare_powerbi_runtime import equal, normalize
+    else:
+        from compare_powerbi_runtime import equal, normalize
+
+    proofs = json.loads((evidence / "sql-refresh-proofs.json").read_text(encoding="utf-8"))
+    modes = {}
+    for mode, project in projects.items():
+        project = project.resolve()
+        preparation = json.loads((project.parent / "preparation.json").read_text(encoding="utf-8"))
+        parameters = preparation["parameters"]
+        endpoint = f"{parameters['ServerHost']}:{parameters['ServerPort']}"
+        source = json.loads(
+            (evidence / f"desktop-source-{mode}.json").read_text(encoding="utf-8-sig")
+        )
+        actual = json.loads((evidence / f"dax-refresh-{mode}.json").read_text(encoding="utf-8-sig"))
+        expected = proofs["modes"][mode]
+        if source["endpoint"] != endpoint or source["database"] != parameters["DatabaseName"]:
+            raise ValueError("Actual Desktop source differs from the prepared configured endpoint")
+        if source["provider"] != "PostgreSQL" or endpoint != proofs["endpoint"]:
+            raise ValueError("Actual Desktop source is not the verified Portable endpoint")
+        if actual["server"] != source["server"] or actual["catalog"] != source["catalog"]:
+            raise ValueError("DAX evidence belongs to a different Desktop engine")
+        observations = {r["id"]: r for r in actual["results"]}
+        required = {"proof:import_counts", "proof:run_metadata", "proof:main_kpis"}
+        if (
+            len(actual["results"]) != 3
+            or set(observations) != required
+            or any(r["status"] != "PASS_EXECUTED" or len(r["rows"]) != 1 for r in actual["results"])
+        ):
+            raise ValueError("Required current refresh proof queries did not execute")
+        counts = normalize(observations["proof:import_counts"]["rows"][0])
+        metadata = normalize(observations["proof:run_metadata"]["rows"][0])
+        kpis = normalize(observations["proof:main_kpis"]["rows"][0])
+        for observed, wanted in (
+            (counts, expected["table_counts"]),
+            (metadata, expected["metadata"]),
+            (kpis, expected["kpis"]),
+        ):
+            if set(observed) != set(wanted) or any(
+                not equal(name, observed.get(name), value) for name, value in wanted.items()
+            ):
+                raise ValueError(
+                    f"Actual {mode} refreshed values differ from current read-only SQL"
+                )
+        files = {name: sha256(project.parent / name) for name in preparation["files_sha256"]}
+        if files != preparation["files_sha256"]:
+            raise ValueError("Prepared input definitions changed during the endpoint refresh")
+        modes[mode] = {
+            "project": str(project),
+            "postgres_endpoint": endpoint,
+            "database": parameters["DatabaseName"],
+            "data_directory": proofs["data_directory"],
+            "source_manifest_sha256": metadata["source_manifest_sha256"],
+            "imported_table_counts": counts,
+            "five_main_kpis": kpis,
+            "engine": actual["server"],
+            "catalog": actual["catalog"],
+            "prepared_definitions_unchanged": True,
+            "runtime_gates": dict.fromkeys(
+                ("DESKTOP_OPEN", "DATA_REFRESH", "ENDPOINT_MATCH", "EIGHT_TABLES", "FIVE_KPIS"),
+                "PASS",
+            ),
+            "executed_proof_queries": 3,
+            "dax_artifact": f"dax-refresh-{mode}.json",
+            "source_artifact": f"desktop-source-{mode}.json",
+        }
+    return {
+        "status": "PASS",
+        "check": "ACTUAL_ENDPOINT_RECONNECTION_AND_REFRESH",
+        "completed_at_utc": datetime.now(UTC).isoformat(),
+        "modes": modes,
+        "historical_model_acceptance": {
+            "run": "20261007T204100Z",
+            "required_queries": 32,
+            "strict_comparisons": 962,
+            "execution": "Accepted historical model and visual QA; not rerun in this endpoint check",
+        },
+        "remote_ci": "NOT_RUN; no publication",
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--evidence", type=Path, required=True)
     parser.add_argument("--real-project", type=Path, required=True)
     parser.add_argument("--synthetic-project", type=Path, required=True)
+    parser.add_argument("--refresh-only", action="store_true")
     args = parser.parse_args()
     evidence = args.evidence.resolve()
+    if args.refresh_only:
+        artifact = record_endpoint_refresh(
+            evidence, {"real": args.real_project, "synthetic": args.synthetic_project}
+        )
+        (evidence / "endpoint-refresh.json").write_text(
+            json.dumps(artifact, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+        print(json.dumps({"status": "PASS", "check": artifact["check"]}))
+        return
     modes = {}
     for mode, project in (("real", args.real_project), ("synthetic", args.synthetic_project)):
         project = project.resolve()
@@ -123,7 +217,11 @@ def main() -> None:
                 "resolution": "Attempt preserved; final queries executed after import proof confirmed all eight tables and source identity.",
             },
         ],
-        "credential_handling": "Existing .env/process settings entered privately only into the verified 127.0.0.1:5433;retaillens native database form. Username/password values and authentication screenshots excluded.",
+        "credential_handling": "Existing .env/process settings entered privately only into the exact configured PostgreSQL source; username/password values and authentication screenshots excluded.",
+        "postgres_endpoints": {
+            name: f"{mode['parameters']['ServerHost']}:{mode['parameters']['ServerPort']};{mode['parameters']['DatabaseName']}"
+            for name, mode in modes.items()
+        },
         "remote_ci": "NOT_RUN; no push or publication requested",
     }
     (evidence / "runtime.json").write_text(

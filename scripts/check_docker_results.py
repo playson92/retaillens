@@ -14,6 +14,7 @@ from psycopg.rows import dict_row
 
 from retaillens.analysis import analyse
 from retaillens.config import Settings, resolve_connection
+from retaillens.portable import assert_data_directory, local_parameters
 from retaillens.source import sha256, write_json
 from retaillens.warehouse import select_schema
 
@@ -327,25 +328,40 @@ def capture_portable(directory):
             "Portable capture directory must be new or empty; previous results are preserved"
         )
     observations = []
+    parameters = local_parameters(resolve_connection())
 
     class ReadOnlyPortable(Settings):
         def connect(self):
-            parameters = resolve_connection()
-            parameters.update(host="127.0.0.1", port="5433")
             connection = psycopg.connect(
                 **parameters,
                 options="-c default_transaction_read_only=on",
                 connect_timeout=10,
                 application_name="retaillens-docker-reference",
             )
-            connection.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY")
+            try:
+                connection.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY")
+                data_directory = assert_data_directory(
+                    connection, Path(__file__).resolve().parents[1] / "output/postgres_data"
+                )
+            except Exception:
+                connection.close()
+                raise
             version, read_only = connection.execute(
                 "SELECT version(),current_setting('transaction_read_only')"
             ).fetchone()
             if read_only != "on":
                 connection.close()
                 raise RuntimeError("Portable reference connection is not read-only")
-            observations.append({"mode": self.mode, "postgres_version": version, "read_only": True})
+            observations.append(
+                {
+                    "mode": self.mode,
+                    "postgres_version": version,
+                    "read_only": True,
+                    "host": parameters["host"],
+                    "port": int(parameters["port"]),
+                    "data_directory": data_directory,
+                }
+            )
             return connection
 
     def snapshot(configured):
@@ -388,8 +404,8 @@ def capture_portable(directory):
         }
     proof = {
         "status": "PASS",
-        "host": "127.0.0.1",
-        "port": 5433,
+        "host": parameters["host"],
+        "port": int(parameters["port"]),
         "read_only": True,
         "connections": observations,
         "modes": summaries,

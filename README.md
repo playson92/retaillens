@@ -19,23 +19,32 @@ interactions are retained. The actual Desktop engine executed **32 required DAX 
 with **962 strict comparisons against PostgreSQL and no mismatches**, including the supplied
 reconciliation queries and date/category/seller/empty selections.
 
-**Overall: PARTIAL** because Docker build/demo/cleanup and remote Actions remain **NOT_RUN**.
-Docker Desktop 4.93.0 is installed, but its Linux daemon is unavailable: WSL is missing and
-pipe probes fail/time out. Remote CI was intentionally not triggered; no publication is requested.
-See [POWER_BI.md](docs/POWER_BI.md) and [PROJECT_STATE.json](docs/PROJECT_STATE.json) for exact evidence.
+**Current local acceptance: PASS.** Run `20261009T2049086587846Z` fixes RL-08.
+WTA keeps PostgreSQL5433 and dashboard8501. The preserved RetailLens Portable cluster
+runs at **127.0.0.1:5435** because5434 was occupied too. Authenticated
+`SHOW data_directory` identifies `output/postgres_data` before readiness, database
+creation and every read-only capture connection. Credentials/data/KPIs remain unchanged.
 
-**Local MVP: ready and accepted.** RL-01–RL-07, Portable PostgreSQL and Desktop are closed
-against the reviewed HEAD. Stage05 run `20261009T091005Z` added one isolated Docker verification
-command and **49 passing scenario regressions**. Fresh read-only Portable results agree with
-the accepted run; its data and metadata remain unchanged. Actual Compose5.5.1 configuration
-passed, but Linux daemon probes still time out and WSL is not installed. Container acceptance
-remains blocked. Previous tests/Desktop evidence are retained references, not new executions.
+Actual Linux Docker verification passed build/image ID, PostgreSQL health, synthetic and
+full pinned Olist v2 demos, nine result sets/seven SQL queries per mode, negative-tolerance
+exit1 and both cleanup phases. Its own host port was6433; containers stopped, named volumes
+remain. WTA's container IDs, configuration hashes, ports and health stayed unchanged.
+**77 scoped tests**, Ruff and the Windows PowerShell parser also passed.
+
+Separate fresh real/synthetic Desktop projects opened and refreshed against5435.
+TOM confirms provider/endpoint/model; six final ADOMD proof queries confirm all eight
+imported table counts, source hashes and five main KPIs against current SQL.
+Two real Overview screenshots are retained. The32queries/962comparisons and four-page
+visual QA above are the historical model acceptance, not a new execution.
+**REMOTE_CI: NOT_RUN**; no merge, push or publication occurred.
+See [demo](docs/DEMO.md) and [PROJECT_STATE.json](docs/PROJECT_STATE.json).
 
 ## Run on Windows
 
 Python 3.12 is required. From the project root:
 
 ```powershell
+$env:DATABASE_PORT = '5435' # Current RetailLens endpoint; this shell only.
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\setup.ps1 -Backend Portable
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo.ps1 -Mode synthetic -Backend Portable
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo.ps1 -Mode real -Backend Portable -ObservationEnd 2018-09-01
@@ -43,7 +52,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\open_powerbi.ps1 -Mo
 ```
 
 Setup creates a private `.env`, installs `requirements.lock`, then starts the selected backend.
-The executed Windows path above uses isolated portable PostgreSQL at `127.0.0.1:5433`;
+The executed Windows path above uses isolated portable PostgreSQL at `127.0.0.1:5435`;
 use `-Backend Docker` when a working daemon is available. Setup preserves credentials, other services
 and volumes. Pass `-Python C:\path\to\python.exe` if needed. Windows portable binaries come
 from EDB with pinned SHA256; the database stays in ignored `output/postgres_data`. Stop with
@@ -71,7 +80,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\verify_docker.ps1
 ```
 
 It creates a fresh evidence run, uses its own Compose project and a free port starting at6433,
-and leaves Portable at5433 available. It validates Compose without printing credentials,
+and excludes the configured Portable port even when its listener is stopped. It validates Compose without printing credentials,
 builds/records the exact app image used by synthetic and pinned Olist demos, compares all SQL
 results with fresh read-only Portable references, checks the application-specific negative
 tolerance error, and stops only its own containers in finally after both scenarios. Volumes
@@ -79,17 +88,15 @@ and previous results remain. Native failures retain their codes; exits0/1/2 mean
 After a system reboot it can start the existing Portable cluster; it never initializes a new
 cluster for this check. Source Olist is mounted read-only and is never downloaded by this scenario.
 
-For the currently confirmed missing WSL prerequisite, an administrator must run
-`wsl --install --no-distribution` and restart if Windows requests it. Then rerun the command above;
-it starts the installed Desktop if needed. See the
-[Microsoft installation instructions](https://learn.microsoft.com/en-us/windows/wsl/install)
-and [no-distribution option](https://learn.microsoft.com/en-us/windows/wsl/basic-commands).
-No administrator feature changes or reboot were forced here.
+Docker Desktop4.93.0 and local Linux daemon29.8.1 were actually available in this run.
+Historical missing-WSL failures remain in old evidence; no OS installation or feature
+change was needed for the current verification.
 
 Generate private credentials in `.env` from `.env.example`, then:
 
 ```bash
 mkdir -p output data/raw
+export DATABASE_PORT=6433 # Choose a free host port for this Compose backend.
 # Allow container user 1000 to write output and data/raw using your local ownership policy.
 docker compose up -d --wait db
 docker compose run --rm app
@@ -98,11 +105,11 @@ docker compose stop
 ```
 
 `docker/Dockerfile` uses Python 3.12 and Compose uses PostgreSQL 17.6. Host clients connect to
-`127.0.0.1:5433`; app containers use `db:5432`. Change occupied `DATABASE_PORT` and prepare the
-local report again. No command deletes volumes. Docker execution is pending; portable PostgreSQL
-was executed here.
-When switching from Portable to Docker, stop the portable cluster first using the command
-above; each backend has its own database storage, so run the demo to populate the chosen backend.
+the configured host port; app containers use `db:5432`. Change occupied `DATABASE_PORT` and prepare the
+local report again. No command deletes volumes. Both backends were executed here.
+Each backend has its own storage. Use a distinct free host port and backend configuration
+for coexistence, or stop only your own Portable cluster if deliberately reusing its port.
+The isolated verification command preserves Portable and WTA.
 
 ## CLI
 
@@ -180,6 +187,6 @@ and [contribution rules](CONTRIBUTING.md).
 
 Code/artificial fixtures: MIT, author **Jonatan Tomaszewicz**. Olist inputs and derived evidence
 retain [CC BY-NC-SA 4.0 terms](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce).
-Microsoft schema attribution is retained separately. Remaining local runtime work is Docker
-verification after administrator WSL setup. Future analytical work includes source completeness
+Microsoft schema attribution is retained separately. Local container acceptance is complete;
+remote CI remains unexecuted. Future analytical work includes source completeness
 agreement, incremental snapshots and investigation of mismatches.
